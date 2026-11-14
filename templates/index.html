@@ -189,6 +189,57 @@
             </div>
           </div>
 
+          <!-- QUICK EXPLORE BY ARCHETYPE -->
+          <div class="panel home-archetypes-preview">
+            <div class="panel-header">
+              <div>
+                <h3>Explore The 4 Global Financial Inclusion Archetypes</h3>
+                <p class="panel-subtitle">Click any archetype below to highlight its 140 peer nations directly on the World Map</p>
+              </div>
+            </div>
+            <div class="archetypes-preview-grid">
+              <div class="arch-preview-card c1" onclick="switchPage('page-worldmap'); setTimeout(() => { document.querySelector('.arch-filter-chip.c1')?.click(); }, 120);">
+                <div class="preview-dot c1"></div>
+                <div class="preview-info">
+                  <strong>Digitally Leaping Cash Economists</strong>
+                  <span>35 countries • High mobile money, rapid fintech surge</span>
+                  <div class="preview-peers-mini">Kenya, Ghana, Uganda, Bangladesh...</div>
+                </div>
+                <span class="preview-arrow">→</span>
+              </div>
+
+              <div class="arch-preview-card c2" onclick="switchPage('page-worldmap'); setTimeout(() => { document.querySelector('.arch-filter-chip.c2')?.click(); }, 120);">
+                <div class="preview-dot c2"></div>
+                <div class="preview-info">
+                  <strong>Universal High-Resilience Systems</strong>
+                  <span>48 countries • Saturated banking, robust emergency buffers</span>
+                  <div class="preview-peers-mini">India, Germany, Japan, Singapore, Canada...</div>
+                </div>
+                <span class="preview-arrow">→</span>
+              </div>
+
+              <div class="arch-preview-card c3" onclick="switchPage('page-worldmap'); setTimeout(() => { document.querySelector('.arch-filter-chip.c3')?.click(); }, 120);">
+                <div class="preview-dot c3"></div>
+                <div class="preview-info">
+                  <strong>Severe Exclusion Frontiers</strong>
+                  <span>29 countries • Acute access deficits, heavy cash reliance</span>
+                  <div class="preview-peers-mini">Afghanistan, South Sudan, Yemen, Chad...</div>
+                </div>
+                <span class="preview-arrow">→</span>
+              </div>
+
+              <div class="arch-preview-card c4" onclick="switchPage('page-worldmap'); setTimeout(() => { document.querySelector('.arch-filter-chip.c4')?.click(); }, 120);">
+                <div class="preview-dot c4"></div>
+                <div class="preview-info">
+                  <strong>Banked but Liquidity-Constrained</strong>
+                  <span>28 countries • High account coverage, low voluntary savings</span>
+                  <div class="preview-peers-mini">Brazil, Colombia, Egypt, Philippines, Mexico...</div>
+                </div>
+                <span class="preview-arrow">→</span>
+              </div>
+            </div>
+          </div>
+
           <!-- QUICK MACRO KPIs -->
           <div class="panel">
             <div class="panel-header">
@@ -228,57 +279,158 @@
           <div class="page-header">
             <div class="page-title-group">
               <div class="section-tag">GLOBAL EXPLORATION</div>
-              <h1>Interactive World Map: Country Archetypes</h1>
-              <p class="section-subtitle">Countries are colored by their comparative financial inclusion pattern archetype. Click any country to see its plain-language profile, strengths, and peer economies.</p>
+              <h1>Interactive World Map & Country Archetypes</h1>
+              <p class="section-subtitle">Explore how 140+ countries cluster into 4 natural financial inclusion archetypes. Filter by group, switch between metrics, and click any nation to inspect live.</p>
             </div>
-            <div class="map-controls-pill">
-              <label for="map-metric-indicator">View Indicator:</label>
-              <select id="map-metric-indicator" class="form-control form-control-sm">
-                <option value="cluster" selected>Cluster Archetype (Recommended K=4)</option>
-                <option value="account">Overall Account Ownership (%)</option>
-                <option value="mobile">Mobile Money Penetration (%)</option>
-                <option value="resilience">Emergency Resilience (%)</option>
-              </select>
+            <div class="map-view-pills-wrap">
+              <div class="map-view-pills" id="map-view-pills">
+                <button class="map-view-pill active" data-metric="cluster">🏷️ 4 Archetype Clusters</button>
+                <button class="map-view-pill" data-metric="account">💳 Overall Account (%)</button>
+                <button class="map-view-pill" data-metric="mobile">📱 Mobile Money (%)</button>
+                <button class="map-view-pill" data-metric="resilience">🛡️ Emergency Resilience (%)</button>
+              </div>
             </div>
           </div>
 
-          <!-- THE CHOROPLETH WORLD MAP -->
-          <div class="panel map-panel-container">
-            <div id="chart-world-map" class="chart-container-map"></div>
-            <div class="map-helper-bar">
-              <small>💡 <strong>Tip for citizens:</strong> Click any country on the map to inspect its profile or search above.</small>
-              <span id="map-click-echo" class="map-selection-echo">Selected: India (Click any country)</span>
+          <!-- ARCHETYPE QUICK-FILTER PILLS -->
+          <div class="map-filter-toolbar">
+            <span class="filter-toolbar-label">Quick Filter Archetype:</span>
+            <div class="map-filter-chips" id="map-filter-chips">
+              <button class="arch-filter-chip active" data-cluster="all">All Nations (140)</button>
+              <button class="arch-filter-chip c1" data-cluster="0"><span class="chip-dot c1"></span> Leapfrogging Cash (35)</button>
+              <button class="arch-filter-chip c2" data-cluster="1"><span class="chip-dot c2"></span> Universal Systems (48)</button>
+              <button class="arch-filter-chip c3" data-cluster="2"><span class="chip-dot c3"></span> Severe Exclusion (29)</button>
+              <button class="arch-filter-chip c4" data-cluster="3"><span class="chip-dot c4"></span> Banked Constrained (28)</button>
+            </div>
+          </div>
+
+          <!-- SPLIT STAGE: CHOROPLETH MAP (LEFT) + INSTANT COUNTRY INSPECTOR (RIGHT) -->
+          <div class="map-layout-split">
+            <!-- LEFT: THE MAP -->
+            <div class="map-stage-left panel">
+              <div id="chart-world-map" class="chart-container-map"></div>
+              <div class="map-helper-bar">
+                <div class="map-helper-left">
+                  <span>💡 <strong>Click any country</strong> to load instant profile, or double-click to reset zoom.</span>
+                </div>
+                <div class="map-helper-right">
+                  <span id="map-hover-echo" class="map-selection-echo">Hovering: Worldwide</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- RIGHT: INSTANT COUNTRY INSPECTOR CARD -->
+            <div class="map-stage-right panel" id="map-inspector-pane">
+              <div class="inspector-card-header">
+                <div>
+                  <div class="inspector-country-badge-row">
+                    <span id="insp-code" class="badge badge-primary">IND</span>
+                    <span id="insp-region" class="badge badge-neutral">South Asia</span>
+                  </div>
+                  <h3 id="insp-name">India</h3>
+                  <span id="insp-archetype-tag" class="modal-cluster-pill">Archetype 2: Universal High-Resilience Systems</span>
+                </div>
+              </div>
+
+              <div class="inspector-metrics-list">
+                <div class="insp-metric-row">
+                  <div class="insp-metric-labels">
+                    <span>Overall Account Ownership</span>
+                    <strong id="insp-acc-val">89.0%</strong>
+                  </div>
+                  <div class="insp-bar-track"><div id="insp-acc-bar" class="insp-bar-fill emerald" style="width: 89%;"></div></div>
+                </div>
+
+                <div class="insp-metric-row">
+                  <div class="insp-metric-labels">
+                    <span>Mobile Money Penetration</span>
+                    <strong id="insp-mob-val">23.1%</strong>
+                  </div>
+                  <div class="insp-bar-track"><div id="insp-mob-bar" class="insp-bar-fill cyan" style="width: 23%;"></div></div>
+                </div>
+
+                <div class="insp-metric-row">
+                  <div class="insp-metric-labels">
+                    <span>Traditional Bank Account</span>
+                    <strong id="insp-fi-val">88.7%</strong>
+                  </div>
+                  <div class="insp-bar-track"><div id="insp-fi-bar" class="insp-bar-fill purple" style="width: 89%;"></div></div>
+                </div>
+
+                <div class="insp-metric-row">
+                  <div class="insp-metric-labels">
+                    <span>Savings Rate</span>
+                    <strong id="insp-save-val">38.6%</strong>
+                  </div>
+                  <div class="insp-bar-track"><div id="insp-save-bar" class="insp-bar-fill amber" style="width: 39%;"></div></div>
+                </div>
+
+                <div class="insp-metric-row">
+                  <div class="insp-metric-labels">
+                    <span>Emergency Resilience Buffer</span>
+                    <strong id="insp-resil-val">95.2%</strong>
+                  </div>
+                  <div class="insp-bar-track"><div id="insp-resil-bar" class="insp-bar-fill emerald" style="width: 95%;"></div></div>
+                </div>
+              </div>
+
+              <div class="inspector-highlights-box">
+                <div class="insp-hl-item strength">
+                  <span class="insp-hl-icon">💪</span>
+                  <div class="insp-hl-text">
+                    <strong>Primary Strength:</strong>
+                    <p id="insp-strength-text">High account access and rapid digital payments expansion.</p>
+                  </div>
+                </div>
+                <div class="insp-hl-item gap">
+                  <span class="insp-hl-icon">⚠️</span>
+                  <div class="insp-hl-text">
+                    <strong>Priority Gap:</strong>
+                    <p id="insp-gap-text">Voluntary bank savings mobilization remains below potential.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="inspector-action-wrap">
+                <button id="insp-open-modal-btn" class="btn btn-primary btn-block">
+                  Open Full Scorecard & Policy Ideas →
+                </button>
+              </div>
             </div>
           </div>
 
           <!-- ARCHETYPE LEGEND CARDS -->
           <div class="archetypes-legend-grid">
-            <div class="legend-card c1">
+            <div class="legend-card c1" data-cluster="0">
               <div class="legend-dot c1"></div>
               <div>
                 <strong>Archetype 1: Digitally Leaping Cash Economists</strong>
                 <p>High mobile money penetration with rapid fintech adoption, yet modest traditional bank savings.</p>
+                <span class="legend-foot">Sub-Saharan Africa & Emerging Asia</span>
               </div>
             </div>
-            <div class="legend-card c2">
+            <div class="legend-card c2" data-cluster="1">
               <div class="legend-dot c2"></div>
               <div>
                 <strong>Archetype 2: Universal High-Resilience Systems</strong>
                 <p>Nearly saturated formal banking (>90%), high digital commerce, and robust emergency buffers.</p>
+                <span class="legend-foot">OECD, High-Income & Established East Asia</span>
               </div>
             </div>
-            <div class="legend-card c3">
+            <div class="legend-card c3" data-cluster="2">
               <div class="legend-dot c3"></div>
               <div>
                 <strong>Archetype 3: Severe Exclusion Frontiers</strong>
                 <p>Acute access deficits across banks and mobile platforms. High reliance on physical cash.</p>
+                <span class="legend-foot">Conflict-affected, Low-Income & Rural Frontiers</span>
               </div>
             </div>
-            <div class="legend-card c4">
+            <div class="legend-card c4" data-cluster="3">
               <div class="legend-dot c4"></div>
               <div>
                 <strong>Archetype 4: Banked but Liquidity-Constrained</strong>
                 <p>High formal account ownership (often payroll/G2P), but low voluntary savings mobilization.</p>
+                <span class="legend-foot">Latin America & Middle East</span>
               </div>
             </div>
           </div>

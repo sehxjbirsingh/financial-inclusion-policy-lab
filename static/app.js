@@ -10,6 +10,9 @@ const state = {
   theme: localStorage.getItem('theme') || 'dark',
   currentPage: 'page-home',
   audienceMode: 'citizen', // 'citizen' or 'analyst'
+  mapMetric: 'cluster',
+  mapClusterFilter: 'all',
+  currentInspectedCountry: 'India',
   countriesData: [],
   recommendedModel: null,
   benchmarksData: null,
@@ -82,12 +85,12 @@ function getPlotlyTheme() {
     paper_bgcolor: 'transparent',
     plot_bgcolor: 'transparent',
     font: {
-      family: "'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif",
-      color: isDark ? '#ecf3f0' : '#122421',
+      family: "'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+      color: isDark ? '#f8fafc' : '#0f172a',
       size: 12
     },
-    gridcolor: isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)',
-    zerolinecolor: isDark ? 'rgba(255,255,255,0.12)' : 'rgba(0,0,0,0.12)'
+    gridcolor: isDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.08)',
+    zerolinecolor: isDark ? 'rgba(255,255,255,0.15)' : 'rgba(0,0,0,0.15)'
   };
 }
 
@@ -404,8 +407,62 @@ async function initWorldMap() {
     }
   }
 
-  const indicatorSelect = document.getElementById('map-metric-indicator');
-  const metric = indicatorSelect ? indicatorSelect.value : 'cluster';
+  // Segmented Metric View Pills
+  document.querySelectorAll('.map-view-pill').forEach(pill => {
+    if (!pill.hasListener) {
+      pill.addEventListener('click', () => {
+        document.querySelectorAll('.map-view-pill').forEach(p => p.classList.remove('active'));
+        pill.classList.add('active');
+        state.mapMetric = pill.getAttribute('data-metric');
+        renderWorldMapChoropleth();
+      });
+      pill.hasListener = true;
+    }
+  });
+
+  // Archetype Filter Chips
+  document.querySelectorAll('.arch-filter-chip').forEach(chip => {
+    if (!chip.hasListener) {
+      chip.addEventListener('click', () => {
+        document.querySelectorAll('.arch-filter-chip').forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+        state.mapClusterFilter = chip.getAttribute('data-cluster');
+        renderWorldMapChoropleth();
+      });
+      chip.hasListener = true;
+    }
+  });
+
+  // Archetype Legend Cards (Clicking highlights cluster)
+  document.querySelectorAll('.archetypes-legend-grid .legend-card').forEach(card => {
+    if (!card.hasListener) {
+      card.addEventListener('click', () => {
+        const cIdx = card.getAttribute('data-cluster');
+        const targetChip = document.querySelector(`.arch-filter-chip[data-cluster="${cIdx}"]`);
+        if (targetChip) targetChip.click();
+      });
+      card.hasListener = true;
+    }
+  });
+
+  // Open Full Scorecard Modal button inside Inspector
+  const openModalBtn = document.getElementById('insp-open-modal-btn');
+  if (openModalBtn && !openModalBtn.hasListener) {
+    openModalBtn.addEventListener('click', () => {
+      if (state.currentInspectedCountry) {
+        showCountryModal(state.currentInspectedCountry);
+      }
+    });
+    openModalBtn.hasListener = true;
+  }
+
+  renderWorldMapChoropleth();
+  updateMapInspector(state.currentInspectedCountry || 'India');
+}
+
+function renderWorldMapChoropleth() {
+  const container = document.getElementById('chart-world-map');
+  if (!container) return;
 
   const assignments = (state.recommendedModel && state.recommendedModel.country_assignments) || [];
   if (assignments.length === 0) {
@@ -413,108 +470,221 @@ async function initWorldMap() {
     return;
   }
 
+  const metric = state.mapMetric || 'cluster';
+  const filter = state.mapClusterFilter || 'all';
+
   const locations = [];
   const zValues = [];
-  const textHover = [];
+  const hoverTexts = [];
   const customData = [];
+
+  const archetypePalette = ['#10b981', '#3b82f6', '#f43f5e', '#f59e0b'];
+  const archetypeNameMap = [
+    'Digitally Leaping Cash Economists',
+    'Universal High-Resilience Systems',
+    'Severe Exclusion Frontiers',
+    'Banked but Liquidity-Constrained'
+  ];
 
   assignments.forEach(row => {
     if (row.code && row.code.length === 3) {
       locations.push(row.code);
       customData.push(row.country);
 
-      let val = row.cluster_id + 1; // 1-4 for clusters
-      let hoverStr = `<b>${esc(row.country)}</b><br>Group: ${esc(row.cluster_name)}<br>Account: ${fmtPct(row.account_pct)}<br>Mobile: ${fmtPct(row.mobile_pct)}<br>Resilience: ${fmtPct(row.emergency_pct)}`;
+      const clusterNum = Number(row.cluster_id);
+      const isFilteredOut = filter !== 'all' && Number(filter) !== clusterNum;
 
-      if (metric === 'account') {
-        val = row.account_pct;
-        hoverStr = `<b>${esc(row.country)}</b><br>Account Ownership: ${fmtPct(val)}`;
+      let val;
+      let hoverStr;
+
+      if (metric === 'cluster') {
+        val = isFilteredOut ? 0 : clusterNum + 1; // 0 for dimmed, 1-4 for clusters
+        const dotColor = isFilteredOut ? '#64748b' : archetypePalette[clusterNum];
+        hoverStr = `<b>${esc(row.country)}</b> (${row.code})<br>` +
+          `<span style="color:${dotColor}">●</span> <b>${esc(row.cluster_name || archetypeNameMap[clusterNum])}</b><br>` +
+          `• Account Ownership: <b>${fmtPct(row.account_pct)}</b><br>` +
+          `• Mobile Money: <b>${fmtPct(row.mobile_pct)}</b><br>` +
+          `• Emergency Resilience: <b>${fmtPct(row.emergency_pct)}</b><br>` +
+          `<span style="color:#0ea5e9;font-size:10px;">Click to inspect details →</span>`;
+      } else if (metric === 'account') {
+        val = isFilteredOut ? 0 : row.account_pct;
+        hoverStr = `<b>${esc(row.country)}</b> (${row.code})<br>Overall Account Ownership: <b>${fmtPct(row.account_pct)}</b><br>Group: ${esc(row.cluster_name)}`;
       } else if (metric === 'mobile') {
-        val = row.mobile_pct;
-        hoverStr = `<b>${esc(row.country)}</b><br>Mobile Money: ${fmtPct(val)}`;
+        val = isFilteredOut ? 0 : row.mobile_pct;
+        hoverStr = `<b>${esc(row.country)}</b> (${row.code})<br>Mobile Money Penetration: <b>${fmtPct(row.mobile_pct)}</b><br>Group: ${esc(row.cluster_name)}`;
       } else if (metric === 'resilience') {
-        val = row.emergency_pct;
-        hoverStr = `<b>${esc(row.country)}</b><br>Emergency Resilience: ${fmtPct(val)}`;
+        val = isFilteredOut ? 0 : row.emergency_pct;
+        hoverStr = `<b>${esc(row.country)}</b> (${row.code})<br>Emergency Resilience: <b>${fmtPct(row.emergency_pct)}</b><br>Group: ${esc(row.cluster_name)}`;
       }
 
       zValues.push(val);
-      textHover.push(hoverStr);
+      hoverTexts.push(hoverStr);
     }
   });
 
   const pTheme = getPlotlyTheme();
   let colorscale;
+  let showscale = false;
+  let zmin = undefined;
+  let zmax = undefined;
+
   if (metric === 'cluster') {
     colorscale = [
-      [0.0, '#10b981'],
-      [0.25, '#10b981'],
-      [0.25, '#06b6d4'],
-      [0.5, '#06b6d4'],
-      [0.5, '#f43f5e'],
-      [0.75, '#f43f5e'],
-      [0.75, '#f59e0b'],
+      [0.0, state.theme === 'dark' ? '#182234' : '#e2e8f0'],
+      [0.19, state.theme === 'dark' ? '#182234' : '#e2e8f0'],
+      [0.2, '#10b981'],
+      [0.39, '#10b981'],
+      [0.4, '#3b82f6'],
+      [0.59, '#3b82f6'],
+      [0.6, '#f43f5e'],
+      [0.79, '#f43f5e'],
+      [0.8, '#f59e0b'],
       [1.0, '#f59e0b']
     ];
+    zmin = 0;
+    zmax = 4;
   } else {
-    colorscale = 'Viridis';
+    colorscale = [
+      [0.0, state.theme === 'dark' ? '#182234' : '#e2e8f0'],
+      [0.2, '#312e81'],
+      [0.4, '#4338ca'],
+      [0.6, '#0284c7'],
+      [0.8, '#06b6d4'],
+      [1.0, '#10b981']
+    ];
+    showscale = true;
+    zmin = 0;
+    zmax = 100;
   }
 
   const trace = {
     type: 'choropleth',
     locations: locations,
     z: zValues,
-    text: textHover,
+    text: hoverTexts,
     hoverinfo: 'text',
     customdata: customData,
     colorscale: colorscale,
-    showscale: metric !== 'cluster',
+    zmin: zmin,
+    zmax: zmax,
+    showscale: showscale,
     colorbar: {
-      title: { text: metric === 'cluster' ? '' : '% Rate', font: { size: 11, color: pTheme.font.color } },
+      title: { text: '% Rate', font: { size: 11, color: pTheme.font.color } },
       tickfont: { color: pTheme.font.color, size: 10 },
       thickness: 12,
-      len: 0.6
+      len: 0.5,
+      x: 0.98,
+      y: 0.5
     },
     marker: {
       line: {
-        color: state.theme === 'dark' ? '#112321' : '#ffffff',
-        width: 0.5
+        color: state.theme === 'dark' ? '#0f172a' : '#ffffff',
+        width: 0.6
       }
     }
   };
 
   const layout = {
     ...pTheme,
-    margin: { t: 10, r: 10, b: 10, l: 10 },
+    margin: { t: 5, r: 5, b: 5, l: 5 },
     geo: {
       showframe: false,
       showcoastlines: true,
-      coastlinecolor: state.theme === 'dark' ? '#233f3a' : '#d2ddd4',
+      coastlinecolor: state.theme === 'dark' ? '#334155' : '#cbd5e1',
       projection: { type: 'natural earth' },
       bgcolor: 'transparent',
       lakecolor: 'transparent',
-      landcolor: state.theme === 'dark' ? '#162a27' : '#e9efe9'
+      landcolor: state.theme === 'dark' ? '#182234' : '#e2e8f0',
+      subunitcolor: state.theme === 'dark' ? '#1e293b' : '#f1f5f9'
     }
   };
 
   Plotly.react(container, [trace], layout, { responsive: true, displayModeBar: false });
 
-  // Handle map click
+  // Map Click Listener -> Updates Inspector
   container.removeAllListeners && container.removeAllListeners('plotly_click');
   container.on('plotly_click', (data) => {
     if (data && data.points && data.points[0]) {
       const countryName = data.points[0].customdata;
       if (countryName) {
-        const echoEl = document.getElementById('map-click-echo');
-        if (echoEl) echoEl.textContent = `Selected: ${countryName}`;
-        showCountryModal(countryName);
+        state.currentInspectedCountry = countryName;
+        updateMapInspector(countryName);
       }
     }
   });
 
-  // Listener for dropdown indicator
-  if (indicatorSelect && !indicatorSelect.hasListener) {
-    indicatorSelect.addEventListener('change', () => initWorldMap());
-    indicatorSelect.hasListener = true;
+  // Map Hover Listener -> Updates top status pill
+  container.removeAllListeners && container.removeAllListeners('plotly_hover');
+  container.on('plotly_hover', (data) => {
+    if (data && data.points && data.points[0]) {
+      const countryName = data.points[0].customdata;
+      const echoEl = document.getElementById('map-hover-echo');
+      if (echoEl && countryName) {
+        echoEl.textContent = `Hovering: ${countryName}`;
+      }
+    }
+  });
+}
+
+async function updateMapInspector(countryName) {
+  state.currentInspectedCountry = countryName;
+
+  const nameEl = document.getElementById('insp-name');
+  const codeEl = document.getElementById('insp-code');
+  const regEl = document.getElementById('insp-region');
+  const archTag = document.getElementById('insp-archetype-tag');
+
+  const accVal = document.getElementById('insp-acc-val');
+  const accBar = document.getElementById('insp-acc-bar');
+  const mobVal = document.getElementById('insp-mob-val');
+  const mobBar = document.getElementById('insp-mob-bar');
+  const fiVal = document.getElementById('insp-fi-val');
+  const fiBar = document.getElementById('insp-fi-bar');
+  const saveVal = document.getElementById('insp-save-val');
+  const saveBar = document.getElementById('insp-save-bar');
+  const resilVal = document.getElementById('insp-resil-val');
+  const resilBar = document.getElementById('insp-resil-bar');
+
+  const strText = document.getElementById('insp-strength-text');
+  const gapText = document.getElementById('insp-gap-text');
+
+  if (!nameEl) return;
+  nameEl.textContent = countryName;
+
+  try {
+    const res = await fetch(`/api/country-profile/${encodeURIComponent(countryName)}`);
+    if (!res.ok) throw new Error('Not found');
+    const p = await res.json();
+
+    if (codeEl) codeEl.textContent = p.code || '—';
+    if (regEl) regEl.textContent = p.region || 'World Bank';
+    if (archTag) archTag.textContent = p.cluster_name || `Archetype ${p.cluster + 1}`;
+
+    const acc = p.account_pct || 0;
+    const mob = p.mobile_pct || 0;
+    const fi = p.fiaccount_pct || 0;
+    const sav = p.saved_pct || 0;
+    const resi = p.emergency_pct || 0;
+
+    if (accVal) accVal.textContent = acc.toFixed(1) + '%';
+    if (accBar) accBar.style.width = Math.min(100, acc) + '%';
+    if (mobVal) mobVal.textContent = mob.toFixed(1) + '%';
+    if (mobBar) mobBar.style.width = Math.min(100, mob) + '%';
+    if (fiVal) fiVal.textContent = fi.toFixed(1) + '%';
+    if (fiBar) fiBar.style.width = Math.min(100, fi) + '%';
+    if (saveVal) saveVal.textContent = sav.toFixed(1) + '%';
+    if (saveBar) saveBar.style.width = Math.min(100, sav) + '%';
+    if (resilVal) resilVal.textContent = resi.toFixed(1) + '%';
+    if (resilBar) resilBar.style.width = Math.min(100, resi) + '%';
+
+    if (strText) {
+      strText.textContent = p.strengths && p.strengths.length > 0 ? p.strengths[0] : 'Broad baseline financial connectivity';
+    }
+    if (gapText) {
+      gapText.textContent = p.gaps && p.gaps.length > 0 ? p.gaps[0] : 'No severe statistical outlier gaps identified';
+    }
+  } catch (err) {
+    console.warn('Inspector update:', err);
   }
 }
 
@@ -694,11 +864,11 @@ async function updateGuidedModel() {
         z: zValues,
         text: hoverTexts,
         hoverinfo: 'text',
-        colorscale: 'Portland',
+        colorscale: 'Viridis',
         showscale: false,
         marker: {
           line: {
-            color: state.theme === 'dark' ? '#112321' : '#ffffff',
+            color: state.theme === 'dark' ? '#0f172a' : '#ffffff',
             width: 0.5
           }
         }
@@ -706,14 +876,14 @@ async function updateGuidedModel() {
 
       const layout = {
         ...pTheme,
-        margin: { t: 10, r: 10, b: 10, l: 10 },
+        margin: { t: 5, r: 5, b: 5, l: 5 },
         geo: {
           showframe: false,
           showcoastlines: true,
-          coastlinecolor: state.theme === 'dark' ? '#233f3a' : '#d2ddd4',
+          coastlinecolor: state.theme === 'dark' ? '#334155' : '#cbd5e1',
           projection: { type: 'natural earth' },
           bgcolor: 'transparent',
-          landcolor: state.theme === 'dark' ? '#162a27' : '#e9efe9'
+          landcolor: state.theme === 'dark' ? '#182234' : '#e2e8f0'
         }
       };
 
@@ -1079,7 +1249,7 @@ async function loadPCAProjection() {
     }
 
     const pTheme = getPlotlyTheme();
-    const clusterColors = ['#10b981', '#06b6d4', '#f43f5e', '#f59e0b'];
+    const clusterColors = ['#10b981', '#3b82f6', '#f43f5e', '#f59e0b'];
     const clusterNames = [
       'Digitally Leaping Cash Economists',
       'Universal High-Resilience Systems',
