@@ -44,7 +44,9 @@ def _read(file) -> pd.DataFrame:
         if suffix == ".csv":
             df = pd.read_csv(io.BytesIO(raw))
         elif suffix in (".xlsx", ".xls"):
-            df = pd.read_excel(io.BytesIO(raw))
+            xls = pd.ExcelFile(io.BytesIO(raw))
+            sheet = "Data" if "Data" in xls.sheet_names else (xls.sheet_names[0] if xls.sheet_names else 0)
+            df = pd.read_excel(xls, sheet_name=sheet)
         else:
             raise AnalysisError("Upload a .csv, .xlsx, or .xls file.")
     except AnalysisError:
