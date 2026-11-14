@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Global Financial Inclusion Policy Lab</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+  <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+</head>
+<body>
+  <header class="topbar"><a class="brand" href="#top"><span class="brand-mark">◎</span> FINANCE FOR ALL <span class="brand-divider">/</span> POLICY LAB</a><span class="edition">GLOBAL FINANCIAL INCLUSION · EXPLORATORY ANALYSIS</span></header>
+  <main id="top">
+    <section class="hero"><div class="eyebrow"><span class="dot"></span> DATA-DRIVEN POLICYMAKING & GLOBAL INEQUALITY</div><h1>Financial inclusion,<br><em>seen in patterns.</em></h1><p class="hero-copy">Explore how access to accounts, digital payments, savings and financial resilience vary across countries. Identify comparable country profiles that can inform better questions for policy and research.</p><div class="hero-meta"><span>01 / PREPARE</span><span>02 / COMPARE</span><span>03 / INTERPRET</span></div></section>
+    <section class="workspace">
+      <aside class="controls panel"><div class="section-label">ANALYSIS SETUP <span>01—03</span></div><h2>Build a country comparison</h2><p class="muted">Upload a World Bank Global Findex country-level export. Country aggregates are excluded automatically.</p>
+        <form id="analysis-form">
+          <label class="upload" for="dataset"><span class="upload-icon">↑</span><strong>Choose your dataset</strong><small>CSV or Excel · up to 32 MB</small><input id="dataset" name="dataset" type="file" accept=".csv,.xlsx,.xls" required><span id="file-name" class="file-name">No file selected</span></label>
+          <label class="field-label" for="year">Survey year in this file</label><select id="year" name="year"><option>2021</option><option>2024</option><option>2017</option><option>2014</option><option>2011</option></select>
+          <label class="field-label">Indicators to compare <span class="optional">All detected indicators are selected by default; uncheck measures to exclude.</span></label><div id="feature-note" class="feature-note">Upload a file to preview detected indicators.</div><div id="features" class="feature-list"></div>
+          <div class="two-col"><div><label class="field-label" for="k-min">Minimum k</label><input id="k-min" name="k_min" type="number" min="2" max="12" value="2"></div><div><label class="field-label" for="k-max">Maximum k</label><input id="k-max" name="k_max" type="number" min="2" max="12" value="7"></div></div>
+          <label class="field-label" for="selected-k">Profile configuration</label><select id="selected-k" name="selected_k"></select>
+          <details><summary>Preprocessing rule</summary><p>Indicators with more than 35% missingness are removed. Remaining missing values receive the indicator median; features are standardized to z-scores. These rules are fixed to keep comparisons consistent.</p></details>
+          <button class="run-button" type="submit">Run policy analysis <span>→</span></button><p id="status" class="status" aria-live="polite"></p>
+        </form>
+      </aside>
+      <section class="results" id="results"><div class="empty-state panel"><div class="empty-mark">↗</div><div class="section-label">A GLOBAL VIEW, GROUNDED IN DATA</div><h2>Turn indicators into<br>useful comparisons.</h2><p>Run an analysis to see country profiles, cluster validation, PCA separation and indicator contrasts. Use these patterns to frame policy questions—not to label countries permanently.</p><div class="empty-cards"><span>Country profiles</span><span>Validation metrics</span><span>Responsible interpretation</span></div></div></section>
+    </section>
+    <footer><span>GLOBAL FINDEX COUNTRY PROFILES</span><span>Exploratory analysis · Not a policy ranking</span><a href="https://www.worldbank.org/en/publication/globalfindex/download-data" target="_blank" rel="noreferrer">World Bank data ↗</a></footer>
+  </main><script src="{{ url_for('static', filename='app.js') }}"></script>
+</body></html>
