@@ -1767,8 +1767,9 @@ body {
   border-radius: var(--radius-sm);
   border: 1px solid var(--border-color);
   font-family: var(--font-mono);
-  font-size: 11px;
-  color: var(--text-muted);
+  font-size: 11.5px;
+  color: var(--text-primary);
+  font-weight: 500;
 }
 
 .playbook-tag {
@@ -1801,8 +1802,20 @@ body {
   .mobile-toggle {
     display: block;
   }
+  .topbar {
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 10px 14px;
+  }
   .topbar-center {
-    display: none;
+    display: flex;
+    order: 3;
+    width: 100%;
+    margin: 6px 0 0 0;
+    max-width: 100%;
+  }
+  .country-search-bar-wrap {
+    width: 100%;
   }
   .grid-layout-1-1 {
     grid-template-columns: 1fr;

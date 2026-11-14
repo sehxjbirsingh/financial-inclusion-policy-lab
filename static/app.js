@@ -381,10 +381,24 @@ async function initWorldMap() {
   const container = document.getElementById('chart-world-map');
   if (!container) return;
 
-  if (!state.recommendedModel) {
+  if (!state.recommendedModel || !state.recommendedModel.country_assignments || state.recommendedModel.country_assignments.length === 0) {
     try {
       const res = await fetch('/api/clustering/recommended');
       if (res.ok) state.recommendedModel = await res.json();
+    } catch (e) {
+      console.warn(e);
+    }
+  }
+
+  // Fallback to interactive k=4 if needed
+  if (!state.recommendedModel || !state.recommendedModel.country_assignments || state.recommendedModel.country_assignments.length === 0) {
+    try {
+      const res = await fetch('/api/clustering/interactive?k=4&metric=euclidean');
+      if (res.ok) {
+        const d = await res.json();
+        if (!state.recommendedModel) state.recommendedModel = {};
+        state.recommendedModel.country_assignments = d.country_assignments;
+      }
     } catch (e) {
       console.warn(e);
     }
@@ -566,12 +580,12 @@ async function runComparison() {
     if (chartEl && data.countries) {
       const pTheme = getPlotlyTheme();
       const dims = [
-        { key: 'account_pct', label: 'Overall Account' },
-        { key: 'mobile_pct', label: 'Mobile Money' },
-        { key: 'fiaccount_pct', label: 'Bank Account' },
-        { key: 'saved_pct', label: 'Savings Rate' },
-        { key: 'borrowed_pct', label: 'Credit Uptake' },
-        { key: 'emergency_pct', label: 'Resilience' },
+        { series: 'account.t.d', key: 'account_pct', label: 'Overall Account' },
+        { series: 'mobileaccount.t.d', key: 'mobile_pct', label: 'Mobile Money' },
+        { series: 'fiaccount.t.d', key: 'fiaccount_pct', label: 'Bank Account' },
+        { series: 'save.any.t.d', key: 'saved_pct', label: 'Savings Rate' },
+        { series: 'borrow.any.t.d', key: 'borrowed_pct', label: 'Credit Uptake' },
+        { series: 'fin24aP', key: 'emergency_pct', label: 'Resilience' },
       ];
 
       const palette = ['#10b981', '#06b6d4', '#f59e0b'];
@@ -579,7 +593,14 @@ async function runComparison() {
         name: c.country,
         type: 'bar',
         x: dims.map(d => d.label),
-        y: dims.map(d => c[d.key] || 0),
+        y: dims.map(d => {
+          if (c[d.key] !== undefined && c[d.key] !== null) return c[d.key];
+          if (c.indicators && Array.isArray(c.indicators)) {
+            const found = c.indicators.find(ind => ind.series === d.series || ind.label.toLowerCase().includes(d.label.toLowerCase()));
+            if (found && found.country_value !== undefined) return found.country_value;
+          }
+          return 0;
+        }),
         marker: { color: palette[idx % palette.length] }
       }));
 
@@ -746,15 +767,21 @@ async function loadCitizenBarriers(country) {
 
     container.innerHTML = data.barriers.map(b => `
       <div class="barrier-card">
-        <div class="barrier-header">
-          <span class="barrier-icon">${esc(b.icon)}</span>
-          <h4>${esc(b.barrier)}</h4>
-          <span class="barrier-rate">${b.rate}% cited</span>
+        <div class="barrier-card-header">
+          <div class="barrier-title-group">
+            <span class="barrier-icon">${esc(b.icon)}</span>
+            <h3>${esc(b.title || b.barrier)}</h3>
+          </div>
+          <span class="barrier-rate-badge">${b.rate}% cited</span>
         </div>
-        <p class="barrier-desc">${esc(b.description)}</p>
-        <div class="barrier-solution">
-          <strong>💡 Everyday Solution:</strong>
-          <span>${esc(b.workaround)}</span>
+        <p class="barrier-question">${esc(b.question || b.description)}</p>
+        <div class="solution-box">
+          <span class="solution-label">💡 CITIZEN WORKAROUND</span>
+          <p>${esc(b.citizen_solution || b.workaround)}</p>
+        </div>
+        <div class="solution-box policy-solution-box">
+          <span class="solution-label" style="color: var(--accent-cyan);">🏛️ POLICY ACTION FIX</span>
+          <p>${esc(b.policy_fix || 'Regulatory reforms to eliminate entry hurdles')}</p>
         </div>
       </div>
     `).join('');

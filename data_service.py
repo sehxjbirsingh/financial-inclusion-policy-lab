@@ -733,10 +733,47 @@ class FindexDataService:
     def get_recommended_clustering(self) -> dict:
         """Returns recommended K=4 archetype models, member countries, and policy suggestions."""
         path = PROCESSED_DIR / "recommended_model.json"
+        assign_path = PROCESSED_DIR / "cluster_country_assignments.csv"
+        raw_path = PROCESSED_DIR / "country_features_raw.csv"
+        data = {}
         if path.exists():
             with open(path, "r", encoding="utf-8") as f:
-                return json.load(f)
-        return {}
+                data = json.load(f)
+
+        # Merge country assignments with actual indicator percentages
+        if assign_path.exists() and raw_path.exists():
+            df_a = pd.read_csv(assign_path)
+            df_r = pd.read_csv(raw_path)
+            merged = pd.merge(df_a, df_r, on="Country", how="left")
+            assignments = []
+            for _, r in merged.iterrows():
+                c_code = str(r.get("Code_x") if "Code_x" in r else r.get("Code", ""))
+                c_region = str(r.get("Region_x") if "Region_x" in r else r.get("Region", ""))
+                assignments.append({
+                    "country": str(r["Country"]),
+                    "code": c_code,
+                    "region": c_region,
+                    "cluster_id": int(r["Cluster"]),
+                    "cluster_name": str(r["ClusterName"]),
+                    "account_pct": round(float(r["account.t.d"]), 1) if pd.notna(r.get("account.t.d")) else 0.0,
+                    "mobile_pct": round(float(r["mobileaccount.t.d"]), 1) if pd.notna(r.get("mobileaccount.t.d")) else 0.0,
+                    "emergency_pct": round(float(r["fin24aP"]), 1) if pd.notna(r.get("fin24aP")) else 0.0,
+                })
+            data["country_assignments"] = assignments
+
+        # Alias profiles to archetype_profiles for clean frontend rendering
+        data["archetype_profiles"] = data.get("profiles", [])
+        for p in data["archetype_profiles"]:
+            if "cluster" in p and "cluster_id" not in p:
+                p["cluster_id"] = p["cluster"]
+            if "representative_countries" not in p and "example_countries" in p:
+                p["representative_countries"] = p["example_countries"]
+            if "mean_account" not in p and "indicators_mean" in p:
+                p["mean_account"] = p["indicators_mean"].get("account.t.d", 0.0)
+                p["mean_mobile"] = p["indicators_mean"].get("mobileaccount.t.d", 0.0)
+                p["mean_resilience"] = p["indicators_mean"].get("fin24aP", 0.0)
+
+        return data
 
     def get_pca_coordinates(self) -> dict:
         """Returns 2D and 3D PCA coordinates with explained variance."""
@@ -852,6 +889,12 @@ class FindexDataService:
             "cluster": c_cluster,
             "cluster_name": c_cluster_name,
             "cluster_persona": profile["persona"] if profile else "",
+            "account_pct": round(float(row_raw["account.t.d"]), 1) if pd.notna(row_raw.get("account.t.d")) else 0.0,
+            "mobile_pct": round(float(row_raw["mobileaccount.t.d"]), 1) if pd.notna(row_raw.get("mobileaccount.t.d")) else 0.0,
+            "fiaccount_pct": round(float(row_raw["fiaccount.t.d"]), 1) if pd.notna(row_raw.get("fiaccount.t.d")) else 0.0,
+            "saved_pct": round(float(row_raw["save.any.t.d"]), 1) if pd.notna(row_raw.get("save.any.t.d")) else 0.0,
+            "borrowed_pct": round(float(row_raw["borrow.any.t.d"]), 1) if pd.notna(row_raw.get("borrow.any.t.d")) else 0.0,
+            "emergency_pct": round(float(row_raw["fin24aP"]), 1) if pd.notna(row_raw.get("fin24aP")) else 0.0,
             "similar_countries": similar_countries,
             "indicators": indicators_list,
             "strengths": strengths[:3] if strengths else ["Balanced alignment with archetype average"],
