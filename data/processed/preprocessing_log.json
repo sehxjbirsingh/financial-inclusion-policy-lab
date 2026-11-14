@@ -1,0 +1,214 @@
+{
+  "pipeline_name": "Global Findex 2024 Preprocessing Pipeline",
+  "survey_year": "2024",
+  "total_countries": 140,
+  "features_kept": 9,
+  "features_dropped": 3,
+  "imputation_strategy": "Median Imputation (with KNN-5 sensitivity benchmark)",
+  "scaling_strategy": "StandardScaler (Z-score zero-mean unit-variance)",
+  "random_seed": 42,
+  "missing_audit": [
+    {
+      "series": "account.t.d",
+      "name": "Overall Account Ownership (% age 15+)",
+      "pillar": "Access",
+      "missing_pct": 0.0,
+      "available_countries": 140,
+      "status": "Retained (Missing <= 40%)"
+    },
+    {
+      "series": "fiaccount.t.d",
+      "name": "Financial Institution Account (% age 15+)",
+      "pillar": "Access",
+      "missing_pct": 0.0,
+      "available_countries": 140,
+      "status": "Retained (Missing <= 40%)"
+    },
+    {
+      "series": "mobileaccount.t.d",
+      "name": "Mobile Money Account (% age 15+)",
+      "pillar": "Access & Digital",
+      "missing_pct": 42.9,
+      "available_countries": 80,
+      "status": "Exceeded Threshold"
+    },
+    {
+      "series": "merchant.pay",
+      "name": "Digital Merchant Payment (% age 15+)",
+      "pillar": "Usage - Payments",
+      "missing_pct": 30.0,
+      "available_countries": 98,
+      "status": "Retained (Missing <= 40%)"
+    },
+    {
+      "series": "save.any.t.d",
+      "name": "Saved Any Money in Past Year (% age 15+)",
+      "pillar": "Usage - Savings",
+      "missing_pct": 30.0,
+      "available_countries": 98,
+      "status": "Retained (Missing <= 40%)"
+    },
+    {
+      "series": "fin17a",
+      "name": "Saved at a Financial Institution (% age 15+)",
+      "pillar": "Usage - Savings",
+      "missing_pct": 30.0,
+      "available_countries": 98,
+      "status": "Retained (Missing <= 40%)"
+    },
+    {
+      "series": "borrow.any.t.d",
+      "name": "Borrowed Any Money in Past Year (% age 15+)",
+      "pillar": "Usage - Credit",
+      "missing_pct": 30.0,
+      "available_countries": 98,
+      "status": "Retained (Missing <= 40%)"
+    },
+    {
+      "series": "fin24aP",
+      "name": "Emergency Funds Possible in 30 Days (% age 15+)",
+      "pillar": "Financial Resilience",
+      "missing_pct": 0.0,
+      "available_countries": 140,
+      "status": "Retained (Missing <= 40%)"
+    },
+    {
+      "series": "fin24sav",
+      "name": "Emergency Funds Sourced from Savings (% age 15+)",
+      "pillar": "Financial Resilience",
+      "missing_pct": 30.0,
+      "available_countries": 98,
+      "status": "Retained (Missing <= 40%)"
+    }
+  ],
+  "stats_before": {
+    "account.t.d": {
+      "mean": 70.77,
+      "std": 22.86,
+      "median": 73.33,
+      "min": 14.83,
+      "max": 99.85
+    },
+    "fiaccount.t.d": {
+      "mean": 63.61,
+      "std": 29.27,
+      "median": 70.25,
+      "min": 9.45,
+      "max": 99.85
+    },
+    "mobileaccount.t.d": {
+      "mean": 32.2,
+      "std": 20.82,
+      "median": 31.33,
+      "min": 2.65,
+      "max": 87.5
+    },
+    "merchant.pay": {
+      "mean": 27.53,
+      "std": 21.95,
+      "median": 20.19,
+      "min": 2.42,
+      "max": 94.94
+    },
+    "save.any.t.d": {
+      "mean": 48.99,
+      "std": 13.73,
+      "median": 48.35,
+      "min": 20.39,
+      "max": 83.41
+    },
+    "fin17a": {
+      "mean": 19.29,
+      "std": 12.36,
+      "median": 16.73,
+      "min": 3.16,
+      "max": 66.52
+    },
+    "borrow.any.t.d": {
+      "mean": 58.41,
+      "std": 14.12,
+      "median": 59.02,
+      "min": 24.89,
+      "max": 90.21
+    },
+    "fin24aP": {
+      "mean": 63.17,
+      "std": 41.84,
+      "median": 88.33,
+      "min": 0.0,
+      "max": 99.4
+    },
+    "fin24sav": {
+      "mean": 15.84,
+      "std": 7.24,
+      "median": 15.1,
+      "min": 5.63,
+      "max": 42.05
+    }
+  },
+  "stats_after": {
+    "account.t.d": {
+      "mean": 70.77,
+      "std": 22.86,
+      "median": 73.33,
+      "min": 14.83,
+      "max": 99.85
+    },
+    "fiaccount.t.d": {
+      "mean": 63.61,
+      "std": 29.27,
+      "median": 70.25,
+      "min": 9.45,
+      "max": 99.85
+    },
+    "mobileaccount.t.d": {
+      "mean": 31.83,
+      "std": 15.7,
+      "median": 31.33,
+      "min": 2.65,
+      "max": 87.5
+    },
+    "merchant.pay": {
+      "mean": 25.33,
+      "std": 18.64,
+      "median": 20.19,
+      "min": 2.42,
+      "max": 94.94
+    },
+    "save.any.t.d": {
+      "mean": 48.8,
+      "std": 11.48,
+      "median": 48.35,
+      "min": 20.39,
+      "max": 83.41
+    },
+    "fin17a": {
+      "mean": 18.53,
+      "std": 10.39,
+      "median": 16.73,
+      "min": 3.16,
+      "max": 66.52
+    },
+    "borrow.any.t.d": {
+      "mean": 58.59,
+      "std": 11.8,
+      "median": 59.02,
+      "min": 24.89,
+      "max": 90.21
+    },
+    "fin24aP": {
+      "mean": 63.17,
+      "std": 41.84,
+      "median": 88.33,
+      "min": 0.0,
+      "max": 99.4
+    },
+    "fin24sav": {
+      "mean": 15.62,
+      "std": 6.06,
+      "median": 15.1,
+      "min": 5.63,
+      "max": 42.05
+    }
+  }
+}

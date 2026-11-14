@@ -1,0 +1,86 @@
+[
+  {
+    "series": "account.t.d",
+    "name": "Overall Account Ownership (% age 15+)",
+    "pillar": "Access",
+    "status": "KEPT",
+    "justification": "Primary benchmark indicator for global financial inclusion; measures adults holding an account at a bank, credit union, or mobile money service."
+  },
+  {
+    "series": "fiaccount.t.d",
+    "name": "Financial Institution Account (% age 15+)",
+    "pillar": "Access",
+    "status": "KEPT",
+    "justification": "Measures traditional formal banking presence; essential for distinguishing bank-led models from digital leapfrogging."
+  },
+  {
+    "series": "mobileaccount.t.d",
+    "name": "Mobile Money Account (% age 15+)",
+    "pillar": "Access & Digital",
+    "status": "KEPT",
+    "justification": "Captures fintech and telco-driven financial access, especially prominent in Sub-Saharan Africa and South Asia."
+  },
+  {
+    "series": "merchant.pay",
+    "name": "Digital Merchant Payment (% age 15+)",
+    "pillar": "Usage - Payments",
+    "status": "KEPT",
+    "justification": "Measures real-world day-to-day digital commerce transactions at stores or markets, beyond passive account holding."
+  },
+  {
+    "series": "save.any.t.d",
+    "name": "Saved Any Money in Past Year (% age 15+)",
+    "pillar": "Usage - Savings",
+    "status": "KEPT",
+    "justification": "Measures broad savings propensity across both formal mechanisms and informal community structures."
+  },
+  {
+    "series": "fin17a",
+    "name": "Saved at a Financial Institution (% age 15+)",
+    "pillar": "Usage - Savings",
+    "status": "KEPT",
+    "justification": "Measures formal capital accumulation in regulated depository institutions."
+  },
+  {
+    "series": "borrow.any.t.d",
+    "name": "Borrowed Any Money in Past Year (% age 15+)",
+    "pillar": "Usage - Credit",
+    "status": "KEPT",
+    "justification": "Captures credit participation and liquidity access across formal lenders, family, friends, and informal sources."
+  },
+  {
+    "series": "fin24aP",
+    "name": "Emergency Funds Possible in 30 Days (% age 15+)",
+    "pillar": "Financial Resilience",
+    "status": "KEPT",
+    "justification": "World Bank gold standard measure of household shock absorption capacity against unexpected health or economic crises."
+  },
+  {
+    "series": "fin24sav",
+    "name": "Emergency Funds Sourced from Savings (% age 15+)",
+    "pillar": "Financial Resilience",
+    "status": "KEPT",
+    "justification": "Distinguishes self-reliant resilience buffers from high-risk debt dependence during shocks."
+  },
+  {
+    "series": "fin14a",
+    "name": "Used debit card in past year (% age 15+)",
+    "pillar": "Usage - Card",
+    "status": "DROPPED",
+    "justification": "Excessive missingness (75.8% missing across countries in 2024); fails quality retention threshold."
+  },
+  {
+    "series": "fin14b",
+    "name": "Used credit card in past year (% age 15+)",
+    "pillar": "Usage - Card",
+    "status": "DROPPED",
+    "justification": "Excessive missingness (75.8% missing in 2024); high sparsity introduces severe noise in unsupervised distance metrics."
+  },
+  {
+    "series": "fin17b",
+    "name": "Received government transfers into account (% age 15+)",
+    "pillar": "Usage - G2P",
+    "status": "DROPPED",
+    "justification": "High missingness (43.1% missing); superseded by broader payment and account ownership indicators."
+  }
+]

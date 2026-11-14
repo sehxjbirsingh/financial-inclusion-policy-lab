@@ -1,0 +1,83 @@
+[
+  {
+    "k": 2,
+    "wcss_euclidean": 896.43,
+    "silhouette_euclidean": 0.31,
+    "davies_bouldin_euclidean": 1.453,
+    "wcsad_manhattan": 718.94,
+    "silhouette_manhattan": 0.342,
+    "davies_bouldin_manhattan": 1.523
+  },
+  {
+    "k": 3,
+    "wcss_euclidean": 673.17,
+    "silhouette_euclidean": 0.382,
+    "davies_bouldin_euclidean": 1.188,
+    "wcsad_manhattan": 579.35,
+    "silhouette_manhattan": 0.432,
+    "davies_bouldin_manhattan": 1.155
+  },
+  {
+    "k": 4,
+    "wcss_euclidean": 498.78,
+    "silhouette_euclidean": 0.434,
+    "davies_bouldin_euclidean": 1.045,
+    "wcsad_manhattan": 498.18,
+    "silhouette_manhattan": 0.451,
+    "davies_bouldin_manhattan": 0.989
+  },
+  {
+    "k": 5,
+    "wcss_euclidean": 423.74,
+    "silhouette_euclidean": 0.444,
+    "davies_bouldin_euclidean": 1.029,
+    "wcsad_manhattan": 461.2,
+    "silhouette_manhattan": 0.43,
+    "davies_bouldin_manhattan": 1.131
+  },
+  {
+    "k": 6,
+    "wcss_euclidean": 378.24,
+    "silhouette_euclidean": 0.419,
+    "davies_bouldin_euclidean": 1.154,
+    "wcsad_manhattan": 435.11,
+    "silhouette_manhattan": 0.418,
+    "davies_bouldin_manhattan": 1.196
+  },
+  {
+    "k": 7,
+    "wcss_euclidean": 342.75,
+    "silhouette_euclidean": 0.418,
+    "davies_bouldin_euclidean": 1.191,
+    "wcsad_manhattan": 409.99,
+    "silhouette_manhattan": 0.427,
+    "davies_bouldin_manhattan": 1.115
+  },
+  {
+    "k": 8,
+    "wcss_euclidean": 304.44,
+    "silhouette_euclidean": 0.418,
+    "davies_bouldin_euclidean": 1.192,
+    "wcsad_manhattan": 392.09,
+    "silhouette_manhattan": 0.429,
+    "davies_bouldin_manhattan": 1.087
+  },
+  {
+    "k": 9,
+    "wcss_euclidean": 270.84,
+    "silhouette_euclidean": 0.434,
+    "davies_bouldin_euclidean": 1.136,
+    "wcsad_manhattan": 366.56,
+    "silhouette_manhattan": 0.437,
+    "davies_bouldin_manhattan": 1.193
+  },
+  {
+    "k": 10,
+    "wcss_euclidean": 257.6,
+    "silhouette_euclidean": 0.422,
+    "davies_bouldin_euclidean": 1.14,
+    "wcsad_manhattan": 351.64,
+    "silhouette_manhattan": 0.434,
+    "davies_bouldin_manhattan": 1.079
+  }
+]

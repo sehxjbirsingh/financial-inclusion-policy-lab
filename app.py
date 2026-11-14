@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, send_file
 from werkzeug.datastructures import FileStorage
 from pathlib import Path
 from flask_cors import CORS
@@ -155,6 +155,94 @@ def api_live_feed():
         "timestamp": request.headers.get("Date", "Live"),
         "feed": feed_items
     })
+
+
+@app.get("/api/clustering/benchmarks")
+def api_clustering_benchmarks():
+    try:
+        data = data_service.get_clustering_benchmarks()
+        return jsonify(data)
+    except Exception as e:
+        return jsonify(error=str(e)), 500
+
+
+@app.get("/api/clustering/recommended")
+def api_clustering_recommended():
+    try:
+        data = data_service.get_recommended_clustering()
+        return jsonify(data)
+    except Exception as e:
+        return jsonify(error=str(e)), 500
+
+
+@app.get("/api/clustering/pca")
+def api_clustering_pca():
+    try:
+        data = data_service.get_pca_coordinates()
+        return jsonify(data)
+    except Exception as e:
+        return jsonify(error=str(e)), 500
+
+
+@app.get("/api/clustering/stability")
+def api_clustering_stability():
+    try:
+        data = data_service.get_stability_analysis()
+        return jsonify(data)
+    except Exception as e:
+        return jsonify(error=str(e)), 500
+
+
+@app.get("/api/clustering/interactive")
+def api_clustering_interactive():
+    k = int(request.args.get("k", 4))
+    metric = request.args.get("metric", "euclidean").strip()
+    try:
+        data = data_service.get_interactive_clustering(k=k, metric=metric)
+        return jsonify(data)
+    except Exception as e:
+        return jsonify(error=str(e)), 500
+
+
+@app.get("/api/country-profile/<name>")
+def api_country_cluster_profile(name):
+    try:
+        profile = data_service.get_country_cluster_profile(name)
+        if not profile:
+            return jsonify(error=f"Country '{name}' not found"), 404
+        return jsonify(profile)
+    except Exception as e:
+        return jsonify(error=str(e)), 500
+
+
+@app.get("/api/compare-countries")
+def api_compare_countries():
+    c1 = request.args.get("c1", "India").strip()
+    c2 = request.args.get("c2", "Kenya").strip()
+    c3 = request.args.get("c3", "").strip()
+    country_list = [c for c in [c1, c2, c3] if c]
+    try:
+        data = data_service.compare_multiple_countries(country_list)
+        return jsonify(data)
+    except Exception as e:
+        return jsonify(error=str(e)), 500
+
+
+@app.get("/api/pipeline/preprocessing-log")
+def api_preprocessing_log():
+    try:
+        log = data_service.get_preprocessing_log()
+        return jsonify(log)
+    except Exception as e:
+        return jsonify(error=str(e)), 500
+
+
+@app.get("/api/export/cluster-csv")
+def api_export_cluster_csv():
+    csv_path = Path(__file__).parent / "data" / "processed" / "cluster_country_assignments.csv"
+    if csv_path.exists():
+        return send_file(csv_path, as_attachment=True, download_name="Global_Findex_Cluster_Assignments_2024.csv")
+    return jsonify(error="Cluster CSV not generated yet"), 404
 
 
 @app.get("/api/dataset-info")

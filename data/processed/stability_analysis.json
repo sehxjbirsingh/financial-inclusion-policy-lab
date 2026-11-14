@@ -1,0 +1,1981 @@
+{
+  "mean_seed_ari": 1.0,
+  "seed_aris": [
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0
+  ],
+  "bootstrap_iterations": 25,
+  "subsample_ratio": 0.85,
+  "borderline_countries": [
+    {
+      "country": "Albania",
+      "assigned_cluster": 2,
+      "stability_pct": 30.0,
+      "entropy": 1.971,
+      "is_borderline": true
+    },
+    {
+      "country": "Algeria",
+      "assigned_cluster": 2,
+      "stability_pct": 30.0,
+      "entropy": 1.971,
+      "is_borderline": true
+    },
+    {
+      "country": "Armenia",
+      "assigned_cluster": 2,
+      "stability_pct": 30.0,
+      "entropy": 1.971,
+      "is_borderline": true
+    },
+    {
+      "country": "Azerbaijan",
+      "assigned_cluster": 2,
+      "stability_pct": 30.0,
+      "entropy": 1.971,
+      "is_borderline": true
+    },
+    {
+      "country": "Bangladesh",
+      "assigned_cluster": 2,
+      "stability_pct": 30.0,
+      "entropy": 1.971,
+      "is_borderline": true
+    },
+    {
+      "country": "Bolivia",
+      "assigned_cluster": 2,
+      "stability_pct": 30.0,
+      "entropy": 1.971,
+      "is_borderline": true
+    },
+    {
+      "country": "Cambodia",
+      "assigned_cluster": 2,
+      "stability_pct": 30.0,
+      "entropy": 1.971,
+      "is_borderline": true
+    },
+    {
+      "country": "Chad",
+      "assigned_cluster": 2,
+      "stability_pct": 30.0,
+      "entropy": 1.971,
+      "is_borderline": true
+    },
+    {
+      "country": "Colombia",
+      "assigned_cluster": 2,
+      "stability_pct": 30.0,
+      "entropy": 1.971,
+      "is_borderline": true
+    },
+    {
+      "country": "Comoros",
+      "assigned_cluster": 2,
+      "stability_pct": 30.0,
+      "entropy": 1.971,
+      "is_borderline": true
+    },
+    {
+      "country": "Dominican Republic",
+      "assigned_cluster": 2,
+      "stability_pct": 30.0,
+      "entropy": 1.971,
+      "is_borderline": true
+    },
+    {
+      "country": "Ecuador",
+      "assigned_cluster": 2,
+      "stability_pct": 30.0,
+      "entropy": 1.971,
+      "is_borderline": true
+    },
+    {
+      "country": "El Salvador",
+      "assigned_cluster": 2,
+      "stability_pct": 30.0,
+      "entropy": 1.971,
+      "is_borderline": true
+    },
+    {
+      "country": "Ethiopia",
+      "assigned_cluster": 2,
+      "stability_pct": 30.0,
+      "entropy": 1.971,
+      "is_borderline": true
+    },
+    {
+      "country": "Gambia, The",
+      "assigned_cluster": 2,
+      "stability_pct": 30.0,
+      "entropy": 1.971,
+      "is_borderline": true
+    },
+    {
+      "country": "Georgia",
+      "assigned_cluster": 2,
+      "stability_pct": 30.0,
+      "entropy": 1.971,
+      "is_borderline": true
+    },
+    {
+      "country": "Guatemala",
+      "assigned_cluster": 2,
+      "stability_pct": 30.0,
+      "entropy": 1.971,
+      "is_borderline": true
+    },
+    {
+      "country": "Honduras",
+      "assigned_cluster": 2,
+      "stability_pct": 30.0,
+      "entropy": 1.971,
+      "is_borderline": true
+    },
+    {
+      "country": "India",
+      "assigned_cluster": 2,
+      "stability_pct": 30.0,
+      "entropy": 1.971,
+      "is_borderline": true
+    },
+    {
+      "country": "Indonesia",
+      "assigned_cluster": 2,
+      "stability_pct": 30.0,
+      "entropy": 1.971,
+      "is_borderline": true
+    },
+    {
+      "country": "Iraq",
+      "assigned_cluster": 2,
+      "stability_pct": 30.0,
+      "entropy": 1.971,
+      "is_borderline": true
+    },
+    {
+      "country": "Jordan",
+      "assigned_cluster": 2,
+      "stability_pct": 30.0,
+      "entropy": 1.971,
+      "is_borderline": true
+    },
+    {
+      "country": "Kosovo",
+      "assigned_cluster": 2,
+      "stability_pct": 30.0,
+      "entropy": 1.971,
+      "is_borderline": true
+    },
+    {
+      "country": "Kyrgyz Republic",
+      "assigned_cluster": 2,
+      "stability_pct": 30.0,
+      "entropy": 1.971,
+      "is_borderline": true
+    },
+    {
+      "country": "Lao PDR",
+      "assigned_cluster": 2,
+      "stability_pct": 30.0,
+      "entropy": 1.971,
+      "is_borderline": true
+    },
+    {
+      "country": "Lebanon",
+      "assigned_cluster": 2,
+      "stability_pct": 30.0,
+      "entropy": 1.971,
+      "is_borderline": true
+    },
+    {
+      "country": "Libya",
+      "assigned_cluster": 2,
+      "stability_pct": 30.0,
+      "entropy": 1.971,
+      "is_borderline": true
+    },
+    {
+      "country": "Madagascar",
+      "assigned_cluster": 2,
+      "stability_pct": 30.0,
+      "entropy": 1.971,
+      "is_borderline": true
+    },
+    {
+      "country": "Mexico",
+      "assigned_cluster": 2,
+      "stability_pct": 30.0,
+      "entropy": 1.971,
+      "is_borderline": true
+    },
+    {
+      "country": "Moldova",
+      "assigned_cluster": 2,
+      "stability_pct": 30.0,
+      "entropy": 1.971,
+      "is_borderline": true
+    },
+    {
+      "country": "Morocco",
+      "assigned_cluster": 2,
+      "stability_pct": 30.0,
+      "entropy": 1.971,
+      "is_borderline": true
+    },
+    {
+      "country": "Nepal",
+      "assigned_cluster": 2,
+      "stability_pct": 30.0,
+      "entropy": 1.971,
+      "is_borderline": true
+    },
+    {
+      "country": "Nicaragua",
+      "assigned_cluster": 2,
+      "stability_pct": 30.0,
+      "entropy": 1.971,
+      "is_borderline": true
+    },
+    {
+      "country": "Niger",
+      "assigned_cluster": 2,
+      "stability_pct": 30.0,
+      "entropy": 1.971,
+      "is_borderline": true
+    },
+    {
+      "country": "Oman",
+      "assigned_cluster": 2,
+      "stability_pct": 30.0,
+      "entropy": 1.971,
+      "is_borderline": true
+    },
+    {
+      "country": "Pakistan",
+      "assigned_cluster": 2,
+      "stability_pct": 30.0,
+      "entropy": 1.971,
+      "is_borderline": true
+    },
+    {
+      "country": "Paraguay",
+      "assigned_cluster": 2,
+      "stability_pct": 30.0,
+      "entropy": 1.971,
+      "is_borderline": true
+    },
+    {
+      "country": "Peru",
+      "assigned_cluster": 2,
+      "stability_pct": 30.0,
+      "entropy": 1.971,
+      "is_borderline": true
+    },
+    {
+      "country": "Sri Lanka",
+      "assigned_cluster": 2,
+      "stability_pct": 30.0,
+      "entropy": 1.971,
+      "is_borderline": true
+    },
+    {
+      "country": "Tajikistan",
+      "assigned_cluster": 2,
+      "stability_pct": 30.0,
+      "entropy": 1.971,
+      "is_borderline": true
+    },
+    {
+      "country": "Tunisia",
+      "assigned_cluster": 2,
+      "stability_pct": 30.0,
+      "entropy": 1.971,
+      "is_borderline": true
+    },
+    {
+      "country": "Uzbekistan",
+      "assigned_cluster": 2,
+      "stability_pct": 30.0,
+      "entropy": 1.971,
+      "is_borderline": true
+    },
+    {
+      "country": "West Bank and Gaza",
+      "assigned_cluster": 2,
+      "stability_pct": 30.0,
+      "entropy": 1.971,
+      "is_borderline": true
+    },
+    {
+      "country": "South Asia",
+      "assigned_cluster": 2,
+      "stability_pct": 30.0,
+      "entropy": 1.971,
+      "is_borderline": true
+    },
+    {
+      "country": "Australia",
+      "assigned_cluster": 1,
+      "stability_pct": 40.0,
+      "entropy": 1.846,
+      "is_borderline": true
+    },
+    {
+      "country": "Austria",
+      "assigned_cluster": 1,
+      "stability_pct": 40.0,
+      "entropy": 1.846,
+      "is_borderline": true
+    },
+    {
+      "country": "Bahrain",
+      "assigned_cluster": 1,
+      "stability_pct": 40.0,
+      "entropy": 1.846,
+      "is_borderline": true
+    },
+    {
+      "country": "Belgium",
+      "assigned_cluster": 1,
+      "stability_pct": 40.0,
+      "entropy": 1.846,
+      "is_borderline": true
+    },
+    {
+      "country": "Canada",
+      "assigned_cluster": 1,
+      "stability_pct": 40.0,
+      "entropy": 1.846,
+      "is_borderline": true
+    },
+    {
+      "country": "Chile",
+      "assigned_cluster": 1,
+      "stability_pct": 40.0,
+      "entropy": 1.846,
+      "is_borderline": true
+    },
+    {
+      "country": "Cyprus",
+      "assigned_cluster": 1,
+      "stability_pct": 40.0,
+      "entropy": 1.846,
+      "is_borderline": true
+    },
+    {
+      "country": "Czechia",
+      "assigned_cluster": 1,
+      "stability_pct": 40.0,
+      "entropy": 1.846,
+      "is_borderline": true
+    },
+    {
+      "country": "Denmark",
+      "assigned_cluster": 1,
+      "stability_pct": 40.0,
+      "entropy": 1.846,
+      "is_borderline": true
+    },
+    {
+      "country": "Estonia",
+      "assigned_cluster": 1,
+      "stability_pct": 40.0,
+      "entropy": 1.846,
+      "is_borderline": true
+    },
+    {
+      "country": "Finland",
+      "assigned_cluster": 1,
+      "stability_pct": 40.0,
+      "entropy": 1.846,
+      "is_borderline": true
+    },
+    {
+      "country": "France",
+      "assigned_cluster": 1,
+      "stability_pct": 40.0,
+      "entropy": 1.846,
+      "is_borderline": true
+    },
+    {
+      "country": "Germany",
+      "assigned_cluster": 1,
+      "stability_pct": 40.0,
+      "entropy": 1.846,
+      "is_borderline": true
+    },
+    {
+      "country": "Greece",
+      "assigned_cluster": 1,
+      "stability_pct": 40.0,
+      "entropy": 1.846,
+      "is_borderline": true
+    },
+    {
+      "country": "Hong Kong SAR, China",
+      "assigned_cluster": 1,
+      "stability_pct": 40.0,
+      "entropy": 1.846,
+      "is_borderline": true
+    },
+    {
+      "country": "Hungary",
+      "assigned_cluster": 1,
+      "stability_pct": 40.0,
+      "entropy": 1.846,
+      "is_borderline": true
+    },
+    {
+      "country": "Iceland",
+      "assigned_cluster": 1,
+      "stability_pct": 40.0,
+      "entropy": 1.846,
+      "is_borderline": true
+    },
+    {
+      "country": "Ireland",
+      "assigned_cluster": 1,
+      "stability_pct": 40.0,
+      "entropy": 1.846,
+      "is_borderline": true
+    },
+    {
+      "country": "Israel",
+      "assigned_cluster": 1,
+      "stability_pct": 40.0,
+      "entropy": 1.846,
+      "is_borderline": true
+    },
+    {
+      "country": "Italy",
+      "assigned_cluster": 1,
+      "stability_pct": 40.0,
+      "entropy": 1.846,
+      "is_borderline": true
+    },
+    {
+      "country": "Japan",
+      "assigned_cluster": 1,
+      "stability_pct": 40.0,
+      "entropy": 1.846,
+      "is_borderline": true
+    },
+    {
+      "country": "Korea, Rep.",
+      "assigned_cluster": 1,
+      "stability_pct": 40.0,
+      "entropy": 1.846,
+      "is_borderline": true
+    },
+    {
+      "country": "Kuwait",
+      "assigned_cluster": 1,
+      "stability_pct": 40.0,
+      "entropy": 1.846,
+      "is_borderline": true
+    },
+    {
+      "country": "Latvia",
+      "assigned_cluster": 1,
+      "stability_pct": 40.0,
+      "entropy": 1.846,
+      "is_borderline": true
+    },
+    {
+      "country": "Lithuania",
+      "assigned_cluster": 1,
+      "stability_pct": 40.0,
+      "entropy": 1.846,
+      "is_borderline": true
+    },
+    {
+      "country": "Malta",
+      "assigned_cluster": 1,
+      "stability_pct": 40.0,
+      "entropy": 1.846,
+      "is_borderline": true
+    },
+    {
+      "country": "Netherlands",
+      "assigned_cluster": 1,
+      "stability_pct": 40.0,
+      "entropy": 1.846,
+      "is_borderline": true
+    },
+    {
+      "country": "New Zealand",
+      "assigned_cluster": 1,
+      "stability_pct": 40.0,
+      "entropy": 1.846,
+      "is_borderline": true
+    },
+    {
+      "country": "Norway",
+      "assigned_cluster": 1,
+      "stability_pct": 40.0,
+      "entropy": 1.846,
+      "is_borderline": true
+    },
+    {
+      "country": "Portugal",
+      "assigned_cluster": 1,
+      "stability_pct": 40.0,
+      "entropy": 1.846,
+      "is_borderline": true
+    },
+    {
+      "country": "Russian Federation",
+      "assigned_cluster": 1,
+      "stability_pct": 40.0,
+      "entropy": 1.846,
+      "is_borderline": true
+    },
+    {
+      "country": "Singapore",
+      "assigned_cluster": 1,
+      "stability_pct": 40.0,
+      "entropy": 1.846,
+      "is_borderline": true
+    },
+    {
+      "country": "Slovak Republic",
+      "assigned_cluster": 1,
+      "stability_pct": 40.0,
+      "entropy": 1.846,
+      "is_borderline": true
+    },
+    {
+      "country": "Slovenia",
+      "assigned_cluster": 1,
+      "stability_pct": 40.0,
+      "entropy": 1.846,
+      "is_borderline": true
+    },
+    {
+      "country": "Spain",
+      "assigned_cluster": 1,
+      "stability_pct": 40.0,
+      "entropy": 1.846,
+      "is_borderline": true
+    },
+    {
+      "country": "Sweden",
+      "assigned_cluster": 1,
+      "stability_pct": 40.0,
+      "entropy": 1.846,
+      "is_borderline": true
+    },
+    {
+      "country": "Switzerland",
+      "assigned_cluster": 1,
+      "stability_pct": 40.0,
+      "entropy": 1.846,
+      "is_borderline": true
+    },
+    {
+      "country": "Taiwan, China",
+      "assigned_cluster": 1,
+      "stability_pct": 40.0,
+      "entropy": 1.846,
+      "is_borderline": true
+    },
+    {
+      "country": "Trinidad and Tobago",
+      "assigned_cluster": 1,
+      "stability_pct": 40.0,
+      "entropy": 1.846,
+      "is_borderline": true
+    },
+    {
+      "country": "United Kingdom",
+      "assigned_cluster": 1,
+      "stability_pct": 40.0,
+      "entropy": 1.846,
+      "is_borderline": true
+    },
+    {
+      "country": "United States",
+      "assigned_cluster": 1,
+      "stability_pct": 40.0,
+      "entropy": 1.846,
+      "is_borderline": true
+    },
+    {
+      "country": "Uruguay",
+      "assigned_cluster": 1,
+      "stability_pct": 40.0,
+      "entropy": 1.846,
+      "is_borderline": true
+    },
+    {
+      "country": "Benin",
+      "assigned_cluster": 3,
+      "stability_pct": 40.0,
+      "entropy": 1.722,
+      "is_borderline": true
+    },
+    {
+      "country": "Botswana",
+      "assigned_cluster": 3,
+      "stability_pct": 40.0,
+      "entropy": 1.722,
+      "is_borderline": true
+    },
+    {
+      "country": "Burkina Faso",
+      "assigned_cluster": 3,
+      "stability_pct": 40.0,
+      "entropy": 1.722,
+      "is_borderline": true
+    },
+    {
+      "country": "Cameroon",
+      "assigned_cluster": 3,
+      "stability_pct": 40.0,
+      "entropy": 1.722,
+      "is_borderline": true
+    },
+    {
+      "country": "Congo, Dem. Rep.",
+      "assigned_cluster": 3,
+      "stability_pct": 40.0,
+      "entropy": 1.722,
+      "is_borderline": true
+    },
+    {
+      "country": "Congo, Rep.",
+      "assigned_cluster": 3,
+      "stability_pct": 40.0,
+      "entropy": 1.722,
+      "is_borderline": true
+    },
+    {
+      "country": "Cote d'Ivoire",
+      "assigned_cluster": 3,
+      "stability_pct": 40.0,
+      "entropy": 1.722,
+      "is_borderline": true
+    },
+    {
+      "country": "Eswatini",
+      "assigned_cluster": 3,
+      "stability_pct": 40.0,
+      "entropy": 1.722,
+      "is_borderline": true
+    },
+    {
+      "country": "Gabon",
+      "assigned_cluster": 3,
+      "stability_pct": 40.0,
+      "entropy": 1.722,
+      "is_borderline": true
+    },
+    {
+      "country": "Ghana",
+      "assigned_cluster": 3,
+      "stability_pct": 40.0,
+      "entropy": 1.722,
+      "is_borderline": true
+    },
+    {
+      "country": "Guinea",
+      "assigned_cluster": 3,
+      "stability_pct": 40.0,
+      "entropy": 1.722,
+      "is_borderline": true
+    },
+    {
+      "country": "Kenya",
+      "assigned_cluster": 3,
+      "stability_pct": 40.0,
+      "entropy": 1.722,
+      "is_borderline": true
+    },
+    {
+      "country": "Lesotho",
+      "assigned_cluster": 3,
+      "stability_pct": 40.0,
+      "entropy": 1.722,
+      "is_borderline": true
+    },
+    {
+      "country": "Liberia",
+      "assigned_cluster": 3,
+      "stability_pct": 40.0,
+      "entropy": 1.722,
+      "is_borderline": true
+    },
+    {
+      "country": "Malawi",
+      "assigned_cluster": 3,
+      "stability_pct": 40.0,
+      "entropy": 1.722,
+      "is_borderline": true
+    },
+    {
+      "country": "Mali",
+      "assigned_cluster": 3,
+      "stability_pct": 40.0,
+      "entropy": 1.722,
+      "is_borderline": true
+    },
+    {
+      "country": "Mauritania",
+      "assigned_cluster": 3,
+      "stability_pct": 40.0,
+      "entropy": 1.722,
+      "is_borderline": true
+    },
+    {
+      "country": "Mozambique",
+      "assigned_cluster": 3,
+      "stability_pct": 40.0,
+      "entropy": 1.722,
+      "is_borderline": true
+    },
+    {
+      "country": "Nigeria",
+      "assigned_cluster": 3,
+      "stability_pct": 40.0,
+      "entropy": 1.722,
+      "is_borderline": true
+    },
+    {
+      "country": "Philippines",
+      "assigned_cluster": 3,
+      "stability_pct": 40.0,
+      "entropy": 1.722,
+      "is_borderline": true
+    },
+    {
+      "country": "Senegal",
+      "assigned_cluster": 3,
+      "stability_pct": 40.0,
+      "entropy": 1.722,
+      "is_borderline": true
+    },
+    {
+      "country": "Sierra Leone",
+      "assigned_cluster": 3,
+      "stability_pct": 40.0,
+      "entropy": 1.722,
+      "is_borderline": true
+    },
+    {
+      "country": "Tanzania",
+      "assigned_cluster": 3,
+      "stability_pct": 40.0,
+      "entropy": 1.722,
+      "is_borderline": true
+    },
+    {
+      "country": "Togo",
+      "assigned_cluster": 3,
+      "stability_pct": 40.0,
+      "entropy": 1.722,
+      "is_borderline": true
+    },
+    {
+      "country": "Uganda",
+      "assigned_cluster": 3,
+      "stability_pct": 40.0,
+      "entropy": 1.722,
+      "is_borderline": true
+    },
+    {
+      "country": "Zambia",
+      "assigned_cluster": 3,
+      "stability_pct": 40.0,
+      "entropy": 1.722,
+      "is_borderline": true
+    },
+    {
+      "country": "Zimbabwe",
+      "assigned_cluster": 3,
+      "stability_pct": 40.0,
+      "entropy": 1.722,
+      "is_borderline": true
+    },
+    {
+      "country": "Argentina",
+      "assigned_cluster": 4,
+      "stability_pct": 40.0,
+      "entropy": 1.571,
+      "is_borderline": true
+    },
+    {
+      "country": "Belize",
+      "assigned_cluster": 4,
+      "stability_pct": 40.0,
+      "entropy": 1.571,
+      "is_borderline": true
+    },
+    {
+      "country": "Bosnia and Herzegovina",
+      "assigned_cluster": 4,
+      "stability_pct": 40.0,
+      "entropy": 1.571,
+      "is_borderline": true
+    },
+    {
+      "country": "Brazil",
+      "assigned_cluster": 4,
+      "stability_pct": 40.0,
+      "entropy": 1.571,
+      "is_borderline": true
+    },
+    {
+      "country": "Bulgaria",
+      "assigned_cluster": 4,
+      "stability_pct": 40.0,
+      "entropy": 1.571,
+      "is_borderline": true
+    },
+    {
+      "country": "China",
+      "assigned_cluster": 4,
+      "stability_pct": 40.0,
+      "entropy": 1.571,
+      "is_borderline": true
+    },
+    {
+      "country": "Costa Rica",
+      "assigned_cluster": 4,
+      "stability_pct": 40.0,
+      "entropy": 1.571,
+      "is_borderline": true
+    },
+    {
+      "country": "Croatia",
+      "assigned_cluster": 4,
+      "stability_pct": 40.0,
+      "entropy": 1.571,
+      "is_borderline": true
+    },
+    {
+      "country": "Iran, Islamic Rep.",
+      "assigned_cluster": 4,
+      "stability_pct": 40.0,
+      "entropy": 1.571,
+      "is_borderline": true
+    },
+    {
+      "country": "Kazakhstan",
+      "assigned_cluster": 4,
+      "stability_pct": 40.0,
+      "entropy": 1.571,
+      "is_borderline": true
+    },
+    {
+      "country": "Malaysia",
+      "assigned_cluster": 4,
+      "stability_pct": 40.0,
+      "entropy": 1.571,
+      "is_borderline": true
+    },
+    {
+      "country": "Mauritius",
+      "assigned_cluster": 4,
+      "stability_pct": 40.0,
+      "entropy": 1.571,
+      "is_borderline": true
+    },
+    {
+      "country": "Mongolia",
+      "assigned_cluster": 4,
+      "stability_pct": 40.0,
+      "entropy": 1.571,
+      "is_borderline": true
+    },
+    {
+      "country": "Montenegro",
+      "assigned_cluster": 4,
+      "stability_pct": 40.0,
+      "entropy": 1.571,
+      "is_borderline": true
+    },
+    {
+      "country": "Namibia",
+      "assigned_cluster": 4,
+      "stability_pct": 40.0,
+      "entropy": 1.571,
+      "is_borderline": true
+    },
+    {
+      "country": "North Macedonia",
+      "assigned_cluster": 4,
+      "stability_pct": 40.0,
+      "entropy": 1.571,
+      "is_borderline": true
+    },
+    {
+      "country": "Panama",
+      "assigned_cluster": 4,
+      "stability_pct": 40.0,
+      "entropy": 1.571,
+      "is_borderline": true
+    },
+    {
+      "country": "Poland",
+      "assigned_cluster": 4,
+      "stability_pct": 40.0,
+      "entropy": 1.571,
+      "is_borderline": true
+    },
+    {
+      "country": "Romania",
+      "assigned_cluster": 4,
+      "stability_pct": 40.0,
+      "entropy": 1.571,
+      "is_borderline": true
+    },
+    {
+      "country": "Serbia",
+      "assigned_cluster": 4,
+      "stability_pct": 40.0,
+      "entropy": 1.571,
+      "is_borderline": true
+    },
+    {
+      "country": "South Africa",
+      "assigned_cluster": 4,
+      "stability_pct": 40.0,
+      "entropy": 1.571,
+      "is_borderline": true
+    },
+    {
+      "country": "Thailand",
+      "assigned_cluster": 4,
+      "stability_pct": 40.0,
+      "entropy": 1.571,
+      "is_borderline": true
+    },
+    {
+      "country": "Turkiye",
+      "assigned_cluster": 4,
+      "stability_pct": 40.0,
+      "entropy": 1.571,
+      "is_borderline": true
+    },
+    {
+      "country": "Ukraine",
+      "assigned_cluster": 4,
+      "stability_pct": 40.0,
+      "entropy": 1.571,
+      "is_borderline": true
+    },
+    {
+      "country": "Venezuela, RB",
+      "assigned_cluster": 4,
+      "stability_pct": 40.0,
+      "entropy": 1.571,
+      "is_borderline": true
+    },
+    {
+      "country": "Viet Nam",
+      "assigned_cluster": 4,
+      "stability_pct": 40.0,
+      "entropy": 1.571,
+      "is_borderline": true
+    },
+    {
+      "country": "Developing economies",
+      "assigned_cluster": 4,
+      "stability_pct": 40.0,
+      "entropy": 1.571,
+      "is_borderline": true
+    }
+  ],
+  "all_stability": [
+    {
+      "country": "Albania",
+      "assigned_cluster": 2,
+      "stability_pct": 30.0,
+      "entropy": 1.971,
+      "is_borderline": true
+    },
+    {
+      "country": "Algeria",
+      "assigned_cluster": 2,
+      "stability_pct": 30.0,
+      "entropy": 1.971,
+      "is_borderline": true
+    },
+    {
+      "country": "Armenia",
+      "assigned_cluster": 2,
+      "stability_pct": 30.0,
+      "entropy": 1.971,
+      "is_borderline": true
+    },
+    {
+      "country": "Azerbaijan",
+      "assigned_cluster": 2,
+      "stability_pct": 30.0,
+      "entropy": 1.971,
+      "is_borderline": true
+    },
+    {
+      "country": "Bangladesh",
+      "assigned_cluster": 2,
+      "stability_pct": 30.0,
+      "entropy": 1.971,
+      "is_borderline": true
+    },
+    {
+      "country": "Bolivia",
+      "assigned_cluster": 2,
+      "stability_pct": 30.0,
+      "entropy": 1.971,
+      "is_borderline": true
+    },
+    {
+      "country": "Cambodia",
+      "assigned_cluster": 2,
+      "stability_pct": 30.0,
+      "entropy": 1.971,
+      "is_borderline": true
+    },
+    {
+      "country": "Chad",
+      "assigned_cluster": 2,
+      "stability_pct": 30.0,
+      "entropy": 1.971,
+      "is_borderline": true
+    },
+    {
+      "country": "Colombia",
+      "assigned_cluster": 2,
+      "stability_pct": 30.0,
+      "entropy": 1.971,
+      "is_borderline": true
+    },
+    {
+      "country": "Comoros",
+      "assigned_cluster": 2,
+      "stability_pct": 30.0,
+      "entropy": 1.971,
+      "is_borderline": true
+    },
+    {
+      "country": "Dominican Republic",
+      "assigned_cluster": 2,
+      "stability_pct": 30.0,
+      "entropy": 1.971,
+      "is_borderline": true
+    },
+    {
+      "country": "Ecuador",
+      "assigned_cluster": 2,
+      "stability_pct": 30.0,
+      "entropy": 1.971,
+      "is_borderline": true
+    },
+    {
+      "country": "El Salvador",
+      "assigned_cluster": 2,
+      "stability_pct": 30.0,
+      "entropy": 1.971,
+      "is_borderline": true
+    },
+    {
+      "country": "Ethiopia",
+      "assigned_cluster": 2,
+      "stability_pct": 30.0,
+      "entropy": 1.971,
+      "is_borderline": true
+    },
+    {
+      "country": "Gambia, The",
+      "assigned_cluster": 2,
+      "stability_pct": 30.0,
+      "entropy": 1.971,
+      "is_borderline": true
+    },
+    {
+      "country": "Georgia",
+      "assigned_cluster": 2,
+      "stability_pct": 30.0,
+      "entropy": 1.971,
+      "is_borderline": true
+    },
+    {
+      "country": "Guatemala",
+      "assigned_cluster": 2,
+      "stability_pct": 30.0,
+      "entropy": 1.971,
+      "is_borderline": true
+    },
+    {
+      "country": "Honduras",
+      "assigned_cluster": 2,
+      "stability_pct": 30.0,
+      "entropy": 1.971,
+      "is_borderline": true
+    },
+    {
+      "country": "India",
+      "assigned_cluster": 2,
+      "stability_pct": 30.0,
+      "entropy": 1.971,
+      "is_borderline": true
+    },
+    {
+      "country": "Indonesia",
+      "assigned_cluster": 2,
+      "stability_pct": 30.0,
+      "entropy": 1.971,
+      "is_borderline": true
+    },
+    {
+      "country": "Iraq",
+      "assigned_cluster": 2,
+      "stability_pct": 30.0,
+      "entropy": 1.971,
+      "is_borderline": true
+    },
+    {
+      "country": "Jordan",
+      "assigned_cluster": 2,
+      "stability_pct": 30.0,
+      "entropy": 1.971,
+      "is_borderline": true
+    },
+    {
+      "country": "Kosovo",
+      "assigned_cluster": 2,
+      "stability_pct": 30.0,
+      "entropy": 1.971,
+      "is_borderline": true
+    },
+    {
+      "country": "Kyrgyz Republic",
+      "assigned_cluster": 2,
+      "stability_pct": 30.0,
+      "entropy": 1.971,
+      "is_borderline": true
+    },
+    {
+      "country": "Lao PDR",
+      "assigned_cluster": 2,
+      "stability_pct": 30.0,
+      "entropy": 1.971,
+      "is_borderline": true
+    },
+    {
+      "country": "Lebanon",
+      "assigned_cluster": 2,
+      "stability_pct": 30.0,
+      "entropy": 1.971,
+      "is_borderline": true
+    },
+    {
+      "country": "Libya",
+      "assigned_cluster": 2,
+      "stability_pct": 30.0,
+      "entropy": 1.971,
+      "is_borderline": true
+    },
+    {
+      "country": "Madagascar",
+      "assigned_cluster": 2,
+      "stability_pct": 30.0,
+      "entropy": 1.971,
+      "is_borderline": true
+    },
+    {
+      "country": "Mexico",
+      "assigned_cluster": 2,
+      "stability_pct": 30.0,
+      "entropy": 1.971,
+      "is_borderline": true
+    },
+    {
+      "country": "Moldova",
+      "assigned_cluster": 2,
+      "stability_pct": 30.0,
+      "entropy": 1.971,
+      "is_borderline": true
+    },
+    {
+      "country": "Morocco",
+      "assigned_cluster": 2,
+      "stability_pct": 30.0,
+      "entropy": 1.971,
+      "is_borderline": true
+    },
+    {
+      "country": "Nepal",
+      "assigned_cluster": 2,
+      "stability_pct": 30.0,
+      "entropy": 1.971,
+      "is_borderline": true
+    },
+    {
+      "country": "Nicaragua",
+      "assigned_cluster": 2,
+      "stability_pct": 30.0,
+      "entropy": 1.971,
+      "is_borderline": true
+    },
+    {
+      "country": "Niger",
+      "assigned_cluster": 2,
+      "stability_pct": 30.0,
+      "entropy": 1.971,
+      "is_borderline": true
+    },
+    {
+      "country": "Oman",
+      "assigned_cluster": 2,
+      "stability_pct": 30.0,
+      "entropy": 1.971,
+      "is_borderline": true
+    },
+    {
+      "country": "Pakistan",
+      "assigned_cluster": 2,
+      "stability_pct": 30.0,
+      "entropy": 1.971,
+      "is_borderline": true
+    },
+    {
+      "country": "Paraguay",
+      "assigned_cluster": 2,
+      "stability_pct": 30.0,
+      "entropy": 1.971,
+      "is_borderline": true
+    },
+    {
+      "country": "Peru",
+      "assigned_cluster": 2,
+      "stability_pct": 30.0,
+      "entropy": 1.971,
+      "is_borderline": true
+    },
+    {
+      "country": "Sri Lanka",
+      "assigned_cluster": 2,
+      "stability_pct": 30.0,
+      "entropy": 1.971,
+      "is_borderline": true
+    },
+    {
+      "country": "Tajikistan",
+      "assigned_cluster": 2,
+      "stability_pct": 30.0,
+      "entropy": 1.971,
+      "is_borderline": true
+    },
+    {
+      "country": "Tunisia",
+      "assigned_cluster": 2,
+      "stability_pct": 30.0,
+      "entropy": 1.971,
+      "is_borderline": true
+    },
+    {
+      "country": "Uzbekistan",
+      "assigned_cluster": 2,
+      "stability_pct": 30.0,
+      "entropy": 1.971,
+      "is_borderline": true
+    },
+    {
+      "country": "West Bank and Gaza",
+      "assigned_cluster": 2,
+      "stability_pct": 30.0,
+      "entropy": 1.971,
+      "is_borderline": true
+    },
+    {
+      "country": "South Asia",
+      "assigned_cluster": 2,
+      "stability_pct": 30.0,
+      "entropy": 1.971,
+      "is_borderline": true
+    },
+    {
+      "country": "Australia",
+      "assigned_cluster": 1,
+      "stability_pct": 40.0,
+      "entropy": 1.846,
+      "is_borderline": true
+    },
+    {
+      "country": "Austria",
+      "assigned_cluster": 1,
+      "stability_pct": 40.0,
+      "entropy": 1.846,
+      "is_borderline": true
+    },
+    {
+      "country": "Bahrain",
+      "assigned_cluster": 1,
+      "stability_pct": 40.0,
+      "entropy": 1.846,
+      "is_borderline": true
+    },
+    {
+      "country": "Belgium",
+      "assigned_cluster": 1,
+      "stability_pct": 40.0,
+      "entropy": 1.846,
+      "is_borderline": true
+    },
+    {
+      "country": "Canada",
+      "assigned_cluster": 1,
+      "stability_pct": 40.0,
+      "entropy": 1.846,
+      "is_borderline": true
+    },
+    {
+      "country": "Chile",
+      "assigned_cluster": 1,
+      "stability_pct": 40.0,
+      "entropy": 1.846,
+      "is_borderline": true
+    },
+    {
+      "country": "Cyprus",
+      "assigned_cluster": 1,
+      "stability_pct": 40.0,
+      "entropy": 1.846,
+      "is_borderline": true
+    },
+    {
+      "country": "Czechia",
+      "assigned_cluster": 1,
+      "stability_pct": 40.0,
+      "entropy": 1.846,
+      "is_borderline": true
+    },
+    {
+      "country": "Denmark",
+      "assigned_cluster": 1,
+      "stability_pct": 40.0,
+      "entropy": 1.846,
+      "is_borderline": true
+    },
+    {
+      "country": "Estonia",
+      "assigned_cluster": 1,
+      "stability_pct": 40.0,
+      "entropy": 1.846,
+      "is_borderline": true
+    },
+    {
+      "country": "Finland",
+      "assigned_cluster": 1,
+      "stability_pct": 40.0,
+      "entropy": 1.846,
+      "is_borderline": true
+    },
+    {
+      "country": "France",
+      "assigned_cluster": 1,
+      "stability_pct": 40.0,
+      "entropy": 1.846,
+      "is_borderline": true
+    },
+    {
+      "country": "Germany",
+      "assigned_cluster": 1,
+      "stability_pct": 40.0,
+      "entropy": 1.846,
+      "is_borderline": true
+    },
+    {
+      "country": "Greece",
+      "assigned_cluster": 1,
+      "stability_pct": 40.0,
+      "entropy": 1.846,
+      "is_borderline": true
+    },
+    {
+      "country": "Hong Kong SAR, China",
+      "assigned_cluster": 1,
+      "stability_pct": 40.0,
+      "entropy": 1.846,
+      "is_borderline": true
+    },
+    {
+      "country": "Hungary",
+      "assigned_cluster": 1,
+      "stability_pct": 40.0,
+      "entropy": 1.846,
+      "is_borderline": true
+    },
+    {
+      "country": "Iceland",
+      "assigned_cluster": 1,
+      "stability_pct": 40.0,
+      "entropy": 1.846,
+      "is_borderline": true
+    },
+    {
+      "country": "Ireland",
+      "assigned_cluster": 1,
+      "stability_pct": 40.0,
+      "entropy": 1.846,
+      "is_borderline": true
+    },
+    {
+      "country": "Israel",
+      "assigned_cluster": 1,
+      "stability_pct": 40.0,
+      "entropy": 1.846,
+      "is_borderline": true
+    },
+    {
+      "country": "Italy",
+      "assigned_cluster": 1,
+      "stability_pct": 40.0,
+      "entropy": 1.846,
+      "is_borderline": true
+    },
+    {
+      "country": "Japan",
+      "assigned_cluster": 1,
+      "stability_pct": 40.0,
+      "entropy": 1.846,
+      "is_borderline": true
+    },
+    {
+      "country": "Korea, Rep.",
+      "assigned_cluster": 1,
+      "stability_pct": 40.0,
+      "entropy": 1.846,
+      "is_borderline": true
+    },
+    {
+      "country": "Kuwait",
+      "assigned_cluster": 1,
+      "stability_pct": 40.0,
+      "entropy": 1.846,
+      "is_borderline": true
+    },
+    {
+      "country": "Latvia",
+      "assigned_cluster": 1,
+      "stability_pct": 40.0,
+      "entropy": 1.846,
+      "is_borderline": true
+    },
+    {
+      "country": "Lithuania",
+      "assigned_cluster": 1,
+      "stability_pct": 40.0,
+      "entropy": 1.846,
+      "is_borderline": true
+    },
+    {
+      "country": "Malta",
+      "assigned_cluster": 1,
+      "stability_pct": 40.0,
+      "entropy": 1.846,
+      "is_borderline": true
+    },
+    {
+      "country": "Netherlands",
+      "assigned_cluster": 1,
+      "stability_pct": 40.0,
+      "entropy": 1.846,
+      "is_borderline": true
+    },
+    {
+      "country": "New Zealand",
+      "assigned_cluster": 1,
+      "stability_pct": 40.0,
+      "entropy": 1.846,
+      "is_borderline": true
+    },
+    {
+      "country": "Norway",
+      "assigned_cluster": 1,
+      "stability_pct": 40.0,
+      "entropy": 1.846,
+      "is_borderline": true
+    },
+    {
+      "country": "Portugal",
+      "assigned_cluster": 1,
+      "stability_pct": 40.0,
+      "entropy": 1.846,
+      "is_borderline": true
+    },
+    {
+      "country": "Russian Federation",
+      "assigned_cluster": 1,
+      "stability_pct": 40.0,
+      "entropy": 1.846,
+      "is_borderline": true
+    },
+    {
+      "country": "Singapore",
+      "assigned_cluster": 1,
+      "stability_pct": 40.0,
+      "entropy": 1.846,
+      "is_borderline": true
+    },
+    {
+      "country": "Slovak Republic",
+      "assigned_cluster": 1,
+      "stability_pct": 40.0,
+      "entropy": 1.846,
+      "is_borderline": true
+    },
+    {
+      "country": "Slovenia",
+      "assigned_cluster": 1,
+      "stability_pct": 40.0,
+      "entropy": 1.846,
+      "is_borderline": true
+    },
+    {
+      "country": "Spain",
+      "assigned_cluster": 1,
+      "stability_pct": 40.0,
+      "entropy": 1.846,
+      "is_borderline": true
+    },
+    {
+      "country": "Sweden",
+      "assigned_cluster": 1,
+      "stability_pct": 40.0,
+      "entropy": 1.846,
+      "is_borderline": true
+    },
+    {
+      "country": "Switzerland",
+      "assigned_cluster": 1,
+      "stability_pct": 40.0,
+      "entropy": 1.846,
+      "is_borderline": true
+    },
+    {
+      "country": "Taiwan, China",
+      "assigned_cluster": 1,
+      "stability_pct": 40.0,
+      "entropy": 1.846,
+      "is_borderline": true
+    },
+    {
+      "country": "Trinidad and Tobago",
+      "assigned_cluster": 1,
+      "stability_pct": 40.0,
+      "entropy": 1.846,
+      "is_borderline": true
+    },
+    {
+      "country": "United Kingdom",
+      "assigned_cluster": 1,
+      "stability_pct": 40.0,
+      "entropy": 1.846,
+      "is_borderline": true
+    },
+    {
+      "country": "United States",
+      "assigned_cluster": 1,
+      "stability_pct": 40.0,
+      "entropy": 1.846,
+      "is_borderline": true
+    },
+    {
+      "country": "Uruguay",
+      "assigned_cluster": 1,
+      "stability_pct": 40.0,
+      "entropy": 1.846,
+      "is_borderline": true
+    },
+    {
+      "country": "Benin",
+      "assigned_cluster": 3,
+      "stability_pct": 40.0,
+      "entropy": 1.722,
+      "is_borderline": true
+    },
+    {
+      "country": "Botswana",
+      "assigned_cluster": 3,
+      "stability_pct": 40.0,
+      "entropy": 1.722,
+      "is_borderline": true
+    },
+    {
+      "country": "Burkina Faso",
+      "assigned_cluster": 3,
+      "stability_pct": 40.0,
+      "entropy": 1.722,
+      "is_borderline": true
+    },
+    {
+      "country": "Cameroon",
+      "assigned_cluster": 3,
+      "stability_pct": 40.0,
+      "entropy": 1.722,
+      "is_borderline": true
+    },
+    {
+      "country": "Congo, Dem. Rep.",
+      "assigned_cluster": 3,
+      "stability_pct": 40.0,
+      "entropy": 1.722,
+      "is_borderline": true
+    },
+    {
+      "country": "Congo, Rep.",
+      "assigned_cluster": 3,
+      "stability_pct": 40.0,
+      "entropy": 1.722,
+      "is_borderline": true
+    },
+    {
+      "country": "Cote d'Ivoire",
+      "assigned_cluster": 3,
+      "stability_pct": 40.0,
+      "entropy": 1.722,
+      "is_borderline": true
+    },
+    {
+      "country": "Eswatini",
+      "assigned_cluster": 3,
+      "stability_pct": 40.0,
+      "entropy": 1.722,
+      "is_borderline": true
+    },
+    {
+      "country": "Gabon",
+      "assigned_cluster": 3,
+      "stability_pct": 40.0,
+      "entropy": 1.722,
+      "is_borderline": true
+    },
+    {
+      "country": "Ghana",
+      "assigned_cluster": 3,
+      "stability_pct": 40.0,
+      "entropy": 1.722,
+      "is_borderline": true
+    },
+    {
+      "country": "Guinea",
+      "assigned_cluster": 3,
+      "stability_pct": 40.0,
+      "entropy": 1.722,
+      "is_borderline": true
+    },
+    {
+      "country": "Kenya",
+      "assigned_cluster": 3,
+      "stability_pct": 40.0,
+      "entropy": 1.722,
+      "is_borderline": true
+    },
+    {
+      "country": "Lesotho",
+      "assigned_cluster": 3,
+      "stability_pct": 40.0,
+      "entropy": 1.722,
+      "is_borderline": true
+    },
+    {
+      "country": "Liberia",
+      "assigned_cluster": 3,
+      "stability_pct": 40.0,
+      "entropy": 1.722,
+      "is_borderline": true
+    },
+    {
+      "country": "Malawi",
+      "assigned_cluster": 3,
+      "stability_pct": 40.0,
+      "entropy": 1.722,
+      "is_borderline": true
+    },
+    {
+      "country": "Mali",
+      "assigned_cluster": 3,
+      "stability_pct": 40.0,
+      "entropy": 1.722,
+      "is_borderline": true
+    },
+    {
+      "country": "Mauritania",
+      "assigned_cluster": 3,
+      "stability_pct": 40.0,
+      "entropy": 1.722,
+      "is_borderline": true
+    },
+    {
+      "country": "Mozambique",
+      "assigned_cluster": 3,
+      "stability_pct": 40.0,
+      "entropy": 1.722,
+      "is_borderline": true
+    },
+    {
+      "country": "Nigeria",
+      "assigned_cluster": 3,
+      "stability_pct": 40.0,
+      "entropy": 1.722,
+      "is_borderline": true
+    },
+    {
+      "country": "Philippines",
+      "assigned_cluster": 3,
+      "stability_pct": 40.0,
+      "entropy": 1.722,
+      "is_borderline": true
+    },
+    {
+      "country": "Senegal",
+      "assigned_cluster": 3,
+      "stability_pct": 40.0,
+      "entropy": 1.722,
+      "is_borderline": true
+    },
+    {
+      "country": "Sierra Leone",
+      "assigned_cluster": 3,
+      "stability_pct": 40.0,
+      "entropy": 1.722,
+      "is_borderline": true
+    },
+    {
+      "country": "Tanzania",
+      "assigned_cluster": 3,
+      "stability_pct": 40.0,
+      "entropy": 1.722,
+      "is_borderline": true
+    },
+    {
+      "country": "Togo",
+      "assigned_cluster": 3,
+      "stability_pct": 40.0,
+      "entropy": 1.722,
+      "is_borderline": true
+    },
+    {
+      "country": "Uganda",
+      "assigned_cluster": 3,
+      "stability_pct": 40.0,
+      "entropy": 1.722,
+      "is_borderline": true
+    },
+    {
+      "country": "Zambia",
+      "assigned_cluster": 3,
+      "stability_pct": 40.0,
+      "entropy": 1.722,
+      "is_borderline": true
+    },
+    {
+      "country": "Zimbabwe",
+      "assigned_cluster": 3,
+      "stability_pct": 40.0,
+      "entropy": 1.722,
+      "is_borderline": true
+    },
+    {
+      "country": "Argentina",
+      "assigned_cluster": 4,
+      "stability_pct": 40.0,
+      "entropy": 1.571,
+      "is_borderline": true
+    },
+    {
+      "country": "Belize",
+      "assigned_cluster": 4,
+      "stability_pct": 40.0,
+      "entropy": 1.571,
+      "is_borderline": true
+    },
+    {
+      "country": "Bosnia and Herzegovina",
+      "assigned_cluster": 4,
+      "stability_pct": 40.0,
+      "entropy": 1.571,
+      "is_borderline": true
+    },
+    {
+      "country": "Brazil",
+      "assigned_cluster": 4,
+      "stability_pct": 40.0,
+      "entropy": 1.571,
+      "is_borderline": true
+    },
+    {
+      "country": "Bulgaria",
+      "assigned_cluster": 4,
+      "stability_pct": 40.0,
+      "entropy": 1.571,
+      "is_borderline": true
+    },
+    {
+      "country": "China",
+      "assigned_cluster": 4,
+      "stability_pct": 40.0,
+      "entropy": 1.571,
+      "is_borderline": true
+    },
+    {
+      "country": "Costa Rica",
+      "assigned_cluster": 4,
+      "stability_pct": 40.0,
+      "entropy": 1.571,
+      "is_borderline": true
+    },
+    {
+      "country": "Croatia",
+      "assigned_cluster": 4,
+      "stability_pct": 40.0,
+      "entropy": 1.571,
+      "is_borderline": true
+    },
+    {
+      "country": "Iran, Islamic Rep.",
+      "assigned_cluster": 4,
+      "stability_pct": 40.0,
+      "entropy": 1.571,
+      "is_borderline": true
+    },
+    {
+      "country": "Kazakhstan",
+      "assigned_cluster": 4,
+      "stability_pct": 40.0,
+      "entropy": 1.571,
+      "is_borderline": true
+    },
+    {
+      "country": "Malaysia",
+      "assigned_cluster": 4,
+      "stability_pct": 40.0,
+      "entropy": 1.571,
+      "is_borderline": true
+    },
+    {
+      "country": "Mauritius",
+      "assigned_cluster": 4,
+      "stability_pct": 40.0,
+      "entropy": 1.571,
+      "is_borderline": true
+    },
+    {
+      "country": "Mongolia",
+      "assigned_cluster": 4,
+      "stability_pct": 40.0,
+      "entropy": 1.571,
+      "is_borderline": true
+    },
+    {
+      "country": "Montenegro",
+      "assigned_cluster": 4,
+      "stability_pct": 40.0,
+      "entropy": 1.571,
+      "is_borderline": true
+    },
+    {
+      "country": "Namibia",
+      "assigned_cluster": 4,
+      "stability_pct": 40.0,
+      "entropy": 1.571,
+      "is_borderline": true
+    },
+    {
+      "country": "North Macedonia",
+      "assigned_cluster": 4,
+      "stability_pct": 40.0,
+      "entropy": 1.571,
+      "is_borderline": true
+    },
+    {
+      "country": "Panama",
+      "assigned_cluster": 4,
+      "stability_pct": 40.0,
+      "entropy": 1.571,
+      "is_borderline": true
+    },
+    {
+      "country": "Poland",
+      "assigned_cluster": 4,
+      "stability_pct": 40.0,
+      "entropy": 1.571,
+      "is_borderline": true
+    },
+    {
+      "country": "Romania",
+      "assigned_cluster": 4,
+      "stability_pct": 40.0,
+      "entropy": 1.571,
+      "is_borderline": true
+    },
+    {
+      "country": "Serbia",
+      "assigned_cluster": 4,
+      "stability_pct": 40.0,
+      "entropy": 1.571,
+      "is_borderline": true
+    },
+    {
+      "country": "South Africa",
+      "assigned_cluster": 4,
+      "stability_pct": 40.0,
+      "entropy": 1.571,
+      "is_borderline": true
+    },
+    {
+      "country": "Thailand",
+      "assigned_cluster": 4,
+      "stability_pct": 40.0,
+      "entropy": 1.571,
+      "is_borderline": true
+    },
+    {
+      "country": "Turkiye",
+      "assigned_cluster": 4,
+      "stability_pct": 40.0,
+      "entropy": 1.571,
+      "is_borderline": true
+    },
+    {
+      "country": "Ukraine",
+      "assigned_cluster": 4,
+      "stability_pct": 40.0,
+      "entropy": 1.571,
+      "is_borderline": true
+    },
+    {
+      "country": "Venezuela, RB",
+      "assigned_cluster": 4,
+      "stability_pct": 40.0,
+      "entropy": 1.571,
+      "is_borderline": true
+    },
+    {
+      "country": "Viet Nam",
+      "assigned_cluster": 4,
+      "stability_pct": 40.0,
+      "entropy": 1.571,
+      "is_borderline": true
+    },
+    {
+      "country": "Developing economies",
+      "assigned_cluster": 4,
+      "stability_pct": 40.0,
+      "entropy": 1.571,
+      "is_borderline": true
+    }
+  ]
+}

@@ -1,0 +1,141 @@
+Country,Code,Region,IncomeGroup,Cluster,ClusterName,PC1,PC2
+Albania,ALB,Europe & Central Asia (excluding high income),Upper middle income,2,Universal High-Resilience Systems,-1.239097231050118,-0.31915259878959545
+Algeria,DZA,Middle East & North Africa (excluding high income),Lower middle income,2,Universal High-Resilience Systems,-1.5160155069306853,-0.10046117064745945
+Argentina,ARG,Latin America & Caribbean (excluding high income),Upper middle income,4,Banked but Liquidity-Constrained,1.403218616875408,1.1313413516646438
+Armenia,ARM,Europe & Central Asia (excluding high income),Upper middle income,2,Universal High-Resilience Systems,-0.6737533450002597,-0.6340799722957602
+Australia,AUS,High income,High income,1,Digitally Leaping Cash Economists,1.1126770700705253,-1.6280726655435094
+Austria,AUT,High income,High income,1,Digitally Leaping Cash Economists,1.1650877191877693,-1.6625275898701235
+Azerbaijan,AZE,Europe & Central Asia (excluding high income),Upper middle income,2,Universal High-Resilience Systems,-1.3354027898819778,-0.6629849622705645
+Bahrain,BHR,High income,High income,1,Digitally Leaping Cash Economists,0.5638321610697159,-1.2672603091773975
+Bangladesh,BGD,South Asia (excluding high income),Lower middle income,2,Universal High-Resilience Systems,-3.3969862797664496,-0.9710809418391951
+Belgium,BEL,High income,High income,1,Digitally Leaping Cash Economists,1.1206021131176014,-1.6332826135802399
+Belize,BLZ,Latin America & Caribbean (excluding high income),Upper middle income,4,Banked but Liquidity-Constrained,1.3438960167151541,1.367370475644416
+Benin,BEN,Sub-Saharan Africa (excluding high income),Lower middle income,3,Severe Exclusion Frontiers,-2.010321228040593,1.6638384154892862
+Bolivia,BOL,Latin America & Caribbean (excluding high income),Lower middle income,2,Universal High-Resilience Systems,0.12130464147061203,0.5610069546141968
+Bosnia and Herzegovina,BIH,Europe & Central Asia (excluding high income),Upper middle income,4,Banked but Liquidity-Constrained,1.6537768306149534,0.11606889969468631
+Botswana,BWA,Sub-Saharan Africa (excluding high income),Upper middle income,3,Severe Exclusion Frontiers,-0.8795945506238979,0.9589902874204131
+Brazil,BRA,Latin America & Caribbean (excluding high income),Upper middle income,4,Banked but Liquidity-Constrained,2.03686374339771,1.272271045012498
+Bulgaria,BGR,Europe & Central Asia (excluding high income),Upper middle income,4,Banked but Liquidity-Constrained,3.9644203272878182,1.645414056604333
+Burkina Faso,BFA,Sub-Saharan Africa (excluding high income),Low income,3,Severe Exclusion Frontiers,-1.7368638018267533,1.633697165512033
+Cambodia,KHM,East Asia & Pacific (excluding high income),Lower middle income,2,Universal High-Resilience Systems,-2.1972903238298525,0.07960254082872573
+Cameroon,CMR,Sub-Saharan Africa (excluding high income),Lower middle income,3,Severe Exclusion Frontiers,-1.1556430571119078,2.219227467745706
+Canada,CAN,High income,High income,1,Digitally Leaping Cash Economists,1.1264725915798746,-1.6371418844457117
+Chad,TCD,Sub-Saharan Africa (excluding high income),Low income,2,Universal High-Resilience Systems,-3.5023510124858515,0.6282557197854438
+Chile,CHL,High income,High income,1,Digitally Leaping Cash Economists,0.6599383988799119,-1.3304408499041178
+China,CHN,East Asia & Pacific (excluding high income),Upper middle income,4,Banked but Liquidity-Constrained,5.700619168456163,3.3395431479800815
+Colombia,COL,Latin America & Caribbean (excluding high income),Upper middle income,2,Universal High-Resilience Systems,-1.0734816328857475,-0.14500847187826918
+Comoros,COM,Sub-Saharan Africa (excluding high income),Lower middle income,2,Universal High-Resilience Systems,-1.525873944050797,0.3411052440587212
+"Congo, Dem. Rep.",COD,Sub-Saharan Africa (excluding high income),Low income,3,Severe Exclusion Frontiers,-2.1706851275166166,1.6491973113646505
+"Congo, Rep.",COG,Sub-Saharan Africa (excluding high income),Lower middle income,3,Severe Exclusion Frontiers,-2.103734168802295,1.3488583372924885
+Costa Rica,CRI,Latin America & Caribbean (excluding high income),Upper middle income,4,Banked but Liquidity-Constrained,1.8992303103489234,0.7004214368356063
+Cote d'Ivoire,CIV,Sub-Saharan Africa (excluding high income),Lower middle income,3,Severe Exclusion Frontiers,-1.428260754361744,2.0106145786260696
+Croatia,HRV,High income,High income,4,Banked but Liquidity-Constrained,4.014643721238671,1.806708972695821
+Cyprus,CYP,High income,High income,1,Digitally Leaping Cash Economists,1.046751049318515,-1.5847326937167159
+Czechia,CZE,High income,High income,1,Digitally Leaping Cash Economists,0.9123189278730925,-1.496356597456075
+Denmark,DNK,High income,High income,1,Digitally Leaping Cash Economists,1.1350717821105645,-1.642795019142484
+Dominican Republic,DOM,Latin America & Caribbean (excluding high income),Upper middle income,2,Universal High-Resilience Systems,-0.0470286931534011,0.46564141662815556
+Ecuador,ECU,Latin America & Caribbean (excluding high income),Upper middle income,2,Universal High-Resilience Systems,-0.25336079201248235,-0.6529397338838778
+El Salvador,SLV,Latin America & Caribbean (excluding high income),Lower middle income,2,Universal High-Resilience Systems,-1.5037535449886117,-0.7049722441974626
+Estonia,EST,High income,High income,1,Digitally Leaping Cash Economists,1.143838670488648,-1.6485583989275927
+Eswatini,SWZ,Sub-Saharan Africa (excluding high income),Lower middle income,3,Severe Exclusion Frontiers,-0.96425061652154,1.1041607522615526
+Ethiopia,ETH,Sub-Saharan Africa (excluding high income),Low income,2,Universal High-Resilience Systems,-1.4734400386233013,-0.28611932876263424
+Finland,FIN,High income,High income,1,Digitally Leaping Cash Economists,1.1767789207762425,-1.6702134222878238
+France,FRA,High income,High income,1,Digitally Leaping Cash Economists,1.1539536116030837,-1.655207992789451
+Gabon,GAB,Sub-Saharan Africa (excluding high income),Upper middle income,3,Severe Exclusion Frontiers,-0.6622562481414129,2.188056619777517
+"Gambia, The",GMB,Sub-Saharan Africa (excluding high income),Low income,2,Universal High-Resilience Systems,-1.5212045759797044,0.8725191110220846
+Georgia,GEO,Europe & Central Asia (excluding high income),Upper middle income,2,Universal High-Resilience Systems,0.28913383729308734,-0.4125237313676646
+Germany,DEU,High income,High income,1,Digitally Leaping Cash Economists,1.1227506467658568,-1.6346950663071318
+Ghana,GHA,Sub-Saharan Africa (excluding high income),Lower middle income,3,Severe Exclusion Frontiers,1.279683805094986,3.752733052266109
+Greece,GRC,High income,High income,1,Digitally Leaping Cash Economists,0.7817816111690742,-1.4105409579898505
+Guatemala,GTM,Latin America & Caribbean (excluding high income),Upper middle income,2,Universal High-Resilience Systems,-2.127669793215946,-1.0533540950658693
+Guinea,GIN,Sub-Saharan Africa (excluding high income),Low income,3,Severe Exclusion Frontiers,-2.858097986805495,0.9928974588471048
+Honduras,HND,Latin America & Caribbean (excluding high income),Lower middle income,2,Universal High-Resilience Systems,-1.7529408643525164,-0.3307584508470531
+"Hong Kong SAR, China",HKG,High income,High income,1,Digitally Leaping Cash Economists,1.0881057467527715,-1.6119194008963933
+Hungary,HUN,High income,High income,1,Digitally Leaping Cash Economists,0.726107165879622,-1.3739404038718677
+Iceland,ISL,High income,High income,1,Digitally Leaping Cash Economists,1.1772041197074368,-1.6704929493924257
+India,IND,South Asia (excluding high income),Lower middle income,2,Universal High-Resilience Systems,0.14253806183778045,-0.7529118145927081
+Indonesia,IDN,East Asia & Pacific (excluding high income),Lower middle income,2,Universal High-Resilience Systems,-0.6845453149562856,0.2751458202455262
+"Iran, Islamic Rep.",IRN,Middle East & North Africa (excluding high income),Lower middle income,4,Banked but Liquidity-Constrained,1.956063814212844,0.37616987886686964
+Iraq,IRQ,Middle East & North Africa (excluding high income),Upper middle income,2,Universal High-Resilience Systems,-2.8865877669424633,0.34275791217468315
+Ireland,IRL,High income,High income,1,Digitally Leaping Cash Economists,1.1225615447239548,-1.634570750034514
+Israel,ISR,High income,High income,1,Digitally Leaping Cash Economists,0.8068730948774485,-1.4270361777014122
+Italy,ITA,High income,High income,1,Digitally Leaping Cash Economists,0.6931710765660181,-1.3522881159489264
+Japan,JPN,High income,High income,1,Digitally Leaping Cash Economists,1.1306303553893766,-1.6398752113523076
+Jordan,JOR,Middle East & North Africa (excluding high income),Upper middle income,2,Universal High-Resilience Systems,-2.659370301553628,-0.6311397566710366
+Kazakhstan,KAZ,Europe & Central Asia (excluding high income),Upper middle income,4,Banked but Liquidity-Constrained,1.9599798174170087,1.1064272349301292
+Kenya,KEN,Sub-Saharan Africa (excluding high income),Lower middle income,3,Severe Exclusion Frontiers,0.8750150435381181,3.2655088555967744
+"Korea, Rep.",KOR,High income,High income,1,Digitally Leaping Cash Economists,1.3254109014858897,-0.91120258251441
+Kosovo,XKX,Europe & Central Asia (excluding high income),Upper middle income,2,Universal High-Resilience Systems,-0.8997740207498569,-0.7500674920697733
+Kuwait,KWT,High income,High income,1,Digitally Leaping Cash Economists,0.2887088628288085,-1.08639339413169
+Kyrgyz Republic,KGZ,Europe & Central Asia (excluding high income),Lower middle income,2,Universal High-Resilience Systems,0.21726257967966728,0.26994752408190936
+Lao PDR,LAO,East Asia & Pacific (excluding high income),Lower middle income,2,Universal High-Resilience Systems,-1.780808952666804,-0.3958309038752187
+Latvia,LVA,High income,High income,1,Digitally Leaping Cash Economists,1.0064274136823117,-1.5582238097814811
+Lebanon,LBN,Middle East & North Africa (excluding high income),Lower middle income,2,Universal High-Resilience Systems,-3.7077742870796673,-1.1063861791640852
+Lesotho,LSO,Sub-Saharan Africa (excluding high income),Lower middle income,3,Severe Exclusion Frontiers,-1.098535352152113,1.1779650510770683
+Liberia,LBR,Sub-Saharan Africa (excluding high income),Low income,3,Severe Exclusion Frontiers,-1.7277355538656844,2.4932572534013535
+Libya,LBY,Middle East & North Africa (excluding high income),Upper middle income,2,Universal High-Resilience Systems,-1.33804182813985,0.4459234065850731
+Lithuania,LTU,High income,High income,1,Digitally Leaping Cash Economists,1.1471134261633618,-1.650711233530118
+Madagascar,MDG,Sub-Saharan Africa (excluding high income),Low income,2,Universal High-Resilience Systems,-4.153023531604521,-0.20538185482932078
+Malawi,MWI,Sub-Saharan Africa (excluding high income),Low income,3,Severe Exclusion Frontiers,-2.580857764028192,1.7291508691020259
+Malaysia,MYS,East Asia & Pacific (excluding high income),Upper middle income,4,Banked but Liquidity-Constrained,4.290761646958029,2.0060025027646704
+Mali,MLI,Sub-Saharan Africa (excluding high income),Low income,3,Severe Exclusion Frontiers,-1.7835132136462668,2.059730383395563
+Malta,MLT,High income,High income,1,Digitally Leaping Cash Economists,1.0618711971158425,-1.5946727260753828
+Mauritania,MRT,Sub-Saharan Africa (excluding high income),Lower middle income,3,Severe Exclusion Frontiers,-1.8245498014911572,1.7796813965771303
+Mauritius,MUS,Sub-Saharan Africa (excluding high income),Upper middle income,4,Banked but Liquidity-Constrained,2.1915855561068027,-0.15968241614506662
+Mexico,MEX,Latin America & Caribbean (excluding high income),Upper middle income,2,Universal High-Resilience Systems,-0.6453029108563871,-0.1821982548605947
+Moldova,MDA,Europe & Central Asia (excluding high income),Upper middle income,2,Universal High-Resilience Systems,-0.5976882983978797,0.01650779174680291
+Mongolia,MNG,East Asia & Pacific (excluding high income),Lower middle income,4,Banked but Liquidity-Constrained,2.709237228076458,1.4571467088016368
+Montenegro,MNE,Europe & Central Asia (excluding high income),Upper middle income,4,Banked but Liquidity-Constrained,1.2531438081876114,-0.18148676082062326
+Morocco,MAR,Middle East & North Africa (excluding high income),Lower middle income,2,Universal High-Resilience Systems,-2.681285254021061,-1.4689467042242303
+Mozambique,MOZ,Sub-Saharan Africa (excluding high income),Low income,3,Severe Exclusion Frontiers,-1.6939188782687609,1.0813152682794316
+Namibia,NAM,Sub-Saharan Africa (excluding high income),Upper middle income,4,Banked but Liquidity-Constrained,1.0739589397988516,1.9715029177314258
+Nepal,NPL,South Asia (excluding high income),Lower middle income,2,Universal High-Resilience Systems,-1.6333552022882094,-0.532341010230572
+Netherlands,NLD,High income,High income,1,Digitally Leaping Cash Economists,1.1532985313310768,-1.6547773409738369
+New Zealand,NZL,High income,High income,1,Digitally Leaping Cash Economists,1.1075826070553887,-1.6247235496552743
+Nicaragua,NIC,Latin America & Caribbean (excluding high income),Lower middle income,2,Universal High-Resilience Systems,-2.701956927885839,-0.3791859141661582
+Niger,NER,Sub-Saharan Africa (excluding high income),Low income,2,Universal High-Resilience Systems,-4.430351054500546,-0.1944956183643568
+Nigeria,NGA,Sub-Saharan Africa (excluding high income),Lower middle income,3,Severe Exclusion Frontiers,0.41794266708622,1.8567065148779118
+North Macedonia,MKD,Europe & Central Asia (excluding high income),Upper middle income,4,Banked but Liquidity-Constrained,2.281259303882249,0.5725461735032267
+Norway,NOR,High income,High income,1,Digitally Leaping Cash Economists,1.1317707695299224,-1.640624923168042
+Oman,OMN,High income,High income,2,Universal High-Resilience Systems,0.4036228747799223,-0.7832993713114603
+Pakistan,PAK,South Asia (excluding high income),Lower middle income,2,Universal High-Resilience Systems,-3.606199549398553,-0.46669995745767384
+Panama,PAN,High income,High income,4,Banked but Liquidity-Constrained,0.7104532381913491,0.7245600382851285
+Paraguay,PRY,Latin America & Caribbean (excluding high income),Upper middle income,2,Universal High-Resilience Systems,-1.3335067513300847,-0.2883784455286373
+Peru,PER,Latin America & Caribbean (excluding high income),Upper middle income,2,Universal High-Resilience Systems,0.03523637375019449,0.7100358480511345
+Philippines,PHL,East Asia & Pacific (excluding high income),Lower middle income,3,Severe Exclusion Frontiers,-1.6453223066178586,1.1255961892247823
+Poland,POL,High income,High income,4,Banked but Liquidity-Constrained,4.9905889166441355,1.9717372895944572
+Portugal,PRT,High income,High income,1,Digitally Leaping Cash Economists,0.8813247911305905,-1.4759809552150733
+Romania,ROU,High income,High income,4,Banked but Liquidity-Constrained,1.4387985351593384,0.6185686941045161
+Russian Federation,RUS,Europe & Central Asia (excluding high income),Upper middle income,1,Digitally Leaping Cash Economists,0.2328408206313277,-1.8085319781168285
+Senegal,SEN,Sub-Saharan Africa (excluding high income),Lower middle income,3,Severe Exclusion Frontiers,0.6656343889138672,3.2245060979332885
+Serbia,SRB,Europe & Central Asia (excluding high income),Upper middle income,4,Banked but Liquidity-Constrained,2.161226740098985,0.5990252700331193
+Sierra Leone,SLE,Sub-Saharan Africa (excluding high income),Low income,3,Severe Exclusion Frontiers,-3.1785868471039516,1.5138493469052472
+Singapore,SGP,High income,High income,1,Digitally Leaping Cash Economists,1.3309820840863515,-1.0229792204846346
+Slovak Republic,SVK,High income,High income,1,Digitally Leaping Cash Economists,0.909934046347067,-1.4947887688965902
+Slovenia,SVN,High income,High income,1,Digitally Leaping Cash Economists,1.1384562747145222,-1.645019995144832
+South Africa,ZAF,Sub-Saharan Africa (excluding high income),Upper middle income,4,Banked but Liquidity-Constrained,1.3674304221345972,0.34253447432708223
+Spain,ESP,High income,High income,1,Digitally Leaping Cash Economists,1.125633984608591,-1.6365905816051247
+Sri Lanka,LKA,South Asia (excluding high income),Lower middle income,2,Universal High-Resilience Systems,-0.4052994123923641,-1.4523838837093672
+Sweden,SWE,High income,High income,1,Digitally Leaping Cash Economists,1.1320974322004487,-1.6408396722273055
+Switzerland,CHE,High income,High income,1,Digitally Leaping Cash Economists,1.1267383700676976,-1.6373166080532193
+"Taiwan, China",TWN,High income,High income,1,Digitally Leaping Cash Economists,1.0290762373226168,-1.573113217139666
+Tajikistan,TJK,Europe & Central Asia (excluding high income),Lower middle income,2,Universal High-Resilience Systems,-2.115026670402769,-1.248438369555112
+Tanzania,TZA,Sub-Saharan Africa (excluding high income),Lower middle income,3,Severe Exclusion Frontiers,-1.9797724551308993,0.9770455349319102
+Thailand,THA,East Asia & Pacific (excluding high income),Upper middle income,4,Banked but Liquidity-Constrained,3.073410559094849,1.3419747641429298
+Togo,TGO,Sub-Saharan Africa (excluding high income),Low income,3,Severe Exclusion Frontiers,-0.8281770152288979,2.268611353842214
+Trinidad and Tobago,TTO,High income,High income,1,Digitally Leaping Cash Economists,0.29340403432105694,-1.0894800145264119
+Tunisia,TUN,Middle East & North Africa (excluding high income),Lower middle income,2,Universal High-Resilience Systems,-1.3123809232905257,-0.06940199175071853
+Turkiye,TUR,Europe & Central Asia (excluding high income),Upper middle income,4,Banked but Liquidity-Constrained,1.3516967403127615,0.32567573974127456
+Uganda,UGA,Sub-Saharan Africa (excluding high income),Low income,3,Severe Exclusion Frontiers,-0.7401218760508308,3.4366564876759953
+Ukraine,UKR,Europe & Central Asia (excluding high income),Lower middle income,4,Banked but Liquidity-Constrained,1.6518132020842613,-0.00366237052317014
+United Kingdom,GBR,High income,High income,1,Digitally Leaping Cash Economists,1.1572446550607518,-1.6573715350313318
+United States,USA,High income,High income,1,Digitally Leaping Cash Economists,1.07813779947916,-1.605366441244326
+Uruguay,URY,High income,High income,1,Digitally Leaping Cash Economists,0.26377456053686865,-1.0700015059739254
+Uzbekistan,UZB,Europe & Central Asia (excluding high income),Lower middle income,2,Universal High-Resilience Systems,-1.0420175276072823,-0.8734840002242101
+"Venezuela, RB",VEN,Latin America & Caribbean (excluding high income),Upper middle income,4,Banked but Liquidity-Constrained,1.2984977832657667,0.5636452877637209
+Viet Nam,VNM,East Asia & Pacific (excluding high income),Lower middle income,4,Banked but Liquidity-Constrained,2.8433123965319917,2.2793789129012083
+West Bank and Gaza,PSE,Middle East & North Africa (excluding high income),Lower middle income,2,Universal High-Resilience Systems,-2.6652436972672664,-1.0310161239093152
+Zambia,ZMB,Sub-Saharan Africa (excluding high income),Low income,3,Severe Exclusion Frontiers,-1.088384533801829,2.220276932456801
+Zimbabwe,ZWE,Sub-Saharan Africa (excluding high income),Lower middle income,3,Severe Exclusion Frontiers,-2.240391412819903,0.6322814384744222
+Developing economies,LMY,,,4,Banked but Liquidity-Constrained,1.4649117420485789,0.8573995575254428
+South Asia,SAS,,,2,Universal High-Resilience Systems,-0.6217454746943303,-0.7453805216718421

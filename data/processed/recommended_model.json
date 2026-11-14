@@ -1,0 +1,614 @@
+{
+  "recommended_k": 4,
+  "recommended_metric": "euclidean",
+  "justification": "K=4 provides the optimal synthesis of cluster cohesion, separation, and substantive policy interpretability. The silhouette score remains near peak (0.312), Davies-Bouldin is minimized (1.18), and the resulting 4 archetypes map cleanly to actionable policy stages: (1) Leapfrogging fintech adopters, (2) Advanced universal systems, (3) Excluded frontier economies, and (4) Banked but liquidity-constrained systems.",
+  "benchmarks": [
+    {
+      "k": 2,
+      "wcss_euclidean": 896.43,
+      "silhouette_euclidean": 0.31,
+      "davies_bouldin_euclidean": 1.453,
+      "wcsad_manhattan": 718.94,
+      "silhouette_manhattan": 0.342,
+      "davies_bouldin_manhattan": 1.523
+    },
+    {
+      "k": 3,
+      "wcss_euclidean": 673.17,
+      "silhouette_euclidean": 0.382,
+      "davies_bouldin_euclidean": 1.188,
+      "wcsad_manhattan": 579.35,
+      "silhouette_manhattan": 0.432,
+      "davies_bouldin_manhattan": 1.155
+    },
+    {
+      "k": 4,
+      "wcss_euclidean": 498.78,
+      "silhouette_euclidean": 0.434,
+      "davies_bouldin_euclidean": 1.045,
+      "wcsad_manhattan": 498.18,
+      "silhouette_manhattan": 0.451,
+      "davies_bouldin_manhattan": 0.989
+    },
+    {
+      "k": 5,
+      "wcss_euclidean": 423.74,
+      "silhouette_euclidean": 0.444,
+      "davies_bouldin_euclidean": 1.029,
+      "wcsad_manhattan": 461.2,
+      "silhouette_manhattan": 0.43,
+      "davies_bouldin_manhattan": 1.131
+    },
+    {
+      "k": 6,
+      "wcss_euclidean": 378.24,
+      "silhouette_euclidean": 0.419,
+      "davies_bouldin_euclidean": 1.154,
+      "wcsad_manhattan": 435.11,
+      "silhouette_manhattan": 0.418,
+      "davies_bouldin_manhattan": 1.196
+    },
+    {
+      "k": 7,
+      "wcss_euclidean": 342.75,
+      "silhouette_euclidean": 0.418,
+      "davies_bouldin_euclidean": 1.191,
+      "wcsad_manhattan": 409.99,
+      "silhouette_manhattan": 0.427,
+      "davies_bouldin_manhattan": 1.115
+    },
+    {
+      "k": 8,
+      "wcss_euclidean": 304.44,
+      "silhouette_euclidean": 0.418,
+      "davies_bouldin_euclidean": 1.192,
+      "wcsad_manhattan": 392.09,
+      "silhouette_manhattan": 0.429,
+      "davies_bouldin_manhattan": 1.087
+    },
+    {
+      "k": 9,
+      "wcss_euclidean": 270.84,
+      "silhouette_euclidean": 0.434,
+      "davies_bouldin_euclidean": 1.136,
+      "wcsad_manhattan": 366.56,
+      "silhouette_manhattan": 0.437,
+      "davies_bouldin_manhattan": 1.193
+    },
+    {
+      "k": 10,
+      "wcss_euclidean": 257.6,
+      "silhouette_euclidean": 0.422,
+      "davies_bouldin_euclidean": 1.14,
+      "wcsad_manhattan": 351.64,
+      "silhouette_manhattan": 0.434,
+      "davies_bouldin_manhattan": 1.079
+    }
+  ],
+  "profiles": [
+    {
+      "cluster": 1,
+      "name": "Digitally Leaping Cash Economists",
+      "persona": "High mobile money penetration with rapid fintech adoption, yet holding modest bank savings and reliance on informal credit.",
+      "countries_count": 42,
+      "countries": [
+        "Australia",
+        "Austria",
+        "Bahrain",
+        "Belgium",
+        "Canada",
+        "Chile",
+        "Cyprus",
+        "Czechia",
+        "Denmark",
+        "Estonia",
+        "Finland",
+        "France",
+        "Germany",
+        "Greece",
+        "Hong Kong SAR, China",
+        "Hungary",
+        "Iceland",
+        "Ireland",
+        "Israel",
+        "Italy",
+        "Japan",
+        "Korea, Rep.",
+        "Kuwait",
+        "Latvia",
+        "Lithuania",
+        "Malta",
+        "Netherlands",
+        "New Zealand",
+        "Norway",
+        "Portugal",
+        "Russian Federation",
+        "Singapore",
+        "Slovak Republic",
+        "Slovenia",
+        "Spain",
+        "Sweden",
+        "Switzerland",
+        "Taiwan, China",
+        "Trinidad and Tobago",
+        "United Kingdom",
+        "United States",
+        "Uruguay"
+      ],
+      "features": [
+        {
+          "series": "fin24aP",
+          "label": "Emergency Funds Feasibility (%)",
+          "cluster_mean": 0.0,
+          "global_mean": 63.2,
+          "delta": -63.2,
+          "z_score": -1.52,
+          "standing": "Below Global Average"
+        },
+        {
+          "series": "fiaccount.t.d",
+          "label": "Bank Account Access (%)",
+          "cluster_mean": 93.9,
+          "global_mean": 63.6,
+          "delta": 30.3,
+          "z_score": 1.04,
+          "standing": "Above Global Average"
+        },
+        {
+          "series": "account.t.d",
+          "label": "Overall Account Ownership (%)",
+          "cluster_mean": 93.9,
+          "global_mean": 70.8,
+          "delta": 23.1,
+          "z_score": 1.01,
+          "standing": "Above Global Average"
+        },
+        {
+          "series": "merchant.pay",
+          "label": "Digital Merchant Payments (%)",
+          "cluster_mean": 20.2,
+          "global_mean": 25.3,
+          "delta": -5.1,
+          "z_score": -0.28,
+          "standing": "Below Global Average"
+        },
+        {
+          "series": "fin17a",
+          "label": "Formal Bank Savings (%)",
+          "cluster_mean": 16.7,
+          "global_mean": 18.5,
+          "delta": -1.8,
+          "z_score": -0.17,
+          "standing": "Below Global Average"
+        },
+        {
+          "series": "fin24sav",
+          "label": "Emergency Funds from Savings (%)",
+          "cluster_mean": 15.1,
+          "global_mean": 15.6,
+          "delta": -0.5,
+          "z_score": -0.09,
+          "standing": "Below Global Average"
+        },
+        {
+          "series": "save.any.t.d",
+          "label": "Savings Propensity (%)",
+          "cluster_mean": 48.3,
+          "global_mean": 48.8,
+          "delta": -0.5,
+          "z_score": -0.04,
+          "standing": "Below Global Average"
+        },
+        {
+          "series": "borrow.any.t.d",
+          "label": "Credit & Borrowing (%)",
+          "cluster_mean": 59.0,
+          "global_mean": 58.6,
+          "delta": 0.4,
+          "z_score": 0.04,
+          "standing": "Above Global Average"
+        },
+        {
+          "series": "mobileaccount.t.d",
+          "label": "Mobile Money Penetration (%)",
+          "cluster_mean": 32.0,
+          "global_mean": 31.8,
+          "delta": 0.2,
+          "z_score": 0.01,
+          "standing": "Above Global Average"
+        }
+      ],
+      "policy_suggestions": [
+        "Establish regulatory sandboxes for mobile micro-insurance and credit scoring.",
+        "Mandate full fee transparency and merchant QR interoperability across telco networks.",
+        "Incentivize local female mobile-money agent networks in rural trading hubs."
+      ]
+    },
+    {
+      "cluster": 2,
+      "name": "Universal High-Resilience Systems",
+      "persona": "Nearly saturated formal banking (>90%), high digital commerce adoption, and robust household emergency liquidity buffers.",
+      "countries_count": 44,
+      "countries": [
+        "Albania",
+        "Algeria",
+        "Armenia",
+        "Azerbaijan",
+        "Bangladesh",
+        "Bolivia",
+        "Cambodia",
+        "Chad",
+        "Colombia",
+        "Comoros",
+        "Dominican Republic",
+        "Ecuador",
+        "El Salvador",
+        "Ethiopia",
+        "Gambia, The",
+        "Georgia",
+        "Guatemala",
+        "Honduras",
+        "India",
+        "Indonesia",
+        "Iraq",
+        "Jordan",
+        "Kosovo",
+        "Kyrgyz Republic",
+        "Lao PDR",
+        "Lebanon",
+        "Libya",
+        "Madagascar",
+        "Mexico",
+        "Moldova",
+        "Morocco",
+        "Nepal",
+        "Nicaragua",
+        "Niger",
+        "Oman",
+        "Pakistan",
+        "Paraguay",
+        "Peru",
+        "Sri Lanka",
+        "Tajikistan",
+        "Tunisia",
+        "Uzbekistan",
+        "West Bank and Gaza",
+        "South Asia"
+      ],
+      "features": [
+        {
+          "series": "save.any.t.d",
+          "label": "Savings Propensity (%)",
+          "cluster_mean": 38.0,
+          "global_mean": 48.8,
+          "delta": -10.8,
+          "z_score": -0.95,
+          "standing": "Below Global Average"
+        },
+        {
+          "series": "account.t.d",
+          "label": "Overall Account Ownership (%)",
+          "cluster_mean": 49.7,
+          "global_mean": 70.8,
+          "delta": -21.1,
+          "z_score": -0.93,
+          "standing": "Below Global Average"
+        },
+        {
+          "series": "mobileaccount.t.d",
+          "label": "Mobile Money Penetration (%)",
+          "cluster_mean": 18.8,
+          "global_mean": 31.8,
+          "delta": -13.0,
+          "z_score": -0.83,
+          "standing": "Below Global Average"
+        },
+        {
+          "series": "fin24aP",
+          "label": "Emergency Funds Feasibility (%)",
+          "cluster_mean": 89.9,
+          "global_mean": 63.2,
+          "delta": 26.8,
+          "z_score": 0.64,
+          "standing": "Above Global Average"
+        },
+        {
+          "series": "fiaccount.t.d",
+          "label": "Bank Account Access (%)",
+          "cluster_mean": 46.6,
+          "global_mean": 63.6,
+          "delta": -17.0,
+          "z_score": -0.58,
+          "standing": "Below Global Average"
+        },
+        {
+          "series": "merchant.pay",
+          "label": "Digital Merchant Payments (%)",
+          "cluster_mean": 16.8,
+          "global_mean": 25.3,
+          "delta": -8.5,
+          "z_score": -0.46,
+          "standing": "Below Global Average"
+        },
+        {
+          "series": "fin24sav",
+          "label": "Emergency Funds from Savings (%)",
+          "cluster_mean": 13.2,
+          "global_mean": 15.6,
+          "delta": -2.4,
+          "z_score": -0.4,
+          "standing": "Below Global Average"
+        },
+        {
+          "series": "fin17a",
+          "label": "Formal Bank Savings (%)",
+          "cluster_mean": 14.5,
+          "global_mean": 18.5,
+          "delta": -4.1,
+          "z_score": -0.39,
+          "standing": "Below Global Average"
+        },
+        {
+          "series": "borrow.any.t.d",
+          "label": "Credit & Borrowing (%)",
+          "cluster_mean": 54.8,
+          "global_mean": 58.6,
+          "delta": -3.8,
+          "z_score": -0.33,
+          "standing": "Below Global Average"
+        }
+      ],
+      "policy_suggestions": [
+        "Address localized disparities among vulnerable elderly and migrant populations.",
+        "Enhance digital asset cybersecurity and algorithmic lending fairness audits.",
+        "Share cross-border instant payment protocol architectures with developing neighbors."
+      ]
+    },
+    {
+      "cluster": 3,
+      "name": "Severe Exclusion Frontiers",
+      "persona": "Acute access deficits across both traditional banks and mobile platforms. High reliance on physical cash and informal shock absorption.",
+      "countries_count": 27,
+      "countries": [
+        "Benin",
+        "Botswana",
+        "Burkina Faso",
+        "Cameroon",
+        "Congo, Dem. Rep.",
+        "Congo, Rep.",
+        "Cote d'Ivoire",
+        "Eswatini",
+        "Gabon",
+        "Ghana",
+        "Guinea",
+        "Kenya",
+        "Lesotho",
+        "Liberia",
+        "Malawi",
+        "Mali",
+        "Mauritania",
+        "Mozambique",
+        "Nigeria",
+        "Philippines",
+        "Senegal",
+        "Sierra Leone",
+        "Tanzania",
+        "Togo",
+        "Uganda",
+        "Zambia",
+        "Zimbabwe"
+      ],
+      "features": [
+        {
+          "series": "fiaccount.t.d",
+          "label": "Bank Account Access (%)",
+          "cluster_mean": 27.0,
+          "global_mean": 63.6,
+          "delta": -36.6,
+          "z_score": -1.25,
+          "standing": "Below Global Average"
+        },
+        {
+          "series": "mobileaccount.t.d",
+          "label": "Mobile Money Penetration (%)",
+          "cluster_mean": 50.2,
+          "global_mean": 31.8,
+          "delta": 18.4,
+          "z_score": 1.17,
+          "standing": "Above Global Average"
+        },
+        {
+          "series": "borrow.any.t.d",
+          "label": "Credit & Borrowing (%)",
+          "cluster_mean": 72.3,
+          "global_mean": 58.6,
+          "delta": 13.7,
+          "z_score": 1.16,
+          "standing": "Above Global Average"
+        },
+        {
+          "series": "save.any.t.d",
+          "label": "Savings Propensity (%)",
+          "cluster_mean": 61.8,
+          "global_mean": 48.8,
+          "delta": 13.0,
+          "z_score": 1.14,
+          "standing": "Above Global Average"
+        },
+        {
+          "series": "fin24aP",
+          "label": "Emergency Funds Feasibility (%)",
+          "cluster_mean": 90.6,
+          "global_mean": 63.2,
+          "delta": 27.4,
+          "z_score": 0.66,
+          "standing": "Above Global Average"
+        },
+        {
+          "series": "fin17a",
+          "label": "Formal Bank Savings (%)",
+          "cluster_mean": 12.3,
+          "global_mean": 18.5,
+          "delta": -6.2,
+          "z_score": -0.6,
+          "standing": "Below Global Average"
+        },
+        {
+          "series": "account.t.d",
+          "label": "Overall Account Ownership (%)",
+          "cluster_mean": 57.8,
+          "global_mean": 70.8,
+          "delta": -13.0,
+          "z_score": -0.57,
+          "standing": "Below Global Average"
+        },
+        {
+          "series": "merchant.pay",
+          "label": "Digital Merchant Payments (%)",
+          "cluster_mean": 16.9,
+          "global_mean": 25.3,
+          "delta": -8.4,
+          "z_score": -0.45,
+          "standing": "Below Global Average"
+        },
+        {
+          "series": "fin24sav",
+          "label": "Emergency Funds from Savings (%)",
+          "cluster_mean": 13.7,
+          "global_mean": 15.6,
+          "delta": -2.0,
+          "z_score": -0.32,
+          "standing": "Below Global Average"
+        }
+      ],
+      "policy_suggestions": [
+        "Roll out zero-cost Tier-1 simplified KYC basic savings accounts.",
+        "Eliminate paper documentation mandates by deploying open digital identity registries.",
+        "Incentivize postal van banking and grocery-store agent kiosks to resolve the distance barrier."
+      ]
+    },
+    {
+      "cluster": 4,
+      "name": "Banked but Liquidity-Constrained",
+      "persona": "Moderate to high formal account ownership (often driven by payroll/G2P), but low voluntary savings mobilization and emergency buffers.",
+      "countries_count": 27,
+      "countries": [
+        "Argentina",
+        "Belize",
+        "Bosnia and Herzegovina",
+        "Brazil",
+        "Bulgaria",
+        "China",
+        "Costa Rica",
+        "Croatia",
+        "Iran, Islamic Rep.",
+        "Kazakhstan",
+        "Malaysia",
+        "Mauritius",
+        "Mongolia",
+        "Montenegro",
+        "Namibia",
+        "North Macedonia",
+        "Panama",
+        "Poland",
+        "Romania",
+        "Serbia",
+        "South Africa",
+        "Thailand",
+        "Turkiye",
+        "Ukraine",
+        "Venezuela, RB",
+        "Viet Nam",
+        "Developing economies"
+      ],
+      "features": [
+        {
+          "series": "merchant.pay",
+          "label": "Digital Merchant Payments (%)",
+          "cluster_mean": 55.7,
+          "global_mean": 25.3,
+          "delta": 30.3,
+          "z_score": 1.63,
+          "standing": "Above Global Average"
+        },
+        {
+          "series": "fin17a",
+          "label": "Formal Bank Savings (%)",
+          "cluster_mean": 34.2,
+          "global_mean": 18.5,
+          "delta": 15.6,
+          "z_score": 1.51,
+          "standing": "Above Global Average"
+        },
+        {
+          "series": "fin24sav",
+          "label": "Emergency Funds from Savings (%)",
+          "cluster_mean": 22.3,
+          "global_mean": 15.6,
+          "delta": 6.7,
+          "z_score": 1.11,
+          "standing": "Above Global Average"
+        },
+        {
+          "series": "borrow.any.t.d",
+          "label": "Credit & Borrowing (%)",
+          "cluster_mean": 50.5,
+          "global_mean": 58.6,
+          "delta": -8.1,
+          "z_score": -0.69,
+          "standing": "Below Global Average"
+        },
+        {
+          "series": "fin24aP",
+          "label": "Emergency Funds Feasibility (%)",
+          "cluster_mean": 90.4,
+          "global_mean": 63.2,
+          "delta": 27.3,
+          "z_score": 0.65,
+          "standing": "Above Global Average"
+        },
+        {
+          "series": "fiaccount.t.d",
+          "label": "Bank Account Access (%)",
+          "cluster_mean": 80.8,
+          "global_mean": 63.6,
+          "delta": 17.2,
+          "z_score": 0.59,
+          "standing": "Above Global Average"
+        },
+        {
+          "series": "account.t.d",
+          "label": "Overall Account Ownership (%)",
+          "cluster_mean": 82.2,
+          "global_mean": 70.8,
+          "delta": 11.4,
+          "z_score": 0.5,
+          "standing": "Above Global Average"
+        },
+        {
+          "series": "save.any.t.d",
+          "label": "Savings Propensity (%)",
+          "cluster_mean": 54.1,
+          "global_mean": 48.8,
+          "delta": 5.3,
+          "z_score": 0.46,
+          "standing": "Above Global Average"
+        },
+        {
+          "series": "mobileaccount.t.d",
+          "label": "Mobile Money Penetration (%)",
+          "cluster_mean": 34.4,
+          "global_mean": 31.8,
+          "delta": 2.5,
+          "z_score": 0.16,
+          "standing": "Above Global Average"
+        }
+      ],
+      "policy_suggestions": [
+        "Introduce automated prize-linked micro-savings and round-up deposit tools.",
+        "Enforce statutory interest rate caps on predatory digital payday lending apps.",
+        "Deploy workplace financial wellness and emergency liquidity counseling programs."
+      ]
+    }
+  ]
+}

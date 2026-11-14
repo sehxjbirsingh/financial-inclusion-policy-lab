@@ -3,14 +3,14 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Global Financial Inclusion Policy Lab | Real-Time Intelligence & Simulation</title>
+  <title>Global Financial Inclusion Policy Lab | Comparative Pattern Diagnostics</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
   <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
 </head>
 <body data-theme="dark">
   <div class="app-container">
-    <!-- SIDEBAR NAVIGATION -->
-    <aside class="sidebar">
+    <!-- ================= SIDEBAR NAVIGATION ================= -->
+    <aside class="sidebar" id="main-sidebar">
       <div class="sidebar-brand">
         <div class="brand-icon">◎</div>
         <div class="brand-text">
@@ -21,56 +21,67 @@
 
       <div class="live-status-pill">
         <span class="live-indicator-dot"></span>
-        <span class="live-status-text">LIVE DATA ENGINE</span>
+        <span class="live-status-text">WORLD BANK FINDEX 2025</span>
       </div>
 
       <nav class="sidebar-nav">
-        <div class="nav-section-title">CITIZEN & REAL-WORLD SOLUTIONS</div>
-        <a href="#citizen-hub" class="nav-item nav-highlight active" data-page="page-citizen">
+        <div class="nav-section-title">START HERE</div>
+        <a href="#home" class="nav-item active" data-page="page-home">
+          <span class="nav-icon">🏠</span>
+          <span class="nav-label">Home & The Problem</span>
+        </a>
+        <a href="#worldmap" class="nav-item nav-highlight" data-page="page-worldmap">
+          <span class="nav-icon">🗺️</span>
+          <span class="nav-label">Interactive World Map</span>
+          <span class="nav-badge success">Explore</span>
+        </a>
+        <a href="#compare" class="nav-item" data-page="page-compare">
+          <span class="nav-icon">⚖️</span>
+          <span class="nav-label">Country Comparator</span>
+        </a>
+        <a href="#guided" class="nav-item" data-page="page-guided">
+          <span class="nav-icon">🎛️</span>
+          <span class="nav-label">Try It Yourself (Guided)</span>
+          <span class="nav-badge">K=2..10</span>
+        </a>
+
+        <div class="nav-section-title">REAL-WORLD SOLUTIONS</div>
+        <a href="#citizen-hub" class="nav-item" data-page="page-citizen">
           <span class="nav-icon">💡</span>
           <span class="nav-label">Citizen Action Hub</span>
-          <span class="nav-badge success">Action</span>
+          <span class="nav-badge alert">Action</span>
         </a>
-
-        <div class="nav-section-title">CORE DASHBOARDS</div>
-        <a href="#overview" class="nav-item" data-page="page-overview">
-          <span class="nav-icon">🌍</span>
-          <span class="nav-label">Global Overview</span>
-          <span class="nav-badge">Live</span>
-        </a>
-        <a href="#country-lab" class="nav-item" data-page="page-country">
-          <span class="nav-icon">🗺️</span>
-          <span class="nav-label">Country Intelligence</span>
-        </a>
-        <a href="#explorer" class="nav-item" data-page="page-explorer">
-          <span class="nav-icon">🌐</span>
-          <span class="nav-label">Global Matrix</span>
-          <span class="nav-count">153</span>
-        </a>
-
-        <div class="nav-section-title">ADVANCED LABS</div>
         <a href="#simulator" class="nav-item" data-page="page-simulator">
           <span class="nav-icon">⚡</span>
           <span class="nav-label">Policy Simulator</span>
-          <span class="nav-badge alert">Lab</span>
         </a>
+
+        <div class="nav-section-title">ADVANCED LABS & DATA</div>
         <a href="#clustering" class="nav-item" data-page="page-cluster">
           <span class="nav-icon">🔬</span>
-          <span class="nav-label">Cluster Archetypes</span>
+          <span class="nav-label">Cluster Archetypes & PCA</span>
+        </a>
+        <a href="#explorer" class="nav-item" data-page="page-explorer">
+          <span class="nav-icon">🌐</span>
+          <span class="nav-label">Global Matrix (153)</span>
         </a>
         <a href="#trends" class="nav-item" data-page="page-trends">
           <span class="nav-icon">📈</span>
           <span class="nav-label">Longitudinal Trends</span>
         </a>
-        <a href="#gaps" class="nav-item" data-page="page-gaps">
-          <span class="nav-icon">🎯</span>
-          <span class="nav-label">Equity & Gaps</span>
-        </a>
 
-        <div class="nav-section-title">SYSTEM & DATA</div>
-        <a href="#quality" class="nav-item" data-page="page-quality">
-          <span class="nav-icon">📋</span>
-          <span class="nav-label">Data Quality</span>
+        <div class="nav-section-title">METHODOLOGY & HELP</div>
+        <a href="#how" class="nav-item" data-page="page-how">
+          <span class="nav-icon">🔍</span>
+          <span class="nav-label">How We Did It</span>
+        </a>
+        <a href="#glossary" class="nav-item" data-page="page-glossary">
+          <span class="nav-icon">📖</span>
+          <span class="nav-label">Plain-English Glossary</span>
+        </a>
+        <a href="#about" class="nav-item" data-page="page-about">
+          <span class="nav-icon">ℹ️</span>
+          <span class="nav-label">About & Limitations</span>
         </a>
       </nav>
 
@@ -84,12 +95,12 @@
         </div>
         <div class="system-meta">
           <span id="sidebar-time">--:--:--</span>
-          <small>World Bank Findex 2025</small>
+          <button id="start-tour-btn" class="tour-text-link">Start Tour ↗</button>
         </div>
       </div>
     </aside>
 
-    <!-- MAIN APP CONTENT -->
+    <!-- ================= MAIN APP WRAPPER ================= -->
     <div class="main-wrapper">
       <!-- TOPBAR HEADER -->
       <header class="topbar">
@@ -98,14 +109,15 @@
           <div class="breadcrumb">
             <span class="breadcrumb-root">Policy Intelligence</span>
             <span class="breadcrumb-sep">/</span>
-            <span id="current-page-title" class="breadcrumb-current">Global Overview</span>
+            <span id="current-page-title" class="breadcrumb-current">Home & The Problem</span>
           </div>
         </div>
 
         <div class="topbar-center">
-          <div class="ticker-box">
-            <span class="ticker-label">ALERT TICKER:</span>
-            <div id="live-ticker-text" class="ticker-content">Loading real-time policy intelligence...</div>
+          <div class="country-search-bar-wrap">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="quick-country-search" placeholder="Find my country (e.g. Kenya, India, Brazil...)" autocomplete="off">
+            <div id="country-search-results" class="search-autocomplete-dropdown"></div>
           </div>
         </div>
 
@@ -114,27 +126,305 @@
             <button id="mode-citizen-btn" class="mode-pill-btn active" title="Switch to Citizen & Actionable mode">👤 Citizen Mode</button>
             <button id="mode-analyst-btn" class="mode-pill-btn" title="Switch to Econometric & Analysis mode">🔬 Policy Mode</button>
           </div>
-          <div class="year-selector-wrap">
-            <label for="global-year-select">Survey Year:</label>
-            <select id="global-year-select" class="year-select">
-              <option value="2024" selected>2024 (Latest)</option>
-              <option value="2021">2021</option>
-              <option value="2017">2017</option>
-              <option value="2014">2014</option>
-              <option value="2011">2011</option>
-            </select>
-          </div>
-          <button id="refresh-data-btn" class="btn btn-secondary btn-sm" title="Re-sync data">
-            ↻ Sync Live
-          </button>
+          <a href="/api/export/cluster-csv" class="btn btn-secondary btn-sm" title="Download Full Cluster Dataset (CSV)">
+            ↓ Download CSV
+          </a>
         </div>
       </header>
+
+      <!-- MANDATORY SCIENTIFIC NOTICE BANNER -->
+      <div class="mandate-disclaimer-banner">
+        <span>⚠️ <strong>Responsible Use Notice:</strong> These clusters represent exploratory data patterns designed to stimulate inquiry. They are <u>NOT</u> official country rankings, developmental grades, or moral classifications.</span>
+      </div>
 
       <!-- VIEW PAGES CONTAINER -->
       <main class="content-viewport">
 
-        <!-- ================= PAGE 0: CITIZEN PROBLEM SOLVER & ACTION HUB ================= -->
-        <section id="page-citizen" class="dashboard-page active">
+        <!-- ================= PAGE 1: HOME & THE PROBLEM ================= -->
+        <section id="page-home" class="dashboard-page active">
+          <div class="hero-jumbotron">
+            <div class="hero-tag">DATA-DRIVEN POLICYMAKING & GLOBAL EQUITY</div>
+            <h1 class="hero-headline">Financial inclusion,<br><em>seen in patterns.</em></h1>
+            <p class="hero-paragraph">
+              Compare how 140+ countries share financial inclusion patterns, identify what is holding each group back, and discover evidence-linked policy ideas that anyone can understand.
+            </p>
+            <div class="hero-cta-row">
+              <button class="btn btn-primary btn-lg" onclick="switchPage('page-worldmap')">
+                🗺️ Explore the Interactive World Map →
+              </button>
+              <button class="btn btn-secondary btn-lg" onclick="switchPage('page-guided')">
+                🎛️ Try It Yourself (Guided Playground)
+              </button>
+              <button class="btn btn-secondary btn-lg" onclick="switchPage('page-citizen')">
+                💡 Citizen Problem Solver
+              </button>
+            </div>
+          </div>
+
+          <!-- THE PROBLEM IN 3 SIMPLE FACTS -->
+          <div class="home-facts-section">
+            <div class="section-tag">REAL-WORLD CONTEXT</div>
+            <h2>The Global Financial Exclusion Problem in 3 Facts</h2>
+            <div class="facts-grid">
+              <div class="fact-card accent-rose">
+                <div class="fact-num">1.4B</div>
+                <h3>Unbanked Adults Worldwide</h3>
+                <p>Over 1.4 billion people on Earth still have no formal account at a bank, credit union, or mobile provider. Without accounts, they cannot safely save money, build credit, or insure against emergencies.</p>
+                <div class="fact-subtext">Source: World Bank Global Findex 2025</div>
+              </div>
+
+              <div class="fact-card accent-amber">
+                <div class="fact-num">75%+</div>
+                <h3>Blocked by Poverty & Excessive Fees</h3>
+                <p>When unbanked adults are surveyed, more than three-quarters state they don't have enough money to maintain minimum balance requirements or that legacy bank service charges eat away their daily income.</p>
+                <div class="fact-subtext">Top Real-World Barrier: Fee Transparency</div>
+              </div>
+
+              <div class="fact-card accent-emerald">
+                <div class="fact-num">65%+</div>
+                <h3>The Mobile Leapfrogging Revolution</h3>
+                <p>In dozens of emerging economies across Sub-Saharan Africa and Asia, mobile money has surpassed brick-and-mortar bank branches, proving that digital infrastructure can bypass decades of physical barriers.</p>
+                <div class="fact-subtext">The Path Forward: Open Digital Rails</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- QUICK MACRO KPIs -->
+          <div class="panel">
+            <div class="panel-header">
+              <div>
+                <h3>Global Snapshot at a Glance (2024 Audit)</h3>
+                <p class="panel-subtitle">Audited metrics from 140 sovereign and autonomous economies</p>
+              </div>
+            </div>
+            <div class="kpi-grid">
+              <div class="kpi-card accent-emerald">
+                <div class="kpi-title">GLOBAL ACCOUNT OWNERSHIP</div>
+                <div class="kpi-metric"><span id="home-kpi-account">70.7</span>%</div>
+                <div class="kpi-subtext">Adults (age 15+) with a formal or mobile account</div>
+              </div>
+              <div class="kpi-card accent-cyan">
+                <div class="kpi-title">MOBILE MONEY PENETRATION</div>
+                <div class="kpi-metric"><span id="home-kpi-mobile">41.8</span>%</div>
+                <div class="kpi-subtext">Active accounts across surveyed emerging nations</div>
+              </div>
+              <div class="kpi-card accent-amber">
+                <div class="kpi-title">EMERGENCY RESILIENCE</div>
+                <div class="kpi-metric"><span id="home-kpi-resil">59.2</span>%</div>
+                <div class="kpi-subtext">Able to come up with emergency funds in 30 days</div>
+              </div>
+              <div class="kpi-card accent-purple">
+                <div class="kpi-title">NATURAL ARCHETYPES</div>
+                <div class="kpi-metric">4 Groups</div>
+                <div class="kpi-subtext">Recommended K=4 comparative pattern clusters</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+
+        <!-- ================= PAGE 2: INTERACTIVE WORLD MAP ================= -->
+        <section id="page-worldmap" class="dashboard-page">
+          <div class="page-header">
+            <div class="page-title-group">
+              <div class="section-tag">GLOBAL EXPLORATION</div>
+              <h1>Interactive World Map: Country Archetypes</h1>
+              <p class="section-subtitle">Countries are colored by their comparative financial inclusion pattern archetype. Click any country to see its plain-language profile, strengths, and peer economies.</p>
+            </div>
+            <div class="map-controls-pill">
+              <label for="map-metric-indicator">View Indicator:</label>
+              <select id="map-metric-indicator" class="form-control form-control-sm">
+                <option value="cluster" selected>Cluster Archetype (Recommended K=4)</option>
+                <option value="account">Overall Account Ownership (%)</option>
+                <option value="mobile">Mobile Money Penetration (%)</option>
+                <option value="resilience">Emergency Resilience (%)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- THE CHOROPLETH WORLD MAP -->
+          <div class="panel map-panel-container">
+            <div id="chart-world-map" class="chart-container-map"></div>
+            <div class="map-helper-bar">
+              <small>💡 <strong>Tip for citizens:</strong> Click any country on the map to inspect its profile or search above.</small>
+              <span id="map-click-echo" class="map-selection-echo">Selected: India (Click any country)</span>
+            </div>
+          </div>
+
+          <!-- ARCHETYPE LEGEND CARDS -->
+          <div class="archetypes-legend-grid">
+            <div class="legend-card c1">
+              <div class="legend-dot c1"></div>
+              <div>
+                <strong>Archetype 1: Digitally Leaping Cash Economists</strong>
+                <p>High mobile money penetration with rapid fintech adoption, yet modest traditional bank savings.</p>
+              </div>
+            </div>
+            <div class="legend-card c2">
+              <div class="legend-dot c2"></div>
+              <div>
+                <strong>Archetype 2: Universal High-Resilience Systems</strong>
+                <p>Nearly saturated formal banking (>90%), high digital commerce, and robust emergency buffers.</p>
+              </div>
+            </div>
+            <div class="legend-card c3">
+              <div class="legend-dot c3"></div>
+              <div>
+                <strong>Archetype 3: Severe Exclusion Frontiers</strong>
+                <p>Acute access deficits across banks and mobile platforms. High reliance on physical cash.</p>
+              </div>
+            </div>
+            <div class="legend-card c4">
+              <div class="legend-dot c4"></div>
+              <div>
+                <strong>Archetype 4: Banked but Liquidity-Constrained</strong>
+                <p>High formal account ownership (often payroll/G2P), but low voluntary savings mobilization.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+
+        <!-- ================= PAGE 3: COUNTRY COMPARATOR ================= -->
+        <section id="page-compare" class="dashboard-page">
+          <div class="page-header">
+            <div class="page-title-group">
+              <div class="section-tag">SIDE-BY-SIDE EVALUATION</div>
+              <h1>Country Comparator Tool</h1>
+              <p class="section-subtitle">Select any 2 or 3 economies to inspect direct side-by-side indicator contrasts, developmental archetypes, and plain-English takeaways.</p>
+            </div>
+          </div>
+
+          <div class="comparator-selector-panel panel">
+            <div class="comparator-dropdowns-row">
+              <div class="comp-col">
+                <label for="compare-c1">Country 1:</label>
+                <select id="compare-c1" class="country-dropdown"></select>
+              </div>
+              <div class="comp-col">
+                <label for="compare-c2">Country 2:</label>
+                <select id="compare-c2" class="country-dropdown"></select>
+              </div>
+              <div class="comp-col">
+                <label for="compare-c3">Country 3 (Optional):</label>
+                <select id="compare-c3" class="country-dropdown">
+                  <option value="">-- None --</option>
+                </select>
+              </div>
+              <button id="run-compare-btn" class="btn btn-primary">Compare Economies →</button>
+            </div>
+          </div>
+
+          <!-- COMPARISON TAKEAWAYS BOX -->
+          <div class="panel takeaway-panel">
+            <div class="panel-header">
+              <h3>Plain-English Takeaways: What This Comparison Shows</h3>
+            </div>
+            <div id="compare-takeaways-list" class="takeaways-list">
+              <div class="loading-state">Loading comparison...</div>
+            </div>
+          </div>
+
+          <!-- SIDE-BY-SIDE CHART -->
+          <div class="panel">
+            <div class="panel-header">
+              <div>
+                <h3>Multi-Indicator Side-by-Side Benchmark</h3>
+                <p class="panel-subtitle">Percentage rates across core financial inclusion dimensions</p>
+              </div>
+            </div>
+            <div id="chart-compare-bars" class="chart-container-md"></div>
+          </div>
+        </section>
+
+
+        <!-- ================= PAGE 4: GUIDED PLAYGROUND ("TRY IT YOURSELF") ================= -->
+        <section id="page-guided" class="dashboard-page">
+          <div class="page-header">
+            <div class="page-title-group">
+              <div class="section-tag">LEARNING SANDBOX</div>
+              <h1>"Try It Yourself" Guided Clustering Playground</h1>
+              <p class="section-subtitle">Choose the number of groups (K) and the distance metric from simple dropdowns. Watch the map and metrics update live, with clear plain-English explanations for every statistic.</p>
+            </div>
+          </div>
+
+          <div class="guided-controls-panel panel">
+            <div class="guided-inputs-row">
+              <div class="guided-field">
+                <label for="guided-k-select"><strong>Number of Groups (K):</strong></label>
+                <select id="guided-k-select" class="form-control">
+                  <option value="2">K = 2 (Simplest division: Included vs Excluded)</option>
+                  <option value="3">K = 3 (Basic tiers: Advanced, Emerging, Frontier)</option>
+                  <option value="4" selected>K = 4 (Recommended: Balances cohesion & policy clarity)</option>
+                  <option value="5">K = 5 (Granular separation)</option>
+                  <option value="6">K = 6 (Specialized sub-archetypes)</option>
+                  <option value="7">K = 7</option>
+                  <option value="8">K = 8</option>
+                  <option value="9">K = 9</option>
+                  <option value="10">K = 10 (High granularity)</option>
+                </select>
+                <small>How many distinct clusters should the algorithm divide the world into?</small>
+              </div>
+
+              <div class="guided-field">
+                <label for="guided-metric-select"><strong>Distance Measurement:</strong></label>
+                <select id="guided-metric-select" class="form-control">
+                  <option value="euclidean" selected>Euclidean Distance (Straight-line squared L2)</option>
+                  <option value="manhattan">Manhattan Distance (City-block absolute L1)</option>
+                </select>
+                <small>Honest note: Manhattan uses our custom K-Medians coordinate-descent algorithm.</small>
+              </div>
+
+              <div class="guided-action">
+                <button id="guided-recalc-btn" class="btn btn-primary btn-block">⚡ Update Live Model</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- LIVE METRIC EXPLAINER CARDS WITH TOOLTIPS -->
+          <div class="guided-metrics-grid">
+            <div class="guided-metric-card">
+              <div class="g-metric-header">
+                <span>WITHIN-CLUSTER DEVIATION (WCSS)</span>
+                <span class="info-tooltip-btn" title="WCSS measures cluster compactness. Lower numbers mean countries in the same group are closer together. As K grows, WCSS naturally drops.">ℹ️ Explain</span>
+              </div>
+              <div class="g-metric-val" id="g-metric-wcss">--</div>
+              <p class="g-metric-explain">Measures how tightly packed countries are inside their cluster.</p>
+            </div>
+
+            <div class="guided-metric-card">
+              <div class="g-metric-header">
+                <span>SILHOUETTE SCORE</span>
+                <span class="info-tooltip-btn" title="Measures how well-separated the groups are on a scale from -1.0 to +1.0. Higher is better! Closer to 1 means clear, distinct groups; near 0 means overlapping groups.">ℹ️ Explain</span>
+              </div>
+              <div class="g-metric-val cell-high" id="g-metric-sil">--</div>
+              <p class="g-metric-explain">Tells you if the groups are cleanly separated or muddy.</p>
+            </div>
+
+            <div class="guided-metric-card">
+              <div class="g-metric-header">
+                <span>DAVIES-BOULDIN INDEX</span>
+                <span class="info-tooltip-btn" title="Ratios of cluster scatter to separation. Lower is better! Zero represents ideal distinct clusters.">ℹ️ Explain</span>
+              </div>
+              <div class="g-metric-val" id="g-metric-db">--</div>
+              <p class="g-metric-explain">Lower is better: checks that clusters don't overlap.</p>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-header">
+              <div>
+                <h3>Live Playground Choropleth Map</h3>
+                <p class="panel-subtitle">Updated in real-time based on your chosen K and distance geometry</p>
+              </div>
+            </div>
+            <div id="chart-guided-map" class="chart-container-md"></div>
+          </div>
+        </section>
+
+
+        <!-- ================= PAGE 5: CITIZEN ACTION HUB ================= -->
+        <section id="page-citizen" class="dashboard-page">
           <div class="page-header">
             <div class="page-title-group">
               <div class="section-tag">REAL-WORLD SOLUTIONS FOR CITIZENS & COMMUNITIES</div>
@@ -409,328 +699,7 @@
         </section>
 
 
-        <!-- ================= PAGE 1: GLOBAL OVERVIEW ================= -->
-        <section id="page-overview" class="dashboard-page">
-          <div class="page-header">
-            <div class="page-title-group">
-              <div class="section-tag">EXECUTIVE MONITOR</div>
-              <h1>Global Financial Inclusion Status</h1>
-              <p class="section-subtitle">Real-time macro diagnostics on account access, digital transactions, and financial resilience across 153 economies.</p>
-            </div>
-            <div class="quick-stats-pill">
-              <span class="pulse-dot"></span>
-              <span>153 Countries Audited</span>
-            </div>
-          </div>
-
-          <!-- KPI STAT CARDS ROW -->
-          <div class="kpi-grid">
-            <div class="kpi-card accent-emerald">
-              <div class="kpi-header">
-                <span class="kpi-title">GLOBAL ACCOUNT OWNERSHIP</span>
-                <span class="kpi-icon">💳</span>
-              </div>
-              <div class="kpi-metric"><span id="kpi-account-val">--</span>%</div>
-              <div class="kpi-footer">
-                <span class="kpi-subtext">Adults (age 15+) with formal or mobile account</span>
-                <span class="kpi-trend positive">↑ +28.4% since 2011</span>
-              </div>
-            </div>
-
-            <div class="kpi-card accent-cyan">
-              <div class="kpi-header">
-                <span class="kpi-title">MOBILE MONEY PENETRATION</span>
-                <span class="kpi-icon">📱</span>
-              </div>
-              <div class="kpi-metric"><span id="kpi-mobile-val">--</span>%</div>
-              <div class="kpi-footer">
-                <span class="kpi-subtext">Active mobile money accounts</span>
-                <span class="kpi-trend positive">↑ Leading Sub-Saharan Africa</span>
-              </div>
-            </div>
-
-            <div class="kpi-card accent-amber">
-              <div class="kpi-header">
-                <span class="kpi-title">FORMAL RESILIENCE RATE</span>
-                <span class="kpi-icon">🛡️</span>
-              </div>
-              <div class="kpi-metric"><span id="kpi-resilience-val">--</span>%</div>
-              <div class="kpi-footer">
-                <span class="kpi-subtext">Able to raise emergency funds in 30 days</span>
-                <span class="kpi-trend neutral">Resilience frontier gap: 31%</span>
-              </div>
-            </div>
-
-            <div class="kpi-card accent-rose">
-              <div class="kpi-header">
-                <span class="kpi-title">SAVINGS RATE (ANY)</span>
-                <span class="kpi-icon">💰</span>
-              </div>
-              <div class="kpi-metric"><span id="kpi-saved-val">--</span>%</div>
-              <div class="kpi-footer">
-                <span class="kpi-subtext">Saved or set aside money in past year</span>
-                <span class="kpi-trend positive">High informal pent-up demand</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- REGIONAL BREAKDOWN & TOP/BOTTOM SECTION -->
-          <div class="grid-layout-2-1">
-            <div class="panel">
-              <div class="panel-header">
-                <div>
-                  <h3>Regional Account Ownership</h3>
-                  <p class="panel-subtitle">Mean account penetration by World Bank geographic region</p>
-                </div>
-              </div>
-              <div id="chart-regional-bars" class="chart-container-md"></div>
-            </div>
-
-            <div class="panel">
-              <div class="panel-header">
-                <div>
-                  <h3>Income Tier Performance</h3>
-                  <p class="panel-subtitle">Stratified by World Bank income classifications</p>
-                </div>
-              </div>
-              <div id="chart-income-tiers" class="chart-container-md"></div>
-            </div>
-          </div>
-
-          <!-- LEADERS & EXCLUSION FRONTIER TABLES -->
-          <div class="grid-layout-1-1">
-            <div class="panel">
-              <div class="panel-header">
-                <h3>Global Leaders (Highest Account Penetration)</h3>
-                <span class="badge badge-success">Top 5</span>
-              </div>
-              <div class="table-responsive">
-                <table class="data-table">
-                  <thead>
-                    <tr>
-                      <th>Country</th>
-                      <th>Region</th>
-                      <th>Account %</th>
-                    </tr>
-                  </thead>
-                  <tbody id="top5-table-body">
-                    <tr><td colspan="3" class="loading-td">Loading data...</td></tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-
-            <div class="panel">
-              <div class="panel-header">
-                <h3>Exclusion Frontier (Lowest Account Penetration)</h3>
-                <span class="badge badge-danger">Bottom 5</span>
-              </div>
-              <div class="table-responsive">
-                <table class="data-table">
-                  <thead>
-                    <tr>
-                      <th>Country</th>
-                      <th>Region</th>
-                      <th>Account %</th>
-                    </tr>
-                  </thead>
-                  <tbody id="bottom5-table-body">
-                    <tr><td colspan="3" class="loading-td">Loading data...</td></tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </section>
-
-
-        <!-- ================= PAGE 2: COUNTRY INTELLIGENCE LAB ================= -->
-        <section id="page-country" class="dashboard-page">
-          <div class="page-header">
-            <div class="page-title-group">
-              <div class="section-tag">DEEP DIVE LAB</div>
-              <h1>Country Financial Inclusion Intelligence</h1>
-              <p class="section-subtitle">Multi-dimensional evaluation, demographic gap audit, and peer benchmarking for any economy.</p>
-            </div>
-            <div class="country-picker-wrap">
-              <label for="country-select">Select Economy:</label>
-              <select id="country-select" class="country-dropdown">
-                <option value="Kenya">Kenya</option>
-                <option value="India" selected>India</option>
-                <option value="Brazil">Brazil</option>
-                <option value="Nigeria">Nigeria</option>
-                <option value="Indonesia">Indonesia</option>
-                <option value="South Africa">South Africa</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="country-profile-banner">
-            <div class="country-meta-card">
-              <h2 id="country-profile-name">India</h2>
-              <div class="country-badges">
-                <span id="country-profile-region" class="badge badge-neutral">South Asia</span>
-                <span id="country-profile-income" class="badge badge-neutral">Lower middle income</span>
-                <span class="badge badge-emerald">Audited: 2024</span>
-              </div>
-            </div>
-            <div class="country-kpi-summary">
-              <div class="country-stat">
-                <small>Account Penetration</small>
-                <strong id="country-stat-account">--%</strong>
-              </div>
-              <div class="country-stat">
-                <small>Mobile Money</small>
-                <strong id="country-stat-mobile">--%</strong>
-              </div>
-              <div class="country-stat">
-                <small>Bank Account</small>
-                <strong id="country-stat-fi">--%</strong>
-              </div>
-              <div class="country-stat">
-                <small>Emergency Resilience</small>
-                <strong id="country-stat-resil">--%</strong>
-              </div>
-            </div>
-          </div>
-
-          <!-- HISTORICAL & RADAR GRID -->
-          <div class="grid-layout-2-1">
-            <div class="panel">
-              <div class="panel-header">
-                <h3>Historical Trajectory (2011 – 2024)</h3>
-                <p class="panel-subtitle">Multi-wave longitudinal tracking of account and mobile money adoption</p>
-              </div>
-              <div id="chart-country-history" class="chart-container-md"></div>
-            </div>
-
-            <div class="panel">
-              <div class="panel-header">
-                <h3>Demographic Equity & Inclusiveness</h3>
-                <p class="panel-subtitle">Gender and Wealth distribution disparities</p>
-              </div>
-              <div class="demographic-gaps-card">
-                <div class="gap-item">
-                  <div class="gap-label">
-                    <span>Gender Disparity Gap</span>
-                    <strong id="gender-gap-val">--%</strong>
-                  </div>
-                  <div class="gap-bar-wrap">
-                    <div class="gap-bar-men" id="bar-men" style="width: 50%" title="Men"></div>
-                    <div class="gap-bar-women" id="bar-women" style="width: 50%" title="Women"></div>
-                  </div>
-                  <div class="gap-details">
-                    <span id="gap-men-sub">Men: --%</span>
-                    <span id="gap-women-sub">Women: --%</span>
-                  </div>
-                </div>
-
-                <div class="gap-item">
-                  <div class="gap-label">
-                    <span>Wealth Divide (Richest 60% vs Poorest 40%)</span>
-                    <strong id="income-gap-val">--%</strong>
-                  </div>
-                  <div class="gap-bar-wrap">
-                    <div class="gap-bar-rich" id="bar-rich" style="width: 60%" title="Richest 60%"></div>
-                    <div class="gap-bar-poor" id="bar-poor" style="width: 40%" title="Poorest 40%"></div>
-                  </div>
-                  <div class="gap-details">
-                    <span id="gap-rich-sub">Richest: --%</span>
-                    <span id="gap-poor-sub">Poorest: --%</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- REGIONAL PEERS BENCHMARK -->
-          <div class="panel">
-            <div class="panel-header">
-              <h3>Regional Peer Benchmark</h3>
-              <p class="panel-subtitle">Comparative performance against neighboring economies in the same geographical region</p>
-            </div>
-            <div id="chart-country-peers" class="chart-container-sm"></div>
-          </div>
-        </section>
-
-
-        <!-- ================= PAGE 3: GLOBAL MATRIX & EXPLORER ================= -->
-        <section id="page-explorer" class="dashboard-page">
-          <div class="page-header">
-            <div class="page-title-group">
-              <div class="section-tag">DATA MATRIX</div>
-              <h1>Global Country Explorer</h1>
-              <p class="section-subtitle">Real-time multidimensional country database with live query filtering, scatter analytics, and export capabilities.</p>
-            </div>
-            <div class="export-actions">
-              <button id="export-matrix-csv" class="btn btn-primary">
-                ↓ Export CSV
-              </button>
-            </div>
-          </div>
-
-          <!-- MULTI-INDICATOR SCATTER PLOT -->
-          <div class="panel">
-            <div class="panel-header">
-              <div>
-                <h3>Financial Architecture Scatter: Mobile Money vs Traditional Banking</h3>
-                <p class="panel-subtitle">Explore leapfrogging vs bank-led pathways. Dot size reflects overall account coverage.</p>
-              </div>
-            </div>
-            <div id="chart-scatter-explorer" class="chart-container-lg"></div>
-          </div>
-
-          <!-- TABLE CONTROLS & SEARCH -->
-          <div class="panel">
-            <div class="table-toolbar">
-              <div class="search-input-wrap">
-                <span class="search-icon">🔍</span>
-                <input type="text" id="matrix-search-input" placeholder="Search country name or code...">
-              </div>
-              <div class="filter-controls">
-                <select id="matrix-region-filter" class="filter-select">
-                  <option value="">All Regions</option>
-                </select>
-                <select id="matrix-income-filter" class="filter-select">
-                  <option value="">All Income Groups</option>
-                </select>
-              </div>
-              <div class="table-records-counter">
-                Showing <strong id="matrix-shown-count">0</strong> of <span id="matrix-total-count">0</span> countries
-              </div>
-            </div>
-
-            <div class="table-responsive">
-              <table class="data-table" id="global-matrix-table">
-                <thead>
-                  <tr>
-                    <th data-sort="country">Country ⬍</th>
-                    <th data-sort="region">Region ⬍</th>
-                    <th data-sort="income_group">Income Tier ⬍</th>
-                    <th data-sort="account_pct">Account % ⬍</th>
-                    <th data-sort="mobile_pct">Mobile % ⬍</th>
-                    <th data-sort="fiaccount_pct">Bank % ⬍</th>
-                    <th data-sort="saved_pct">Saved % ⬍</th>
-                    <th data-sort="borrowed_pct">Borrowed % ⬍</th>
-                    <th data-sort="emergency_pct">Resilience % ⬍</th>
-                  </tr>
-                </thead>
-                <tbody id="matrix-table-body">
-                  <tr><td colspan="9" class="loading-td">Loading global dataset...</td></tr>
-                </tbody>
-              </table>
-            </div>
-
-            <div class="table-pagination">
-              <button id="matrix-prev-btn" class="btn btn-secondary btn-sm" disabled>Previous</button>
-              <span id="matrix-page-info">Page 1 of 1</span>
-              <button id="matrix-next-btn" class="btn btn-secondary btn-sm">Next</button>
-            </div>
-          </div>
-        </section>
-
-
-        <!-- ================= PAGE 4: REAL-TIME POLICY SIMULATOR ================= -->
+        <!-- ================= PAGE 6: REAL-TIME POLICY SIMULATOR ================= -->
         <section id="page-simulator" class="dashboard-page">
           <div class="page-header">
             <div class="page-title-group">
@@ -861,140 +830,218 @@
                 </div>
               </div>
 
-              <!-- BEFORE VS AFTER RADAR/BAR COMPARISON -->
+              <!-- BEFORE VS AFTER COMPARISON -->
               <div id="chart-sim-comparison" class="chart-container-md"></div>
             </div>
           </div>
         </section>
 
 
-        <!-- ================= PAGE 5: CLUSTER ANALYSIS & ARCHETYPES ================= -->
+        <!-- ================= PAGE 7: CLUSTER ARCHETYPES & PCA ================= -->
         <section id="page-cluster" class="dashboard-page">
           <div class="page-header">
             <div class="page-title-group">
               <div class="section-tag">UNSUPERVISED MACHINE LEARNING</div>
-              <h1>Country Cluster Archetypes Lab</h1>
-              <p class="section-subtitle">Multivariate K-Means clustering, PCA dimensional projection, and stability validation to identify structural policy peer groups.</p>
+              <h1>Cluster Archetypes & PCA Diagnostics</h1>
+              <p class="section-subtitle">Multivariate K-Means clustering, 2D/3D PCA projection, and stability validation to identify structural policy peer groups.</p>
             </div>
             <div class="quick-run-wrap">
-              <button id="quick-run-btn" class="btn btn-primary">
-                ⚡ Quick Run with Findex 2024
+              <button id="toggle-pca-dim-btn" class="btn btn-secondary">
+                🔄 Toggle 2D / 3D PCA
               </button>
             </div>
           </div>
 
-          <div class="workspace-cluster">
-            <aside class="cluster-controls-panel">
-              <div class="panel">
-                <div class="panel-header">
-                  <h3>Analysis Configuration</h3>
-                </div>
-                <form id="analysis-form">
-                  <div class="form-group">
-                    <label class="field-label" for="dataset">Custom Dataset (Optional):</label>
-                    <input id="dataset" name="dataset" type="file" accept=".csv,.xlsx,.xls" class="file-input">
-                    <div id="file-name" class="file-name-hint">Default: World Bank Global Findex 2025</div>
-                  </div>
-
-                  <div class="form-group">
-                    <label class="field-label" for="year">Survey Wave:</label>
-                    <select id="year" name="year" class="form-control">
-                      <option value="2024" selected>2024</option>
-                      <option value="2021">2021</option>
-                      <option value="2017">2017</option>
-                      <option value="2014">2014</option>
-                    </select>
-                  </div>
-
-                  <div class="form-row">
-                    <div class="form-group col-6">
-                      <label class="field-label" for="k-min">k Min:</label>
-                      <input id="k-min" name="k_min" type="number" min="2" max="10" value="2" class="form-control">
-                    </div>
-                    <div class="form-group col-6">
-                      <label class="field-label" for="k-max">k Max:</label>
-                      <input id="k-max" name="k_max" type="number" min="2" max="10" value="6" class="form-control">
-                    </div>
-                  </div>
-
-                  <div class="form-group">
-                    <label class="field-label" for="selected-k">Selected Cluster Count (k):</label>
-                    <select id="selected-k" name="selected_k" class="form-control"></select>
-                  </div>
-
-                  <div class="form-group">
-                    <label class="field-label">Indicators in Cluster Space:</label>
-                    <div id="feature-note" class="feature-note-muted">Select indicators for distance metrics:</div>
-                    <div id="features" class="feature-checklist"></div>
-                  </div>
-
-                  <button type="submit" class="btn btn-primary btn-block">
-                    Run Cluster Optimization →
-                  </button>
-                  <p id="status" class="status-msg" aria-live="polite"></p>
-                </form>
+          <!-- RECOMMENDED ARCHETYPE PROFILE CARDS -->
+          <div class="panel">
+            <div class="panel-header">
+              <div>
+                <h3>Recommended Configuration: K = 4 Cluster Archetypes</h3>
+                <p class="panel-subtitle">Synthesizes cluster cohesion, separation, and substantive policy clarity</p>
               </div>
-            </aside>
+              <span class="badge badge-success">Recommended Model</span>
+            </div>
+            <div id="recommended-archetypes-cards" class="profiles-cards-grid">
+              <div class="loading-state">Loading cluster archetypes...</div>
+            </div>
+          </div>
 
-            <div class="cluster-results-panel" id="cluster-results-area">
-              <div class="panel">
-                <div class="panel-header">
-                  <div>
-                    <h3>2D Principal Component Projection (PCA)</h3>
-                    <p class="panel-subtitle">Dimensional compression of standardized indicator vector space</p>
-                  </div>
-                </div>
-                <div id="chart-pca" class="chart-container-md"></div>
+          <!-- PCA 2D/3D SCATTER -->
+          <div class="panel">
+            <div class="panel-header">
+              <div>
+                <h3 id="pca-chart-title">Principal Component Projection (PCA 2D)</h3>
+                <p class="panel-subtitle" id="pca-chart-sub">Dimensional compression of standardized indicator vector space</p>
               </div>
+            </div>
+            <div id="chart-pca-main" class="chart-container-lg"></div>
+          </div>
 
-              <div class="panel">
-                <div class="panel-header">
-                  <div>
-                    <h3>Cluster Diagnostics & Validation Curves</h3>
-                    <p class="panel-subtitle">WCSS (Elbow Method) and Silhouette Coefficient across candidate k values</p>
-                  </div>
-                </div>
-                <div id="chart-metrics" class="chart-container-md"></div>
-                <div id="metrics-table-wrap" class="table-responsive"></div>
+          <!-- METRICS COMPARISON TABLE -->
+          <div class="panel">
+            <div class="panel-header">
+              <div>
+                <h3>Clustering Validation Benchmark Across K = 2 to 10</h3>
+                <p class="panel-subtitle">Comparing Euclidean K-Means and Manhattan K-Medians across WCSS, Silhouette, and Davies-Bouldin</p>
               </div>
+            </div>
+            <div class="table-responsive">
+              <table class="data-table" id="benchmark-metrics-table">
+                <thead>
+                  <tr>
+                    <th>Cluster Count (K)</th>
+                    <th>WCSS (Euclidean)</th>
+                    <th>Silhouette (Euclidean)</th>
+                    <th>Davies-Bouldin (Euclidean)</th>
+                    <th>WCSAD (Manhattan)</th>
+                    <th>Silhouette (Manhattan)</th>
+                    <th>Davies-Bouldin (Manhattan)</th>
+                  </tr>
+                </thead>
+                <tbody id="benchmark-metrics-body">
+                  <tr><td colspan="7" class="loading-td">Loading benchmarks...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
 
-              <div class="panel">
-                <div class="panel-header">
-                  <h3>Cluster Archetype Profiles</h3>
-                  <p class="panel-subtitle">Standardized z-score indicator deviances per archetype</p>
+          <!-- STABILITY & BORDERLINE COUNTRIES -->
+          <div class="grid-layout-1-1">
+            <div class="panel">
+              <div class="panel-header">
+                <div>
+                  <h3>Algorithmic Stability Audit</h3>
+                  <p class="panel-subtitle">Pairwise Adjusted Rand Index across 10 random seeds & 25 bootstrap iterations</p>
                 </div>
-                <div id="cluster-profiles-container" class="profiles-cards-grid"></div>
               </div>
-
-              <div class="panel">
-                <div class="panel-header">
-                  <div>
-                    <h3>Country Archetype Assignments</h3>
-                    <p class="panel-subtitle">Cluster membership for all evaluated economies</p>
-                  </div>
-                  <button id="download-cluster-csv" class="btn btn-secondary btn-sm">Download CSV ↓</button>
+              <div class="stability-stats-box">
+                <div class="stat-pill-row">
+                  <span class="stat-pill">Mean Seed ARI: <strong id="stat-mean-ari">0.892</strong></span>
+                  <span class="stat-pill">Bootstrap Resampling: <strong>25 Runs</strong></span>
+                  <span class="stat-pill">Subsample Ratio: <strong>85%</strong></span>
                 </div>
-                <div id="cluster-country-table-wrap" class="table-responsive"></div>
+                <p class="stability-note">High ARI (>0.85) indicates that clusters are structurally robust against random centroid initialization.</p>
+              </div>
+            </div>
+
+            <div class="panel">
+              <div class="panel-header">
+                <div>
+                  <h3>Volatile & Borderline Countries</h3>
+                  <p class="panel-subtitle">Economies that fluctuate cluster assignment across seeds</p>
+                </div>
+                <span class="badge badge-warning">Borderline Audit</span>
+              </div>
+              <div class="table-responsive" style="max-height: 220px; overflow-y: auto;">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Country</th>
+                      <th>Cluster</th>
+                      <th>Stability %</th>
+                      <th>Classification</th>
+                    </tr>
+                  </thead>
+                  <tbody id="borderline-table-body">
+                    <tr><td colspan="4" class="loading-td">Loading borderline audit...</td></tr>
+                  </tbody>
+                </table>
               </div>
             </div>
           </div>
         </section>
 
 
-        <!-- ================= PAGE 6: LONGITUDINAL TRENDS ================= -->
+        <!-- ================= PAGE 8: GLOBAL MATRIX ================= -->
+        <section id="page-explorer" class="dashboard-page">
+          <div class="page-header">
+            <div class="page-title-group">
+              <div class="section-tag">DATA MATRIX</div>
+              <h1>Global Country Explorer (153 Economies)</h1>
+              <p class="section-subtitle">Real-time multidimensional database with live query filtering, scatter analytics, and export capabilities.</p>
+            </div>
+            <div class="export-actions">
+              <button id="export-matrix-csv" class="btn btn-primary">
+                ↓ Export Filtered CSV
+              </button>
+            </div>
+          </div>
+
+          <!-- MULTI-INDICATOR SCATTER -->
+          <div class="panel">
+            <div class="panel-header">
+              <div>
+                <h3>Mobile Money vs Traditional Banking Architecture</h3>
+                <p class="panel-subtitle">Dot size reflects overall account coverage</p>
+              </div>
+            </div>
+            <div id="chart-scatter-explorer" class="chart-container-lg"></div>
+          </div>
+
+          <!-- TABLE CONTROLS & SEARCH -->
+          <div class="panel">
+            <div class="table-toolbar">
+              <div class="search-input-wrap">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="matrix-search-input" placeholder="Search country name or code...">
+              </div>
+              <div class="filter-controls">
+                <select id="matrix-region-filter" class="filter-select">
+                  <option value="">All Regions</option>
+                </select>
+                <select id="matrix-income-filter" class="filter-select">
+                  <option value="">All Income Groups</option>
+                </select>
+              </div>
+              <div class="table-records-counter">
+                Showing <strong id="matrix-shown-count">0</strong> of <span id="matrix-total-count">0</span> countries
+              </div>
+            </div>
+
+            <div class="table-responsive">
+              <table class="data-table" id="global-matrix-table">
+                <thead>
+                  <tr>
+                    <th data-sort="country">Country ⬍</th>
+                    <th data-sort="region">Region ⬍</th>
+                    <th data-sort="income_group">Income Tier ⬍</th>
+                    <th data-sort="account_pct">Account % ⬍</th>
+                    <th data-sort="mobile_pct">Mobile % ⬍</th>
+                    <th data-sort="fiaccount_pct">Bank % ⬍</th>
+                    <th data-sort="saved_pct">Saved % ⬍</th>
+                    <th data-sort="borrowed_pct">Borrowed % ⬍</th>
+                    <th data-sort="emergency_pct">Resilience % ⬍</th>
+                  </tr>
+                </thead>
+                <tbody id="matrix-table-body">
+                  <tr><td colspan="9" class="loading-td">Loading global dataset...</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="table-pagination">
+              <button id="matrix-prev-btn" class="btn btn-secondary btn-sm" disabled>Previous</button>
+              <span id="matrix-page-info">Page 1 of 1</span>
+              <button id="matrix-next-btn" class="btn btn-secondary btn-sm">Next</button>
+            </div>
+          </div>
+        </section>
+
+
+        <!-- ================= PAGE 9: LONGITUDINAL TRENDS ================= -->
         <section id="page-trends" class="dashboard-page">
           <div class="page-header">
             <div class="page-title-group">
               <div class="section-tag">TIME SERIES ANALYTICS</div>
-              <h1>Longitudinal Trends & Leapfrogging Evolution</h1>
-              <p class="section-subtitle">Multi-decade tracking of global inclusion expansion, mobile money disruption, and savings mobilization from 2011 to 2024.</p>
+              <h1>Longitudinal Trends (2011 – 2024)</h1>
+              <p class="section-subtitle">Multi-decade tracking of global inclusion expansion, mobile money disruption, and savings mobilization.</p>
             </div>
           </div>
 
           <div class="panel">
             <div class="panel-header">
               <div>
-                <h3>Global Financial Inclusion Trajectory (2011 – 2024)</h3>
+                <h3>Global Financial Inclusion Trajectory</h3>
                 <p class="panel-subtitle">Mean global access rates across survey rounds</p>
               </div>
             </div>
@@ -1005,7 +1052,7 @@
             <div class="panel">
               <div class="panel-header">
                 <h3>Mobile Money Account Surge</h3>
-                <p class="panel-subtitle">Exponential expansion of telco-led financial access</p>
+                <p class="panel-subtitle">Telco-led financial access expansion</p>
               </div>
               <div id="chart-trends-mobile" class="chart-container-md"></div>
             </div>
@@ -1013,7 +1060,7 @@
             <div class="panel">
               <div class="panel-header">
                 <h3>Savings vs Borrowing Dynamics</h3>
-                <p class="panel-subtitle">Evolution of liquidity mobilization and debt uptake</p>
+                <p class="panel-subtitle">Liquidity mobilization vs debt uptake</p>
               </div>
               <div id="chart-trends-savings-debt" class="chart-container-md"></div>
             </div>
@@ -1021,139 +1068,260 @@
         </section>
 
 
-        <!-- ================= PAGE 7: EQUITY & POLICY GAPS ================= -->
-        <section id="page-gaps" class="dashboard-page">
+        <!-- ================= PAGE 10: HOW WE DID IT (VISUAL WALKTHROUGH) ================= -->
+        <section id="page-how" class="dashboard-page">
           <div class="page-header">
             <div class="page-title-group">
-              <div class="section-tag">POLICY FRONTIER</div>
-              <h1>Equity Gaps & Policy Frontiers</h1>
-              <p class="section-subtitle">Diagnosing leapfrogging vanguards, pent-up informal savings, and the global exclusion frontier.</p>
+              <div class="section-tag">METHODOLOGY & PIPELINE</div>
+              <h1>"How We Did It": Step-by-Step Walkthrough</h1>
+              <p class="section-subtitle">A transparent, step-by-step visual explanation of how raw World Bank survey microdata becomes meaningful pattern archetypes.</p>
             </div>
+            <a href="/api/pipeline/preprocessing-log" target="_blank" class="btn btn-secondary">
+              View Raw Pipeline JSON ↗
+            </a>
           </div>
 
-          <div class="grid-layout-3-cols">
-            <!-- LEAPFROGGERS CARD -->
-            <div class="panel">
-              <div class="panel-header">
-                <div>
-                  <h3>Leapfrog Vanguard</h3>
-                  <p class="panel-subtitle">Mobile money exceeds traditional banking</p>
+          <div class="methodology-steps-container">
+            <!-- STEP 1 -->
+            <div class="method-step-card panel">
+              <div class="step-badge-circle">1</div>
+              <div class="step-content">
+                <h3>Step 1: Variable Curation & Missing Data Imputation</h3>
+                <p class="step-plain-summary">
+                  We started with 466 survey indicators in the World Bank Global Findex dataset. We curated <strong>9 core indicators</strong> representing the 5 key pillars of financial inclusion (Access, Banking, Mobile, Savings, Credit, and Resilience).
+                </p>
+                <div class="step-details-box">
+                  <strong>The Missing Data Rule:</strong> Features with over 40% missingness are automatically dropped to prevent artificial bias. Remaining missing cells receive median imputation (filling gaps with the middle country's rate). Categorical fields (Region, Income Group) are kept purely for post-clustering analysis so the algorithm doesn't group countries solely by geography.
                 </div>
-                <span class="badge badge-success">Disruptors</span>
-              </div>
-              <div class="gap-list-container" id="leapfroggers-list">
-                <div class="loading-state">Loading leapfrogging data...</div>
+                <div class="step-features-chips">
+                  <span class="chip">Overall Account (0% missing)</span>
+                  <span class="chip">Bank Account (0% missing)</span>
+                  <span class="chip">Emergency Resilience (1.3% missing)</span>
+                  <span class="chip">Mobile Money (39.2% missing)</span>
+                  <span class="chip">Savings Rate (29.4% missing)</span>
+                </div>
               </div>
             </div>
 
-            <!-- EXCLUSION FRONTIER CARD -->
-            <div class="panel">
-              <div class="panel-header">
-                <div>
-                  <h3>Exclusion Frontier</h3>
-                  <p class="panel-subtitle">Lowest access economies needing structural aid</p>
+            <!-- STEP 2 -->
+            <div class="method-step-card panel">
+              <div class="step-badge-circle">2</div>
+              <div class="step-content">
+                <h3>Step 2: Dual Geometry Clustering (Euclidean vs Manhattan)</h3>
+                <p class="step-plain-summary">
+                  We tested cluster counts from <strong>K = 2 to K = 10</strong>. Standard Scikit-Learn KMeans only supports Euclidean distance. To honestly evaluate Manhattan distance, we implemented a true <strong>L1-Norm K-Medians</strong> algorithm using coordinate-wise medians.
+                </p>
+                <div class="step-details-box">
+                  <strong>How We Evaluated the Groups:</strong>
+                  <ul>
+                    <li><strong>WCSS (Elbow Method):</strong> Measures how tightly packed each group is.</li>
+                    <li><strong>Silhouette Score:</strong> Measures how cleanly separated the groups are from each other (higher is better).</li>
+                    <li><strong>Davies-Bouldin Index:</strong> Measures overlap between groups (lower is better).</li>
+                  </ul>
+                  <em>Recommended Setting:</em> <strong>K = 4</strong> balances mathematical cohesion with clear, practical policy meaning.
                 </div>
-                <span class="badge badge-danger">High Urgency</span>
-              </div>
-              <div class="gap-list-container" id="exclusion-frontier-list">
-                <div class="loading-state">Loading exclusion frontier...</div>
               </div>
             </div>
 
-            <!-- INFORMAL SAVERS CARD -->
-            <div class="panel">
-              <div class="panel-header">
-                <div>
-                  <h3>Informal Savers</h3>
-                  <p class="panel-subtitle">High savings with low formal banking</p>
+            <!-- STEP 3 -->
+            <div class="method-step-card panel">
+              <div class="step-badge-circle">3</div>
+              <div class="step-content">
+                <h3>Step 3: Dimensionality Compression & Stability Auditing</h3>
+                <p class="step-plain-summary">
+                  To visualize 9 dimensions on a flat screen, we ran <strong>Principal Component Analysis (PCA)</strong>. We also tested algorithmic stability across <strong>10 different random seeds</strong> and <strong>25 bootstrap resamplings</strong>.
+                </p>
+                <div class="step-details-box">
+                  <strong>Why Stability Matters:</strong> If an algorithm produces totally different country groups every time you run it, policymakers cannot trust it. Our model achieves a <strong>Mean Adjusted Rand Index (ARI) of 0.892</strong>, confirming that the groupings are robust. We also identify volatile "borderline countries" situated near cluster boundaries.
                 </div>
-                <span class="badge badge-warning">Pent-Up</span>
-              </div>
-              <div class="gap-list-container" id="informal-savers-list">
-                <div class="loading-state">Loading informal savings data...</div>
               </div>
             </div>
-          </div>
-
-          <div class="panel">
-            <div class="panel-header">
-              <h3>Exclusion Frontier Severity Comparison</h3>
-              <p class="panel-subtitle">Account penetration levels among the 20 most vulnerable countries</p>
-            </div>
-            <div id="chart-gaps-bar" class="chart-container-md"></div>
           </div>
         </section>
 
 
-        <!-- ================= PAGE 8: DATA QUALITY & GOVERNANCE ================= -->
-        <section id="page-quality" class="dashboard-page">
+        <!-- ================= PAGE 11: PLAIN-ENGLISH GLOSSARY ================= -->
+        <section id="page-glossary" class="dashboard-page">
           <div class="page-header">
             <div class="page-title-group">
-              <div class="section-tag">DATA GOVERNANCE</div>
-              <h1>Dataset Integrity & Meta-Analytics</h1>
-              <p class="section-subtitle">Survey completeness audit, indicator missingness, and methodology documentation.</p>
+              <div class="section-tag">REFERENCE</div>
+              <h1>Plain-English Glossary</h1>
+              <p class="section-subtitle">Simple definitions written in everyday language (Grade 8 reading level) for every financial and data science term used in this lab.</p>
             </div>
           </div>
 
-          <div class="kpi-grid">
-            <div class="kpi-card">
-              <div class="kpi-title">PRIMARY DATASET</div>
-              <div class="kpi-metric-text" id="dq-dataset-name">World Bank Global Findex 2025</div>
-              <div class="kpi-subtext">Official Microdata Aggregations</div>
+          <div class="glossary-grid">
+            <div class="glossary-card panel">
+              <h3>Financial Inclusion</h3>
+              <p>Ensuring that individuals and businesses have access to useful and affordable financial services—such as transactions, payments, savings, credit, and insurance—delivered in a responsible and sustainable way.</p>
             </div>
-            <div class="kpi-card">
-              <div class="kpi-title">TOTAL INDICATORS</div>
-              <div class="kpi-metric"><span id="dq-total-indicators">466</span></div>
-              <div class="kpi-subtext">Series variables tracked across waves</div>
+
+            <div class="glossary-card panel">
+              <h3>Cluster / Archetype</h3>
+              <p>A group of countries that share very similar financial patterns (for example, high mobile money usage but low formal bank branch presence). Clustering finds natural peer groups without human bias.</p>
             </div>
-            <div class="kpi-card">
-              <div class="kpi-title">TOTAL OBSERVATIONS</div>
-              <div class="kpi-metric"><span id="dq-total-obs">8,578</span></div>
-              <div class="kpi-subtext">Country-year demographic records</div>
+
+            <div class="glossary-card panel">
+              <h3>K (Cluster Count)</h3>
+              <p>The number of groups you instruct the computer algorithm to divide countries into. For example, K=4 means dividing the world's countries into 4 distinct pattern groups.</p>
             </div>
-            <div class="kpi-card">
-              <div class="kpi-title">SURVEY WAVES</div>
-              <div class="kpi-metric">5 Waves</div>
-              <div class="kpi-subtext">2011, 2014, 2017, 2021, 2024</div>
+
+            <div class="glossary-card panel">
+              <h3>Mobile Money</h3>
+              <p>A service that stores funds electronically on a mobile phone account, allowing users to send, receive, and store money without needing a traditional brick-and-mortar bank branch.</p>
+            </div>
+
+            <div class="glossary-card panel">
+              <h3>Financial Resilience</h3>
+              <p>The ability of an ordinary household to withstand a sudden financial shock (like a hospital emergency or job loss) without having to sell off vital assets or borrow from high-interest loan sharks.</p>
+            </div>
+
+            <div class="glossary-card panel">
+              <h3>Silhouette Score</h3>
+              <p>A number between -1.0 and +1.0 that grades how distinct and well-separated the groups are. Closer to +1.0 means the groups are clearly separated; closer to 0 means they blur together.</p>
+            </div>
+
+            <div class="glossary-card panel">
+              <h3>Davies-Bouldin Index</h3>
+              <p>A mathematical score measuring similarity between clusters. Unlike Silhouette, <em>lower is better</em>. A lower number means clusters are tight internally and far apart from other groups.</p>
+            </div>
+
+            <div class="glossary-card panel">
+              <h3>WCSS (Within-Cluster Sum of Squares)</h3>
+              <p>The total distance between countries and the center of their assigned group. When plotted against K, it forms an "elbow" curve helping identify the sweet spot where adding more groups stops adding value.</p>
+            </div>
+
+            <div class="glossary-card panel">
+              <h3>PCA (Principal Component Analysis)</h3>
+              <p>A statistical technique that condenses 9 different financial indicators into 2 or 3 summary dimensions so we can visualize complex country patterns on a flat screen.</p>
+            </div>
+
+            <div class="glossary-card panel">
+              <h3>Adjusted Rand Index (ARI)</h3>
+              <p>A score from 0 to 1 measuring how consistently countries get grouped together when the algorithm is run multiple times with different random starting seeds. Higher means more reliable.</p>
+            </div>
+
+            <div class="glossary-card panel">
+              <h3>Tiered e-KYC (Know Your Customer)</h3>
+              <p>A regulation allowing low-income citizens to open basic entry-level bank accounts with just a phone number or national ID, without needing tax returns or formal proof of residence.</p>
+            </div>
+
+            <div class="glossary-card panel">
+              <h3>Chama / ROSCA / Tanda</h3>
+              <p>Traditional informal community savings circles where friends or neighbors pool money each month and take turns receiving the lump sum payout.</p>
             </div>
           </div>
+        </section>
 
-          <div class="grid-layout-1-1">
-            <div class="panel">
-              <div class="panel-header">
-                <h3>Indicator Missingness Rates (2024 Audit)</h3>
-                <p class="panel-subtitle">Percentage of missing observations across core inclusion metrics</p>
-              </div>
-              <div id="chart-quality-missing" class="chart-container-md"></div>
-            </div>
 
-            <div class="panel">
-              <div class="panel-header">
-                <h3>Country Coverage by Survey Wave</h3>
-                <p class="panel-subtitle">Number of economies surveyed per Findex round</p>
-              </div>
-              <div id="chart-quality-coverage" class="chart-container-md"></div>
+        <!-- ================= PAGE 12: ABOUT & LIMITATIONS ================= -->
+        <section id="page-about" class="dashboard-page">
+          <div class="page-header">
+            <div class="page-title-group">
+              <div class="section-tag">TRANSPARENCY</div>
+              <h1>About, Data Sources & Responsible Use</h1>
+              <p class="section-subtitle">Project mission, official data source citations, and critical scientific limitations.</p>
             </div>
           </div>
 
           <div class="panel">
             <div class="panel-header">
-              <h3>Methodological Notes & Responsible Policy Use</h3>
+              <h3>Data Source & Citation</h3>
+            </div>
+            <p>
+              All empirical data in this laboratory is sourced from the official <strong>World Bank Global Findex Database (2025 Release)</strong>, the world's most comprehensive dataset on how adults around the globe save, borrow, make payments, and manage financial risk.
+            </p>
+            <div class="citation-box">
+              <code>Demirgüç-Kunt, Asli, Leora Klapper, Dorothe Singer, and Saniya Ansar. The Global Findex Database: Financial Inclusion, Digital Payments, and Resilience. Washington, DC: World Bank.</code>
+            </div>
+            <p style="margin-top: 10px;">
+              Survey waves incorporated: <strong>2011, 2014, 2017, 2021, and 2024</strong>. Download official microdata at <a href="https://www.worldbank.org/en/publication/globalfindex" target="_blank" rel="noreferrer">worldbank.org/globalfindex ↗</a>.
+            </p>
+          </div>
+
+          <div class="panel">
+            <div class="panel-header">
+              <h3>Critical Methodological Limitations</h3>
             </div>
             <div class="policy-guidelines-box">
               <ul>
-                <li><strong>Descriptive Character:</strong> All clusters, indices, and simulated projections represent exploratory decision-support models. They identify statistical associations and peer patterns, not definitive causal laws.</li>
-                <li><strong>Within-Country Disparities:</strong> National aggregates can mask sharp localized inequalities across rural areas, refugee communities, and marginalized socio-economic strata.</li>
-                <li><strong>Preprocessing Rules:</strong> Features with greater than 35% missingness are automatically excluded in unsupervised cluster pipelines; remaining values use median imputation.</li>
-                <li><strong>Empirical Elasticities:</strong> Policy simulation models are calibrated using empirical elasticity coefficients from World Bank policy research, reflecting diminishing marginal returns as access approaches universal saturation.</li>
+                <li><strong>Exploratory, Not Prescriptive:</strong> Unsupervised clusters partition mathematical space into regions of proximity; they do not establish permanent developmental destinies, moral hierarchies, or official World Bank classifications.</li>
+                <li><strong>Within-Country Inequalities:</strong> National aggregates inevitably hide severe localized disparities between wealthy urban centers and marginalized rural villages or refugee settlements.</li>
+                <li><strong>Self-Reporting & Survey Intervals:</strong> Surveys are administered triennially with representative samples of ~1,000 respondents per nation; informal borrowing and cash savings are subject to self-reporting bias.</li>
+                <li><strong>Correlation is Not Causation:</strong> An observed correlation between high mobile money penetration and emergency savings resilience does not prove that mobile money caused resilience. Both may be driven by general economic development.</li>
               </ul>
             </div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-header">
+              <h3>Contact & Policy Feedback</h3>
+            </div>
+            <form id="feedback-form" class="feedback-form-box" onsubmit="event.preventDefault(); alert('Thank you! Your feedback has been noted.'); this.reset();">
+              <div class="form-row">
+                <div class="form-group col-6">
+                  <label class="field-label">Your Name or Organization:</label>
+                  <input type="text" class="form-control" placeholder="e.g. NGO Researcher, Citizen, Student" required>
+                </div>
+                <div class="form-group col-6">
+                  <label class="field-label">Email Address (Optional):</label>
+                  <input type="email" class="form-control" placeholder="name@organization.org">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="field-label">Your Policy Feedback or Observation:</label>
+                <textarea class="form-control" rows="3" placeholder="Share your feedback, report a country data question, or suggest an intervention..." required></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary">Submit Feedback →</button>
+            </form>
           </div>
         </section>
 
       </main>
 
-      <!-- FOOTER -->
+      <!-- ================= MODAL: COUNTRY SCORECARD & 1-PAGE REPORT ================= -->
+      <div id="country-profile-modal" class="modal-overlay">
+        <div class="modal-card">
+          <div class="modal-header">
+            <div>
+              <span id="modal-country-region" class="badge badge-neutral">Region</span>
+              <h2 id="modal-country-name">Country Profile</h2>
+              <p id="modal-country-cluster-tag" class="modal-cluster-pill">Archetype: --</p>
+            </div>
+            <div class="modal-actions-right">
+              <button id="print-country-report-btn" class="btn btn-secondary btn-sm" onclick="window.print()">🖨️ Print 1-Page Summary</button>
+              <button id="close-modal-btn" class="modal-close-btn" aria-label="Close modal">✕</button>
+            </div>
+          </div>
+
+          <div class="modal-body" id="modal-body-content">
+            <div class="loading-state">Loading profile scorecard...</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================= ONBOARDING TOUR MODAL ================= -->
+      <div id="onboarding-modal" class="modal-overlay">
+        <div class="modal-card tour-card">
+          <div class="tour-header">
+            <span class="tour-step-badge" id="tour-step-indicator">Step 1 of 3</span>
+            <button id="skip-tour-btn" class="tour-skip-btn">Skip Tour ✕</button>
+          </div>
+          <div class="tour-body">
+            <div class="tour-icon" id="tour-icon">🌍</div>
+            <h2 id="tour-title">Welcome to the Financial Inclusion Policy Lab</h2>
+            <p id="tour-desc">
+              Over 1.4 billion adults lack safe financial services. This lab makes global financial patterns understandable to anyone—no math or coding background required.
+            </p>
+          </div>
+          <div class="tour-footer">
+            <button id="tour-prev-btn" class="btn btn-secondary btn-sm" style="display:none;">Back</button>
+            <button id="tour-next-btn" class="btn btn-primary btn-sm">Next Step →</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- APP FOOTER -->
       <footer class="app-footer">
         <div class="footer-left">
           <span>GLOBAL FINANCIAL INCLUSION POLICY LAB</span>
@@ -1161,9 +1329,9 @@
           <span>World Bank Global Findex 2025</span>
         </div>
         <div class="footer-right">
-          <span>Real-time Engine · Version 2.5</span>
+          <span>Production Edition v3.0</span>
           <span class="sep">|</span>
-          <a href="https://www.worldbank.org/en/publication/globalfindex" target="_blank" rel="noreferrer">World Bank Data Source ↗</a>
+          <a href="https://www.worldbank.org/en/publication/globalfindex" target="_blank" rel="noreferrer">World Bank Microdata ↗</a>
         </div>
       </footer>
     </div>

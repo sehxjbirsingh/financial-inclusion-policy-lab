@@ -4,13 +4,16 @@ and real-time policy simulation based on World Bank Global Findex 2025.
 from __future__ import annotations
 
 import os
+import json
 from pathlib import Path
 import numpy as np
 import pandas as pd
+from sklearn.cluster import KMeans
 
 BASE_DIR = Path(__file__).parent
 DATA_PATH = BASE_DIR / "data" / "GlobalFindex2025.xlsx"
 CACHE_DIR = BASE_DIR / "data" / "cache"
+PROCESSED_DIR = BASE_DIR / "data" / "processed"
 CACHE_DATA_PKL = CACHE_DIR / "findex_data.pkl"
 CACHE_SERIES_PKL = CACHE_DIR / "findex_series.pkl"
 
@@ -717,6 +720,234 @@ class FindexDataService:
             "savings_per_transfer": savings_per_transfer,
             "annual_savings": annual_savings,
             "impact_text": impact_text
+        }
+
+    def get_clustering_benchmarks(self) -> list[dict]:
+        """Returns benchmarks across K=2..10 for Euclidean and Manhattan."""
+        path = PROCESSED_DIR / "clustering_benchmarks.json"
+        if path.exists():
+            with open(path, "r", encoding="utf-8") as f:
+                return json.load(f)
+        return []
+
+    def get_recommended_clustering(self) -> dict:
+        """Returns recommended K=4 archetype models, member countries, and policy suggestions."""
+        path = PROCESSED_DIR / "recommended_model.json"
+        if path.exists():
+            with open(path, "r", encoding="utf-8") as f:
+                return json.load(f)
+        return {}
+
+    def get_pca_coordinates(self) -> dict:
+        """Returns 2D and 3D PCA coordinates with explained variance."""
+        path = PROCESSED_DIR / "pca_coordinates.json"
+        if path.exists():
+            with open(path, "r", encoding="utf-8") as f:
+                return json.load(f)
+        return {}
+
+    def get_stability_analysis(self) -> dict:
+        """Returns seed ARI stability and volatile borderline countries."""
+        path = PROCESSED_DIR / "stability_analysis.json"
+        if path.exists():
+            with open(path, "r", encoding="utf-8") as f:
+                return json.load(f)
+        return {}
+
+    def get_preprocessing_log(self) -> dict:
+        """Returns data preparation log and missingness audit."""
+        path = PROCESSED_DIR / "preprocessing_log.json"
+        if path.exists():
+            with open(path, "r", encoding="utf-8") as f:
+                return json.load(f)
+        return {}
+
+    def get_country_cluster_profile(self, country_name: str) -> dict | None:
+        """Detailed plain-language country profile: cluster archetype, peer countries, strengths, and gaps."""
+        rec = self.get_recommended_clustering()
+        if not rec or "profiles" not in rec:
+            return None
+
+        # Load assignments
+        assign_path = PROCESSED_DIR / "cluster_country_assignments.csv"
+        raw_path = PROCESSED_DIR / "country_features_raw.csv"
+        if not assign_path.exists() or not raw_path.exists():
+            return None
+
+        df_assign = pd.read_csv(assign_path)
+        df_raw = pd.read_csv(raw_path)
+
+        # Match country name
+        c_clean = country_name.strip().lower()
+        match = df_assign[df_assign["Country"].str.lower() == c_clean]
+        if match.empty:
+            match = df_assign[df_assign["Country"].str.lower().str.contains(c_clean, na=False)]
+        if match.empty:
+            return None
+
+        row = match.iloc[0]
+        c_matched = row["Country"]
+        c_code = str(row["Code"])
+        c_cluster = int(row["Cluster"])
+        c_cluster_name = str(row["ClusterName"])
+        c_region = str(row["Region"])
+        c_income = str(row["IncomeGroup"])
+
+        # Find profile
+        profile = next((p for p in rec["profiles"] if p["cluster"] == c_cluster), None)
+        similar_countries = [c for c in df_assign[df_assign["Cluster"] == c_cluster]["Country"].tolist() if c != c_matched][:6]
+
+        # Indicator values
+        row_raw = df_raw[df_raw["Country"] == c_matched].iloc[0]
+        indicators_list = []
+        strengths = []
+        gaps = []
+
+        feature_cols = [
+            "account.t.d", "fiaccount.t.d", "mobileaccount.t.d", "merchant.pay",
+            "save.any.t.d", "fin17a", "borrow.any.t.d", "fin24aP", "fin24sav"
+        ]
+        feature_labels = {
+            "account.t.d": "Overall Account Ownership",
+            "fiaccount.t.d": "Bank Account Access",
+            "mobileaccount.t.d": "Mobile Money Penetration",
+            "merchant.pay": "Digital Merchant Payments",
+            "save.any.t.d": "Savings Propensity",
+            "fin17a": "Formal Bank Savings",
+            "borrow.any.t.d": "Credit & Borrowing",
+            "fin24aP": "Emergency Funds Feasibility",
+            "fin24sav": "Emergency Funds from Savings"
+        }
+
+        # Cluster averages
+        cluster_raw_means = df_raw[df_raw["Country"].isin(df_assign[df_assign["Cluster"] == c_cluster]["Country"])][feature_cols].mean()
+        global_raw_means = df_raw[feature_cols].mean()
+
+        for col in feature_cols:
+            val = round(float(row_raw[col]), 1)
+            c_mean = round(float(cluster_raw_means[col]), 1)
+            g_mean = round(float(global_raw_means[col]), 1)
+            diff_cluster = round(val - c_mean, 1)
+
+            item = {
+                "series": col,
+                "label": feature_labels[col],
+                "country_value": val,
+                "cluster_mean": c_mean,
+                "global_mean": g_mean,
+                "diff_cluster": diff_cluster,
+            }
+            indicators_list.append(item)
+
+            if diff_cluster >= 3.0:
+                strengths.append(f"{feature_labels[col]} ({val}% vs {c_mean}% group average)")
+            elif diff_cluster <= -3.0:
+                gaps.append(f"{feature_labels[col]} ({val}% vs {c_mean}% group average)")
+
+        return {
+            "country": c_matched,
+            "code": c_code,
+            "region": c_region,
+            "income_group": c_income,
+            "cluster": c_cluster,
+            "cluster_name": c_cluster_name,
+            "cluster_persona": profile["persona"] if profile else "",
+            "similar_countries": similar_countries,
+            "indicators": indicators_list,
+            "strengths": strengths[:3] if strengths else ["Balanced alignment with archetype average"],
+            "gaps": gaps[:3] if gaps else ["No severe outlier deficits compared to group peers"],
+            "policy_suggestions": profile["policy_suggestions"] if profile else []
+        }
+
+    def compare_multiple_countries(self, country_names: list[str]) -> dict:
+        """Compares 2 or 3 countries side-by-side with plain-English takeaway insights."""
+        profiles = []
+        for name in country_names:
+            p = self.get_country_cluster_profile(name)
+            if p:
+                profiles.append(p)
+
+        if not profiles:
+            return {"error": "No matching countries found"}
+
+        # Plain English comparative takeaway
+        c1 = profiles[0]
+        c2 = profiles[1] if len(profiles) > 1 else None
+
+        takeaways = []
+        if c2:
+            acc_diff = round(c1["indicators"][0]["country_value"] - c2["indicators"][0]["country_value"], 1)
+            if abs(acc_diff) >= 5.0:
+                higher = c1["country"] if acc_diff > 0 else c2["country"]
+                lower = c2["country"] if acc_diff > 0 else c1["country"]
+                takeaways.append(f"{higher} leads {lower} in overall account ownership by {abs(acc_diff)} percentage points.")
+            else:
+                takeaways.append(f"{c1['country']} and {c2['country']} have very comparable account access levels (within {abs(acc_diff)}%).")
+
+            # Mobile money comparison
+            mob1 = c1["indicators"][2]["country_value"]
+            mob2 = c2["indicators"][2]["country_value"]
+            mob_diff = round(mob1 - mob2, 1)
+            if abs(mob_diff) >= 10.0:
+                mob_lead = c1["country"] if mob_diff > 0 else c2["country"]
+                takeaways.append(f"{mob_lead} demonstrates significantly higher mobile money adoption (+{abs(mob_diff)}%), indicating digital leapfrogging.")
+
+            # Same or different cluster
+            if c1["cluster"] == c2["cluster"]:
+                takeaways.append(f"Both nations belong to Archetype {c1['cluster']} ('{c1['cluster_name']}'), facing similar structural opportunities and constraints.")
+            else:
+                takeaways.append(f"They occupy different developmental archetypes: {c1['country']} is in Archetype {c1['cluster']} ('{c1['cluster_name']}'), whereas {c2['country']} belongs to Archetype {c2['cluster']} ('{c2['cluster_name']}').")
+
+        return {
+            "countries": profiles,
+            "takeaways": takeaways
+        }
+
+    def get_interactive_clustering(self, k: int, metric: str = "euclidean") -> dict:
+        """Computes or retrieves cluster assignments for guided playground."""
+        k = max(2, min(10, int(k)))
+        metric = "manhattan" if metric.lower() == "manhattan" else "euclidean"
+
+        benchmarks = self.get_clustering_benchmarks()
+        bm = next((b for b in benchmarks if b["k"] == k), None)
+
+        std_path = PROCESSED_DIR / "country_features_standardized.csv"
+        df_std = pd.read_csv(std_path)
+        feature_cols = [
+            "account.t.d", "fiaccount.t.d", "mobileaccount.t.d", "merchant.pay",
+            "save.any.t.d", "fin17a", "borrow.any.t.d", "fin24aP", "fin24sav"
+        ]
+        X = df_std[feature_cols].values
+
+        if metric == "euclidean":
+            km = KMeans(n_clusters=k, random_state=42, n_init=20)
+            labels = km.fit_predict(X)
+        else:
+            # Manhattan K-Medians
+            from analysis.clustering_pipeline import run_kmedians
+            labels, _, _ = run_kmedians(X, k, n_init=10, seed=42)
+
+        # Country items for choropleth recoloring
+        country_items = []
+        for idx, row in df_std.iterrows():
+            country_items.append({
+                "country": str(row["Country"]),
+                "code": str(row.get("Code", "")),
+                "cluster": int(labels[idx] + 1)
+            })
+
+        sizes = {int(c + 1): int(np.sum(labels == c)) for c in range(k)}
+
+        return {
+            "k": k,
+            "metric": metric,
+            "metrics": {
+                "wcss": bm.get("wcss_euclidean" if metric == "euclidean" else "wcsad_manhattan") if bm else None,
+                "silhouette": bm.get("silhouette_euclidean" if metric == "euclidean" else "silhouette_manhattan") if bm else None,
+                "davies_bouldin": bm.get("davies_bouldin_euclidean" if metric == "euclidean" else "davies_bouldin_manhattan") if bm else None,
+            },
+            "cluster_sizes": sizes,
+            "country_assignments": country_items
         }
 
     def get_data_quality(self) -> dict:
