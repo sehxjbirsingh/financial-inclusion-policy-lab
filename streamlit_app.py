@@ -74,31 +74,36 @@ st.markdown("""
         padding-right: 1.2rem !important;
     }
 
-    /* Convert Sidebar Radio Buttons into Sleek Nav Pills with ZERO Bullet Points */
-    [data-testid="stSidebar"] [data-testid="stRadio"] > div {
-        gap: 6px !important;
-    }
-    [data-testid="stSidebar"] [data-testid="stRadio"] label {
-        background: transparent !important;
-        border: 1px solid transparent !important;
-        padding: 10px 14px !important;
-        border-radius: 8px !important;
-        transition: all 0.2s ease !important;
-        cursor: pointer !important;
-        color: #94a3b8 !important;
-        font-size: 13.5px !important;
-        font-weight: 500 !important;
-        display: flex !important;
-        align-items: center !important;
+    /* Modern Sidebar Navigation Pills (Using st.pills - ZERO Radio Circles) */
+    [data-testid="stSidebar"] [data-testid="stPills"] {
         width: 100% !important;
     }
-    [data-testid="stSidebar"] [data-testid="stRadio"] label:hover {
+    [data-testid="stSidebar"] [data-testid="stPills"] > div {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 6px !important;
+        width: 100% !important;
+    }
+    [data-testid="stSidebar"] [data-testid="stPills"] button {
+        width: 100% !important;
+        text-align: left !important;
+        justify-content: flex-start !important;
+        padding: 10px 14px !important;
+        border-radius: 8px !important;
+        font-size: 13.5px !important;
+        font-weight: 500 !important;
+        background: transparent !important;
+        border: 1px solid transparent !important;
+        color: #94a3b8 !important;
+        transition: all 0.2s ease !important;
+        cursor: pointer !important;
+    }
+    [data-testid="stSidebar"] [data-testid="stPills"] button:hover {
         background: rgba(99, 102, 241, 0.12) !important;
         color: #f8fafc !important;
         transform: translateX(2px) !important;
     }
-    [data-testid="stSidebar"] [data-testid="stRadio"] label[data-checked="true"],
-    [data-testid="stSidebar"] [data-testid="stRadio"] label:has(input:checked) {
+    [data-testid="stSidebar"] [data-testid="stPills"] button[aria-pressed="true"] {
         background: linear-gradient(135deg, rgba(99, 102, 241, 0.25) 0%, rgba(16, 185, 129, 0.15) 100%) !important;
         border: 1px solid rgba(99, 102, 241, 0.4) !important;
         color: #ffffff !important;
@@ -390,20 +395,24 @@ with st.sidebar:
     st.caption("FINANCIAL INCLUSION 2025 · WORLD BANK FINDEX")
     st.markdown("---")
     
-    # 7 Public Dashboard Pages (Methodology moved to private section below)
-    page = st.radio(
+    # 7 Public Dashboard Pages (Using st.pills - ZERO Radio Circles or Bullets)
+    nav_options = [
+        "🗺️ World Map & Archetypes",
+        "⚖️ Country Comparator",
+        "💡 Citizen Action Hub",
+        "🎛️ Try It Yourself (Guided Lab)",
+        "🔬 Archetypes & PCA Diagnostics",
+        "⚡ Policy Simulator",
+        "🌐 Global Matrix (140+ Countries)"
+    ]
+    page = st.pills(
         "Navigation",
-        [
-            "🗺️ World Map & Archetypes",
-            "⚖️ Country Comparator",
-            "💡 Citizen Action Hub",
-            "🎛️ Try It Yourself (Guided Lab)",
-            "🔬 Archetypes & PCA Diagnostics",
-            "⚡ Policy Simulator",
-            "🌐 Global Matrix (140+ Countries)"
-        ],
+        nav_options,
+        default=nav_options[0],
         label_visibility="collapsed"
     )
+    if not page:
+        page = nav_options[0]
     
     st.markdown("---")
     st.markdown("##### 📥 Data Export")
