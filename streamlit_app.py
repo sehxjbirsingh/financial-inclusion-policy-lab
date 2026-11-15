@@ -74,92 +74,65 @@ st.markdown("""
         padding-right: 1.2rem !important;
     }
 
-    /* Modern Sidebar Navigation Pills (Using st.pills - ZERO Radio Circles) */
-    [data-testid="stSidebar"] [data-testid="stPills"] {
-        width: 100% !important;
-    }
-    [data-testid="stSidebar"] [data-testid="stPills"] > div {
-        display: flex !important;
-        flex-direction: column !important;
+    /* Modern Sidebar Navigation Items matching the screenshot (ZERO Blue Radio Circles) */
+    [data-testid="stSidebar"] [data-testid="stRadio"] > div {
         gap: 6px !important;
-        width: 100% !important;
-    }
-    [data-testid="stSidebar"] [data-testid="stPills"] button {
-        width: 100% !important;
-        text-align: left !important;
-        justify-content: flex-start !important;
-        padding: 10px 14px !important;
-        border-radius: 8px !important;
-        font-size: 13.5px !important;
-        font-weight: 500 !important;
-        background: transparent !important;
-        border: 1px solid transparent !important;
-        color: #94a3b8 !important;
-        transition: all 0.2s ease !important;
-        cursor: pointer !important;
-    }
-    [data-testid="stSidebar"] [data-testid="stPills"] button:hover {
-        background: rgba(99, 102, 241, 0.12) !important;
-        color: #f8fafc !important;
-        transform: translateX(2px) !important;
-    }
-    [data-testid="stSidebar"] [data-testid="stPills"] button[aria-pressed="true"] {
-        background: linear-gradient(135deg, rgba(99, 102, 241, 0.25) 0%, rgba(16, 185, 129, 0.15) 100%) !important;
-        border: 1px solid rgba(99, 102, 241, 0.4) !important;
-        color: #ffffff !important;
-        font-weight: 600 !important;
-        box-shadow: 0 2px 12px rgba(99, 102, 241, 0.25) !important;
     }
     
-    /* Hide the 16x16px Radio Circle / Bullet Point completely */
-    div[data-testid="stRadioOption"] > div > div:first-child,
-    div[data-testid="stRadioOption"] > label > div:first-child,
-    div[data-testid="stRadioOption"] > div:first-child:not([data-testid="stMarkdownContainer"]),
-    div[data-testid="stRadioOption"] input[type="radio"],
-    div[data-testid="stRadioOption"] svg,
-    div[data-testid="stRadioOption"] [class*="Radio"],
-    div[data-testid="stRadioOption"] [class*="radio"],
-    div[data-testid="stRadioOption"] [class*="Circle"],
-    div[data-testid="stRadioOption"] [class*="circle"],
-    div[data-testid="stRadioOption"] [class*="Dot"],
-    [data-testid="stRadio"] div[role="radiogroup"] > div > div:first-child,
-    [data-testid="stRadio"] div[role="radiogroup"] > div > label > div:first-child,
-    [data-testid="stRadio"] label > div:first-child:has(input[type="radio"]),
-    [data-testid="stSidebar"] [data-testid="stRadio"] label > div:has(input[type="radio"]),
-    [data-testid="stSidebar"] [data-testid="stRadio"] input[type="radio"] {
+    [data-testid="stRadioOption"] {
+        background: transparent !important;
+        border: 1px solid transparent !important;
+        padding: 8px 12px !important;
+        border-radius: 8px !important;
+        transition: all 0.2s ease !important;
+        cursor: pointer !important;
+        display: flex !important;
+        align-items: center !important;
+        width: 100% !important;
+    }
+    
+    [data-testid="stRadioOption"]:hover {
+        background: rgba(255, 255, 255, 0.05) !important;
+        transform: translateX(2px) !important;
+    }
+    
+    /* Active Selected Item - Beautiful Sky-Blue Glow Pill from screenshot */
+    [data-testid="stRadioOption"]:has(input:checked) {
+        background: rgba(56, 189, 248, 0.16) !important;
+        border: 1px solid rgba(56, 189, 248, 0.45) !important;
+        border-radius: 8px !important;
+        box-shadow: 0 0 14px rgba(56, 189, 248, 0.2) !important;
+    }
+    
+    /* Complete removal of the round blue radio circle, inner dot, and circular outline */
+    [data-testid="stRadioOption"] label > div > div:first-child,
+    [data-testid="stRadioOption"] div:has(> input[type="radio"]),
+    [data-testid="stRadioOption"] div:has(input[type="radio"]),
+    [data-testid="stRadioOption"] input[type="radio"],
+    [data-testid="stRadioOption"] div[class*="ex50key"],
+    [data-testid="stRadioOption"] svg {
         display: none !important;
+        visibility: hidden !important;
         width: 0px !important;
         height: 0px !important;
         min-width: 0px !important;
         max-width: 0px !important;
         margin: 0px !important;
         padding: 0px !important;
+        border: none !important;
         opacity: 0 !important;
-        visibility: hidden !important;
         pointer-events: none !important;
         position: absolute !important;
     }
     
     /* Ensure Nav Pill Text Labels are Crisp, Visible, and Full-Width */
-    div[data-testid="stRadioOption"],
-    div[data-testid="stRadioOption"] > div,
-    div[data-testid="stRadioOption"] > label,
-    [data-testid="stSidebar"] [data-testid="stRadio"] label {
-        width: 100% !important;
-        cursor: pointer !important;
-        display: flex !important;
-        align-items: center !important;
-    }
-    div[data-testid="stRadioOption"] [data-testid="stMarkdownContainer"],
-    [data-testid="stSidebar"] [data-testid="stRadio"] [data-testid="stMarkdownContainer"] {
+    [data-testid="stRadioOption"] [data-testid="stMarkdownContainer"] {
         display: block !important;
         visibility: visible !important;
         opacity: 1 !important;
         width: 100% !important;
-        padding-left: 2px !important;
     }
-    div[data-testid="stRadioOption"] [data-testid="stMarkdownContainer"] p,
-    [data-testid="stSidebar"] [data-testid="stRadio"] [data-testid="stMarkdownContainer"] p {
+    [data-testid="stRadioOption"] [data-testid="stMarkdownContainer"] p {
         display: block !important;
         visibility: visible !important;
         opacity: 1 !important;
@@ -169,13 +142,10 @@ st.markdown("""
         margin: 0 !important;
         line-height: 1.4 !important;
     }
-    div[data-testid="stRadioOption"]:hover p,
-    [data-testid="stSidebar"] [data-testid="stRadio"] label:hover [data-testid="stMarkdownContainer"] p {
+    [data-testid="stRadioOption"]:hover [data-testid="stMarkdownContainer"] p {
         color: #f8fafc !important;
     }
-    div[data-testid="stRadioOption"]:has(input:checked) p,
-    [data-testid="stSidebar"] [data-testid="stRadio"] label[data-checked="true"] [data-testid="stMarkdownContainer"] p,
-    [data-testid="stSidebar"] [data-testid="stRadio"] label:has(input:checked) [data-testid="stMarkdownContainer"] p {
+    [data-testid="stRadioOption"]:has(input:checked) [data-testid="stMarkdownContainer"] p {
         color: #ffffff !important;
         font-weight: 600 !important;
     }
@@ -395,7 +365,7 @@ with st.sidebar:
     st.caption("FINANCIAL INCLUSION 2025 · WORLD BANK FINDEX")
     st.markdown("---")
     
-    # 7 Public Dashboard Pages (Using st.pills - ZERO Radio Circles or Bullets)
+    # Public Dashboard Navigation (7 Core Public Tools)
     nav_options = [
         "🗺️ World Map & Archetypes",
         "⚖️ Country Comparator",
@@ -405,38 +375,36 @@ with st.sidebar:
         "⚡ Policy Simulator",
         "🌐 Global Matrix (140+ Countries)"
     ]
-    page = st.pills(
+    page = st.radio(
         "Navigation",
         nav_options,
-        default=nav_options[0],
-        label_visibility="collapsed"
+        index=0
     )
-    if not page:
-        page = nav_options[0]
-    
-    st.markdown("---")
-    st.markdown("##### 📥 Data Export")
-    
-    if rec_model and "country_assignments" in rec_model:
-        df_export = pd.DataFrame(rec_model["country_assignments"])
-        csv_bytes = df_export.to_csv(index=False).encode('utf-8')
-        st.download_button(
-            label="Download Cluster Dataset (CSV)",
-            data=csv_bytes,
-            file_name="financial_inclusion_clusters_2025.csv",
-            mime="text/csv",
-            use_container_width=True
-        )
     
     st.markdown("---")
     
-    # Private Researcher & Evaluator Gated Section
-    with st.expander("🔒 Researcher & Evaluator Access", expanded=False):
-        st.caption("Technical methodology, preprocessing logs, and model diagnostics are restricted.")
-        passcode = st.text_input("Evaluator Passcode:", type="password", key="auditor_passcode", placeholder="••••••••")
+    # Private Researcher & Evaluator Gated Section (Data Export + Methodology)
+    with st.expander("🔒 Researcher & Evaluator Access (Private)", expanded=False):
+        st.caption("Technical methodology, preprocessing logs, and raw dataset exports are private.")
+        passcode = st.text_input("Evaluator Passcode:", type="password", key="eval_passcode", placeholder="••••••••")
         if passcode in ["findex2025", "admin", "policy2025"]:
             st.success("Access Granted")
-            if st.button("Unlock Methodology & Data Log", use_container_width=True):
+            
+            st.markdown("##### 📥 Dataset Export")
+            if rec_model and "country_assignments" in rec_model:
+                df_export = pd.DataFrame(rec_model["country_assignments"])
+                csv_bytes = df_export.to_csv(index=False).encode('utf-8')
+                st.download_button(
+                    label="Download Cluster Dataset (CSV)",
+                    data=csv_bytes,
+                    file_name="financial_inclusion_clusters_2025.csv",
+                    mime="text/csv",
+                    use_container_width=True
+                )
+            
+            st.markdown("---")
+            st.markdown("##### 📖 Technical Methodology & Data Log")
+            if st.button("Open Technical Methodology & Data Log", use_container_width=True):
                 st.session_state["show_technical_logs"] = True
         elif passcode:
             st.error("Access Denied: Invalid Passcode")
@@ -444,10 +412,11 @@ with st.sidebar:
     # If evaluator unlocked the private data log
     if st.session_state.get("show_technical_logs", False):
         page = "📖 Methodology & Data Log"
-        if st.button("← Return to Public Dashboard", use_container_width=True):
+        if st.sidebar.button("← Return to Public Dashboard", use_container_width=True):
             st.session_state["show_technical_logs"] = False
             st.rerun()
 
+    st.markdown("---")
     st.caption("World Bank Global Findex 2025 · 140 Sovereign Economies")
 
 
