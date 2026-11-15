@@ -82,7 +82,7 @@ st.markdown("""
     [data-testid="stRadioOption"] {
         background: transparent !important;
         border: 1px solid transparent !important;
-        padding: 8px 12px !important;
+        padding: 9px 14px !important;
         border-radius: 8px !important;
         transition: all 0.2s ease !important;
         cursor: pointer !important;
@@ -105,11 +105,8 @@ st.markdown("""
     }
     
     /* Complete removal of the round blue radio circle, inner dot, and circular outline */
-    [data-testid="stRadioOption"] label > div > div:first-child,
-    [data-testid="stRadioOption"] div:has(> input[type="radio"]),
-    [data-testid="stRadioOption"] div:has(input[type="radio"]),
+    [data-testid="stRadioOption"] > *:first-child:not([data-testid="stMarkdownContainer"]),
     [data-testid="stRadioOption"] input[type="radio"],
-    [data-testid="stRadioOption"] div[class*="ex50key"],
     [data-testid="stRadioOption"] svg {
         display: none !important;
         visibility: hidden !important;
@@ -126,16 +123,17 @@ st.markdown("""
     }
     
     /* Ensure Nav Pill Text Labels are Crisp, Visible, and Full-Width */
-    [data-testid="stRadioOption"] [data-testid="stMarkdownContainer"] {
+    [data-testid="stRadioOption"] > *:last-child,
+    [data-testid="stRadioOption"] [data-testid="stMarkdownContainer"],
+    [data-testid="stRadioOption"] [data-testid="stMarkdownContainer"] * {
         display: block !important;
         visibility: visible !important;
         opacity: 1 !important;
+    }
+    [data-testid="stRadioOption"] [data-testid="stMarkdownContainer"] {
         width: 100% !important;
     }
     [data-testid="stRadioOption"] [data-testid="stMarkdownContainer"] p {
-        display: block !important;
-        visibility: visible !important;
-        opacity: 1 !important;
         font-size: 13.5px !important;
         font-weight: 500 !important;
         color: #94a3b8 !important;
