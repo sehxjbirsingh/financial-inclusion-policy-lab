@@ -1,7 +1,6 @@
 """
-Global Financial Inclusion Policy Lab - Streamlit Edition
+Global Financial Inclusion Policy Lab - Streamlit Production Edition
 Comparative Unsupervised Pattern Clustering on World Bank Global Findex Data
-Production-ready, accessible, fast, and deployable with one click on Streamlit Cloud.
 """
 from __future__ import annotations
 
@@ -10,8 +9,8 @@ import pandas as pd
 import numpy as np
 import plotly.express as px
 import plotly.graph_objects as go
-import json
 from pathlib import Path
+from data_service import data_service
 
 # Streamlit Page Config
 st.set_page_config(
@@ -26,12 +25,17 @@ st.markdown("""
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
     
-    html, body, [class*="css"] {
-        font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    html, body, [class*="css"], .stMarkdown {
+        font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif !important;
     }
     
     .stApp {
         background-color: #070a12;
+    }
+    
+    [data-testid="stSidebar"] {
+        background-color: #0b1120;
+        border-right: 1px solid rgba(255, 255, 255, 0.08);
     }
     
     .hero-card {
@@ -119,6 +123,14 @@ st.markdown("""
     .arch-c3 { border-top: 4px solid #f43f5e; }
     .arch-c4 { border-top: 4px solid #f59e0b; }
     
+    .barrier-card {
+        background: #0f172a;
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 16px;
+    }
+    
     .subtle-notice {
         font-size: 12px;
         color: #64748b;
@@ -130,9 +142,6 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# Preload cached models and data
-from data_service import data_service
-
 @st.cache_data
 def load_all_data():
     countries = data_service.get_countries(year="2024")
@@ -142,7 +151,6 @@ def load_all_data():
 
 countries, rec_model, benchmarks = load_all_data()
 
-# Cluster Name Mapping & Palette
 CLUSTER_INFO = {
     0: {"name": "Digitally Leaping Cash Economists", "color": "#10b981", "countries": 35, "desc": "High mobile money adoption, rapid fintech leapfrogging, modest formal bank savings."},
     1: {"name": "Universal High-Resilience Systems", "color": "#3b82f6", "countries": 48, "desc": "Nearly universal banking coverage (>90%), high digital commerce, robust emergency liquidity."},
@@ -174,7 +182,6 @@ with st.sidebar:
     st.markdown("---")
     st.markdown("##### 📥 Data Export")
     
-    # Export full dataset as CSV
     if rec_model and "country_assignments" in rec_model:
         df_export = pd.DataFrame(rec_model["country_assignments"])
         csv_bytes = df_export.to_csv(index=False).encode('utf-8')
@@ -194,7 +201,6 @@ with st.sidebar:
 # PAGE 1: WORLD MAP & ARCHETYPES
 # ==============================================================================
 if page == "🗺️ World Map & Archetypes":
-    # Hero Card
     st.markdown("""
     <div class="hero-card">
         <div class="hero-tag">WORLD BANK GLOBAL FINDEX · UNSUPERVISED MACHINE LEARNING</div>
@@ -206,7 +212,6 @@ if page == "🗺️ World Map & Archetypes":
     </div>
     """, unsafe_allow_html=True)
 
-    # 3 Summary Stat Pills
     c1, c2, c3 = st.columns(3)
     with c1:
         st.markdown("""
@@ -232,7 +237,6 @@ if page == "🗺️ World Map & Archetypes":
     
     st.markdown("<br>", unsafe_allow_html=True)
 
-    # Map Toolbar
     col_filter, col_metric = st.columns([3, 2])
     with col_filter:
         arch_filter = st.selectbox(
@@ -245,26 +249,24 @@ if page == "🗺️ World Map & Archetypes":
             ["Archetype Cluster", "Overall Account Ownership (%)", "Mobile Money (%)", "Emergency Resilience (%)"]
         )
 
-    # Prepare DataFrame for Map
     assignments = rec_model.get("country_assignments", [])
     df_map = pd.DataFrame(assignments)
     
-    # Filter
+    # Filter by cluster if selected
     if arch_filter != "All Nations (140)":
         cluster_id = int(arch_filter.split(".")[0])
-        df_map = df_map[df_map["cluster"] == cluster_id]
+        df_map = df_map[df_map["cluster_id"] == cluster_id]
 
-    # Map Plot
     map_col, insp_col = st.columns([7, 3])
     
     with map_col:
         if color_metric == "Archetype Cluster":
             fig_map = px.choropleth(
                 df_map,
-                locations="Code",
+                locations="code",
                 color="cluster_name",
-                hover_name="Country",
-                hover_data={"Code": False, "cluster_name": True, "account_pct": ':.1f', "mobile_pct": ':.1f'},
+                hover_name="country",
+                hover_data={"code": False, "cluster_name": True, "account_pct": ':.1f', "mobile_pct": ':.1f'},
                 color_discrete_map={
                     "Digitally Leaping Cash Economists": "#10b981",
                     "Universal High-Resilience Systems": "#3b82f6",
@@ -277,15 +279,15 @@ if page == "🗺️ World Map & Archetypes":
             metric_col_map = {
                 "Overall Account Ownership (%)": "account_pct",
                 "Mobile Money (%)": "mobile_pct",
-                "Emergency Resilience (%)": "resilience_pct"
+                "Emergency Resilience (%)": "emergency_pct"
             }
             col_target = metric_col_map[color_metric]
             fig_map = px.choropleth(
                 df_map,
-                locations="Code",
+                locations="code",
                 color=col_target,
-                hover_name="Country",
-                hover_data={"Code": False, "cluster_name": True, col_target: ':.1f'},
+                hover_name="country",
+                hover_data={"code": False, "cluster_name": True, col_target: ':.1f'},
                 color_continuous_scale="Viridis",
                 labels={col_target: color_metric}
             )
@@ -314,7 +316,7 @@ if page == "🗺️ World Map & Archetypes":
 
     with insp_col:
         st.markdown("### 🔎 Country Inspector")
-        all_country_names = sorted(df_map["Country"].dropna().unique().tolist())
+        all_country_names = sorted(df_map["country"].dropna().unique().tolist())
         default_idx = all_country_names.index("India") if "India" in all_country_names else 0
         inspected_name = st.selectbox("Select Country:", all_country_names, index=default_idx)
         
@@ -323,20 +325,26 @@ if page == "🗺️ World Map & Archetypes":
             st.markdown(f"**{country_prof['country']}** ({country_prof['code']}) — *{country_prof['region']}*")
             st.info(f"🏷️ **{country_prof['cluster_name']}**")
             
-            st.write(f"💳 Account Ownership: **{country_prof.get('account_pct', 0):.1f}%**")
-            st.progress(min(1.0, max(0.0, country_prof.get('account_pct', 0) / 100.0)))
+            acc = country_prof.get('account_pct', 0)
+            mob = country_prof.get('mobile_pct', 0)
+            fi = country_prof.get('fiaccount_pct', 0)
+            sav = country_prof.get('saved_pct', 0)
+            resil = country_prof.get('resilience_pct', 0)
             
-            st.write(f"📱 Mobile Money: **{country_prof.get('mobile_pct', 0):.1f}%**")
-            st.progress(min(1.0, max(0.0, country_prof.get('mobile_pct', 0) / 100.0)))
+            st.write(f"💳 Account Ownership: **{acc:.1f}%**")
+            st.progress(min(1.0, max(0.0, acc / 100.0)))
             
-            st.write(f"🏦 Formal Bank Account: **{country_prof.get('fiaccount_pct', 0):.1f}%**")
-            st.progress(min(1.0, max(0.0, country_prof.get('fiaccount_pct', 0) / 100.0)))
+            st.write(f"📱 Mobile Money: **{mob:.1f}%**")
+            st.progress(min(1.0, max(0.0, mob / 100.0)))
             
-            st.write(f"💰 Savings Propensity: **{country_prof.get('saved_pct', 0):.1f}%**")
-            st.progress(min(1.0, max(0.0, country_prof.get('saved_pct', 0) / 100.0)))
+            st.write(f"🏦 Formal Bank Account: **{fi:.1f}%**")
+            st.progress(min(1.0, max(0.0, fi / 100.0)))
             
-            st.write(f"🛡️ Emergency Resilience: **{country_prof.get('resilience_pct', 0):.1f}%**")
-            st.progress(min(1.0, max(0.0, country_prof.get('resilience_pct', 0) / 100.0)))
+            st.write(f"💰 Savings Propensity: **{sav:.1f}%**")
+            st.progress(min(1.0, max(0.0, sav / 100.0)))
+            
+            st.write(f"🛡️ Emergency Resilience: **{resil:.1f}%**")
+            st.progress(min(1.0, max(0.0, resil / 100.0)))
             
             st.markdown("**Key Takeaways:**")
             st.success(f"💪 **Strength:** {country_prof.get('strength', 'Solid core access')}")
@@ -381,7 +389,6 @@ elif page == "⚖️ Country Comparator":
     profiles = [p for p in profiles if p]
 
     if profiles:
-        # Grouped Bar Chart
         categories = ["Account Ownership", "Mobile Money", "Formal Bank", "Savings Propensity", "Emergency Funds"]
         fig_bar = go.Figure()
         colors = ["#10b981", "#3b82f6", "#f59e0b"]
@@ -411,7 +418,6 @@ elif page == "⚖️ Country Comparator":
         )
         st.plotly_chart(fig_bar, use_container_width=True)
 
-        # Plain-English Takeaways
         st.markdown("### 💡 Plain-English Takeaways")
         diff_acc = abs(profiles[0].get("account_pct", 0) - profiles[1].get("account_pct", 0))
         leader_acc = profiles[0] if profiles[0].get("account_pct", 0) > profiles[1].get("account_pct", 0) else profiles[1]
@@ -430,24 +436,30 @@ elif page == "⚖️ Country Comparator":
 # ==============================================================================
 elif page == "💡 Citizen Action Hub":
     st.markdown("## 💡 Citizen Action Hub: Solving Real-World Barriers")
-    st.caption("Over 1.4 billion adults remain unbanked. Here are the 8 real-world reasons why, accompanied by proven citizen solutions and policy reforms.")
+    st.caption("Over 1.4 billion adults remain unbanked. Select an economy to view local barriers, proven community solutions, and policy recommendations.")
 
-    barriers = data_service.get_unbanked_barriers()
+    country_list = sorted([c["country"] for c in countries if "country" in c])
+    selected_c = st.selectbox("Select Country:", country_list, index=country_list.index("India") if "India" in country_list else 0)
+    
+    barrier_data = data_service.get_citizen_barriers(country=selected_c)
+    barriers = barrier_data.get("barriers", [])
+    
+    st.info(f"📌 **Primary Constraint in {selected_c}:** {barrier_data.get('top_barrier', 'Insufficient funds')} cited by **{barrier_data.get('top_rate', 0)}%** of unbanked citizens.")
     
     b_cols = st.columns(2)
     for idx, b in enumerate(barriers):
         with b_cols[idx % 2]:
             st.markdown(f"""
-            <div style="background:#0f172a; border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:20px; margin-bottom:16px;">
-                <h4 style="color:#f8fafc; margin-bottom:6px;">{b['title']}</h4>
-                <div style="font-size:12px; color:#10b981; font-family:'JetBrains Mono'; margin-bottom:10px;">📊 {b['pct_citing']}% of unbanked cite this barrier</div>
+            <div class="barrier-card">
+                <h4 style="color:#f8fafc; margin-bottom:4px;">{b.get('icon', '💡')} {b['title']}</h4>
+                <div style="font-size:12px; color:#10b981; font-family:'JetBrains Mono'; margin-bottom:8px;">📊 {b['rate']}% cite this barrier</div>
                 <p style="font-size:13px; color:#94a3b8; font-style:italic;">"{b['question']}"</p>
-                <div style="background:rgba(16,185,129,0.08); border:1px solid rgba(16,185,129,0.25); border-radius:8px; padding:10px; margin-top:10px;">
-                    <strong style="color:#10b981; font-size:12px;">👤 Citizen Action:</strong>
+                <div style="background:rgba(16,185,129,0.08); border:1px solid rgba(16,185,129,0.25); border-radius:8px; padding:10px; margin-top:8px;">
+                    <strong style="color:#10b981; font-size:12px;">👤 Citizen Workaround:</strong>
                     <div style="font-size:12px; color:#f8fafc; margin-top:2px;">{b['citizen_solution']}</div>
                 </div>
-                <div style="background:rgba(99,102,241,0.08); border:1px solid rgba(99,102,241,0.25); border-radius:8px; padding:10px; margin-top:10px;">
-                    <strong style="color:#818cf8; font-size:12px;">🏛️ Policy Recommendation:</strong>
+                <div style="background:rgba(99,102,241,0.08); border:1px solid rgba(99,102,241,0.25); border-radius:8px; padding:10px; margin-top:8px;">
+                    <strong style="color:#818cf8; font-size:12px;">🏛️ Policy Fix:</strong>
                     <div style="font-size:12px; color:#f8fafc; margin-top:2px;">{b['policy_fix']}</div>
                 </div>
             </div>
@@ -465,26 +477,26 @@ elif page == "🎛️ Try It Yourself (Guided Lab)":
     dist_val = st.radio("Select Distance Metric:", ["Euclidean (Standard K-Means)", "Manhattan (L1 K-Medians)"], horizontal=True)
     metric_code = "euclidean" if "Euclidean" in dist_val else "manhattan"
 
-    eval_data = data_service.get_clustering_evaluation(k=k_val, distance_metric=metric_code)
+    eval_data = data_service.get_interactive_clustering(k=k_val, metric=metric_code)
+    metrics = eval_data.get("metrics", {})
     
     m1, m2, m3 = st.columns(3)
     with m1:
-        st.metric("Within-Cluster Distance (WCSS / Elbow)", f"{eval_data['wcss']:,.1f}")
+        st.metric("Within-Cluster Distance (WCSS / Elbow)", f"{metrics.get('wcss', 0):,.1f}")
         st.caption("How tightly packed points are inside their cluster. Smaller is tighter, but decreases naturally as K grows.")
     with m2:
-        st.metric("Silhouette Score (Cluster Separation)", f"{eval_data['silhouette']:.3f}")
+        st.metric("Silhouette Score (Cluster Separation)", f"{metrics.get('silhouette', 0):.3f}")
         st.caption("Ranges from -1 to +1. Scores > 0.4 indicate distinct separation without overlapping borders.")
     with m3:
-        st.metric("Davies-Bouldin Index (Compactness)", f"{eval_data['davies_bouldin']:.3f}")
+        st.metric("Davies-Bouldin Index (Compactness)", f"{metrics.get('davies_bouldin', 0):.3f}")
         st.caption("Similarity between each cluster and its closest neighbor. Lower is better.")
 
     st.markdown("---")
     st.markdown("##### 📐 Elbow & Metric Comparison Curve (K = 2 to 10)")
     
-    # Generate benchmark table
     k_range = list(range(2, 11))
-    euc_wcss = [data_service.get_clustering_evaluation(k=k, distance_metric="euclidean")["wcss"] for k in k_range]
-    euc_sil = [data_service.get_clustering_evaluation(k=k, distance_metric="euclidean")["silhouette"] for k in k_range]
+    euc_wcss = [data_service.get_interactive_clustering(k=k, metric="euclidean")["metrics"]["wcss"] for k in k_range]
+    euc_sil = [data_service.get_interactive_clustering(k=k, metric="euclidean")["metrics"]["silhouette"] for k in k_range]
     
     fig_eval = go.Figure()
     fig_eval.add_trace(go.Scatter(x=k_range, y=euc_wcss, name="WCSS (Elbow)", line=dict(color="#6366f1", width=3), yaxis="y1"))
@@ -512,14 +524,22 @@ elif page == "🔬 Archetypes & PCA Diagnostics":
     dim_choice = st.radio("PCA Projection:", ["2D Scatter Plot", "3D Interactive Scatter Plot"], horizontal=True)
     n_comp = 2 if "2D" in dim_choice else 3
     
-    pca_data = data_service.get_pca_projection(n_components=n_comp)
-    df_pca = pd.DataFrame(pca_data["points"])
+    pca_raw = data_service.get_pca_coordinates()
+    df_pca = pd.DataFrame(pca_raw.get("data", []))
+    
+    cluster_name_map = {
+        1: "Universal High-Resilience Systems",
+        2: "Severe Exclusion Frontiers",
+        3: "Digitally Leaping Cash Economists",
+        4: "Banked but Liquidity-Constrained"
+    }
+    df_pca["cluster_name"] = df_pca["cluster"].map(cluster_name_map).fillna("Cluster")
     
     if n_comp == 2:
         fig_pca = px.scatter(
             df_pca,
-            x="pca_1",
-            y="pca_2",
+            x="pc1_2d",
+            y="pc2_2d",
             color="cluster_name",
             hover_name="country",
             color_discrete_map={
@@ -529,16 +549,16 @@ elif page == "🔬 Archetypes & PCA Diagnostics":
                 "Banked but Liquidity-Constrained": "#f59e0b"
             },
             labels={
-                "pca_1": f"PC 1 ({pca_data['explained_variance'][0]*100:.1f}% Variance)",
-                "pca_2": f"PC 2 ({pca_data['explained_variance'][1]*100:.1f}% Variance)"
+                "pc1_2d": "Principal Component 1",
+                "pc2_2d": "Principal Component 2"
             }
         )
     else:
         fig_pca = px.scatter_3d(
             df_pca,
-            x="pca_1",
-            y="pca_2",
-            z="pca_3",
+            x="pc1_3d",
+            y="pc2_3d",
+            z="pc3_3d",
             color="cluster_name",
             hover_name="country",
             color_discrete_map={
@@ -557,12 +577,11 @@ elif page == "🔬 Archetypes & PCA Diagnostics":
     )
     st.plotly_chart(fig_pca, use_container_width=True)
 
-    # Stability Bootstrap Audit
     st.markdown("### 🎲 Cluster Stability & Bootstrap Audit")
-    stab = data_service.get_clustering_stability()
+    stab = data_service.get_stability_analysis()
     s1, s2 = st.columns(2)
     with s1:
-        st.metric("Adjusted Rand Index (ARI)", f"{stab.get('mean_ari', 0.88):.3f}")
+        st.metric("Adjusted Rand Index (ARI)", f"{stab.get('mean_seed_ari', 0.88):.3f}")
         st.caption("Re-run across 50 bootstrap samples and varying seeds. High ARI confirms the 4 archetypes are robust, not statistical flukes.")
     with s2:
         st.metric("Borderline Nations", f"{len(stab.get('borderline_countries', []))} Countries")
@@ -588,21 +607,24 @@ elif page == "⚡ Policy Simulator":
         delta_resil = st.slider("🛡️ Emergency Micro-Insurance (%):", 0, 30, 8, step=2)
 
     sim_result = data_service.simulate_policy(
-        country_name=sim_target,
-        interventions={
+        country=sim_target,
+        levers={
             "delta_mobile": delta_mobile,
             "delta_fee": delta_fee,
             "delta_resilience": delta_resil
         }
     )
 
+    baseline = sim_result.get("baseline", {})
+    projected = sim_result.get("projected", {})
+
     r1, r2, r3 = st.columns(3)
     with r1:
-        st.metric("Simulated Account Ownership", f"{sim_result['projected_account']:.1f}%", f"+{sim_result['projected_account'] - sim_result['baseline_account']:.1f}%")
+        st.metric("Projected Account Ownership", f"{projected.get('account', 0):.1f}%", f"+{projected.get('uplift', 0):.1f}%")
     with r2:
-        st.metric("Current Archetype", sim_result['baseline_cluster_name'])
+        st.metric("Estimated Newly Included Citizens", f"{projected.get('newly_included_est', 0):,}")
     with r3:
-        st.metric("Projected Archetype", sim_result['projected_cluster_name'])
+        st.metric("Years to Universal Access", f"{projected.get('years_to_universal_access', 0):.1f} yrs")
 
 
 # ==============================================================================
@@ -618,21 +640,22 @@ elif page == "🌐 Global Matrix (140+ Countries)":
     search_q = st.text_input("🔍 Filter by Country or Region:", "")
     if search_q:
         df_matrix = df_matrix[
-            df_matrix["Country"].str.contains(search_q, case=False, na=False) |
-            df_matrix["Region"].str.contains(search_q, case=False, na=False)
+            df_matrix["country"].str.contains(search_q, case=False, na=False) |
+            df_matrix["region"].str.contains(search_q, case=False, na=False)
         ]
 
-    cols_to_show = ["Country", "Code", "Region", "cluster_name", "account_pct", "mobile_pct", "fiaccount_pct", "saved_pct", "resilience_pct"]
+    cols_to_show = ["country", "code", "region", "cluster_name", "account_pct", "mobile_pct", "emergency_pct"]
     cols_exist = [c for c in cols_to_show if c in df_matrix.columns]
     
     st.dataframe(
         df_matrix[cols_exist].rename(columns={
+            "country": "Country",
+            "code": "Code",
+            "region": "Region",
             "cluster_name": "Archetype",
             "account_pct": "Account %",
             "mobile_pct": "Mobile %",
-            "fiaccount_pct": "Bank %",
-            "saved_pct": "Savings %",
-            "resilience_pct": "Resilience %"
+            "emergency_pct": "Resilience %"
         }),
         use_container_width=True,
         hide_index=True
@@ -674,7 +697,6 @@ elif page == "📖 Methodology & Data Log":
         - **Correlation vs Causation**: High cluster adoption rates reflect correlated economic conditions, not singular policy causes.
         """)
 
-# Subtle Footer
 st.markdown("""
 <div class="subtle-notice">
     <strong>Global Financial Inclusion Policy Lab</strong> · Exploratory Machine Learning Patterns · Source: World Bank Global Findex 2025
