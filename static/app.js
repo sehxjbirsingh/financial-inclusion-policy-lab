@@ -192,7 +192,7 @@ function handleHashChange() {
   const hash = window.location.hash.replace('#', '');
   const hashMap = {
     'home': 'page-home',
-    'worldmap': 'page-worldmap',
+    'worldmap': 'page-home',
     'compare': 'page-compare',
     'guided': 'page-guided',
     'citizen-hub': 'page-citizen',
@@ -201,8 +201,8 @@ function handleHashChange() {
     'explorer': 'page-explorer',
     'trends': 'page-trends',
     'how': 'page-how',
-    'glossary': 'page-glossary',
-    'about': 'page-about'
+    'glossary': 'page-how',
+    'about': 'page-how'
   };
   if (hashMap[hash]) {
     switchPage(hashMap[hash]);
@@ -210,6 +210,9 @@ function handleHashChange() {
 }
 
 function switchPage(pageId) {
+  if (pageId === 'page-worldmap') {
+    pageId = 'page-home';
+  }
   state.currentPage = pageId;
 
   document.querySelectorAll('.dashboard-page').forEach(page => {
@@ -221,7 +224,7 @@ function switchPage(pageId) {
   }
 
   document.querySelectorAll('.sidebar-nav .nav-item').forEach(item => {
-    if (item.getAttribute('data-page') === pageId) {
+    if (item.getAttribute('data-page') === pageId || (pageId === 'page-home' && item.getAttribute('data-page') === 'page-worldmap')) {
       item.classList.add('active');
       const label = item.querySelector('.nav-label');
       if (label) {
@@ -240,9 +243,8 @@ function switchPage(pageId) {
 }
 
 function onPageActivated(pageId) {
-  if (pageId === 'page-home') {
+  if (pageId === 'page-home' || pageId === 'page-worldmap') {
     initHomePage();
-  } else if (pageId === 'page-worldmap') {
     initWorldMap();
   } else if (pageId === 'page-compare') {
     initComparator();

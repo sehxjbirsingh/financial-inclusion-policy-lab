@@ -4,6 +4,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Global Financial Inclusion Policy Lab | Comparative Pattern Diagnostics</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
   <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
 </head>
@@ -12,54 +15,37 @@
     <!-- ================= SIDEBAR NAVIGATION ================= -->
     <aside class="sidebar" id="main-sidebar">
       <div class="sidebar-brand">
-        <div class="brand-icon">◎</div>
+        <div class="brand-logo-mark">◎</div>
         <div class="brand-text">
           <h2>POLICY LAB</h2>
           <span>FINANCIAL INCLUSION 2025</span>
         </div>
       </div>
 
-      <div class="live-status-pill">
-        <span class="live-indicator-dot"></span>
-        <span class="live-status-text">WORLD BANK FINDEX 2025</span>
-      </div>
-
       <nav class="sidebar-nav">
-        <div class="nav-section-title">START HERE</div>
         <a href="#home" class="nav-item active" data-page="page-home">
-          <span class="nav-icon">🏠</span>
-          <span class="nav-label">Home & The Problem</span>
-        </a>
-        <a href="#worldmap" class="nav-item nav-highlight" data-page="page-worldmap">
           <span class="nav-icon">🗺️</span>
-          <span class="nav-label">Interactive World Map</span>
-          <span class="nav-badge success">Explore</span>
+          <span class="nav-label">World Map & Archetypes</span>
         </a>
         <a href="#compare" class="nav-item" data-page="page-compare">
           <span class="nav-icon">⚖️</span>
           <span class="nav-label">Country Comparator</span>
         </a>
-        <a href="#guided" class="nav-item" data-page="page-guided">
-          <span class="nav-icon">🎛️</span>
-          <span class="nav-label">Try It Yourself (Guided)</span>
-          <span class="nav-badge">K=2..10</span>
-        </a>
-
-        <div class="nav-section-title">REAL-WORLD SOLUTIONS</div>
         <a href="#citizen-hub" class="nav-item" data-page="page-citizen">
           <span class="nav-icon">💡</span>
           <span class="nav-label">Citizen Action Hub</span>
-          <span class="nav-badge alert">Action</span>
+        </a>
+        <a href="#guided" class="nav-item" data-page="page-guided">
+          <span class="nav-icon">🎛️</span>
+          <span class="nav-label">Try It Yourself (Guided)</span>
+        </a>
+        <a href="#clustering" class="nav-item" data-page="page-cluster">
+          <span class="nav-icon">🔬</span>
+          <span class="nav-label">Archetypes & PCA Lab</span>
         </a>
         <a href="#simulator" class="nav-item" data-page="page-simulator">
           <span class="nav-icon">⚡</span>
           <span class="nav-label">Policy Simulator</span>
-        </a>
-
-        <div class="nav-section-title">ADVANCED LABS & DATA</div>
-        <a href="#clustering" class="nav-item" data-page="page-cluster">
-          <span class="nav-icon">🔬</span>
-          <span class="nav-label">Cluster Archetypes & PCA</span>
         </a>
         <a href="#explorer" class="nav-item" data-page="page-explorer">
           <span class="nav-icon">🌐</span>
@@ -69,34 +55,18 @@
           <span class="nav-icon">📈</span>
           <span class="nav-label">Longitudinal Trends</span>
         </a>
-
-        <div class="nav-section-title">METHODOLOGY & HELP</div>
         <a href="#how" class="nav-item" data-page="page-how">
-          <span class="nav-icon">🔍</span>
-          <span class="nav-label">How We Did It</span>
-        </a>
-        <a href="#glossary" class="nav-item" data-page="page-glossary">
           <span class="nav-icon">📖</span>
-          <span class="nav-label">Plain-English Glossary</span>
-        </a>
-        <a href="#about" class="nav-item" data-page="page-about">
-          <span class="nav-icon">ℹ️</span>
-          <span class="nav-label">About & Limitations</span>
+          <span class="nav-label">Methodology & Guide</span>
         </a>
       </nav>
 
       <div class="sidebar-footer">
-        <div class="theme-switch-wrap">
-          <span class="theme-label">Theme</span>
-          <button id="theme-toggle-btn" class="theme-toggle" title="Toggle Light/Dark Theme">
-            <span class="theme-toggle-icon">🌙</span>
-            <span id="theme-text">Dark</span>
-          </button>
-        </div>
-        <div class="system-meta">
-          <span id="sidebar-time">--:--:--</span>
-          <button id="start-tour-btn" class="tour-text-link">Start Tour ↗</button>
-        </div>
+        <button id="theme-toggle-btn" class="theme-toggle-sleek" title="Toggle Light/Dark Theme">
+          <span class="theme-toggle-icon">🌙</span>
+          <span id="theme-text">Dark Mode</span>
+        </button>
+        <button id="start-tour-btn" class="tour-btn-pill">Tour ↗</button>
       </div>
     </aside>
 
@@ -107,24 +77,22 @@
         <div class="topbar-left">
           <button id="mobile-menu-btn" class="mobile-toggle" aria-label="Toggle navigation">☰</button>
           <div class="breadcrumb">
-            <span class="breadcrumb-root">Policy Intelligence</span>
-            <span class="breadcrumb-sep">/</span>
-            <span id="current-page-title" class="breadcrumb-current">Home & The Problem</span>
+            <span id="current-page-title" class="breadcrumb-current">World Map & Archetypes</span>
           </div>
         </div>
 
         <div class="topbar-center">
           <div class="country-search-bar-wrap">
             <span class="search-icon">🔍</span>
-            <input type="text" id="quick-country-search" placeholder="Find my country (e.g. Kenya, India, Brazil...)" autocomplete="off">
+            <input type="text" id="quick-country-search" placeholder="Search 140+ countries (e.g. Kenya, India, Brazil...)" autocomplete="off">
             <div id="country-search-results" class="search-autocomplete-dropdown"></div>
           </div>
         </div>
 
         <div class="topbar-right">
-          <div class="mode-toggle-wrap">
-            <button id="mode-citizen-btn" class="mode-pill-btn active" title="Switch to Citizen & Actionable mode">👤 Citizen Mode</button>
-            <button id="mode-analyst-btn" class="mode-pill-btn" title="Switch to Econometric & Analysis mode">🔬 Policy Mode</button>
+          <div class="topbar-status-badge">
+            <span class="status-indicator-dot"></span>
+            <span>World Bank Findex 2025</span>
           </div>
           <a href="/api/export/cluster-csv" class="btn btn-secondary btn-sm" title="Download Full Cluster Dataset (CSV)">
             ↓ Download CSV
@@ -132,186 +100,69 @@
         </div>
       </header>
 
-      <!-- MANDATORY SCIENTIFIC NOTICE BANNER -->
-      <div class="mandate-disclaimer-banner">
-        <span>⚠️ <strong>Responsible Use Notice:</strong> These clusters represent exploratory data patterns designed to stimulate inquiry. They are <u>NOT</u> official country rankings, developmental grades, or moral classifications.</span>
-      </div>
-
       <!-- VIEW PAGES CONTAINER -->
       <main class="content-viewport">
 
-        <!-- ================= PAGE 1: HOME & THE PROBLEM ================= -->
+        <!-- ================= PAGE 1: WORLD MAP & ARCHETYPES ================= -->
         <section id="page-home" class="dashboard-page active">
-          <div class="hero-jumbotron">
-            <div class="hero-tag">DATA-DRIVEN POLICYMAKING & GLOBAL EQUITY</div>
-            <h1 class="hero-headline">Financial inclusion,<br><em>seen in patterns.</em></h1>
-            <p class="hero-paragraph">
-              Compare how 140+ countries share financial inclusion patterns, identify what is holding each group back, and discover evidence-linked policy ideas that anyone can understand.
+          <!-- AESTHETIC HERO BANNER -->
+          <div class="hero-jumbotron-modern">
+            <div class="hero-tag-pill">
+              <span class="status-indicator-dot"></span>
+              <span>WORLD BANK GLOBAL FINDEX · UNSUPERVISED PATTERN CLUSTERING</span>
+            </div>
+            <h1 class="hero-headline-modern">Financial inclusion,<br><span class="gradient-text">seen in patterns.</span></h1>
+            <p class="hero-subheadline">
+              We analyzed 140+ economies using machine learning to uncover 4 natural financial ecosystems. Discover what is holding each group back, how peer nations compare, and evidence-backed policy solutions designed for everyone.
             </p>
-            <div class="hero-cta-row">
-              <button class="btn btn-primary btn-lg" onclick="switchPage('page-worldmap')">
-                🗺️ Explore the Interactive World Map →
-              </button>
-              <button class="btn btn-secondary btn-lg" onclick="switchPage('page-guided')">
-                🎛️ Try It Yourself (Guided Playground)
-              </button>
-              <button class="btn btn-secondary btn-lg" onclick="switchPage('page-citizen')">
-                💡 Citizen Problem Solver
-              </button>
-            </div>
-          </div>
-
-          <!-- THE PROBLEM IN 3 SIMPLE FACTS -->
-          <div class="home-facts-section">
-            <div class="section-tag">REAL-WORLD CONTEXT</div>
-            <h2>The Global Financial Exclusion Problem in 3 Facts</h2>
-            <div class="facts-grid">
-              <div class="fact-card accent-rose">
-                <div class="fact-num">1.4B</div>
-                <h3>Unbanked Adults Worldwide</h3>
-                <p>Over 1.4 billion people on Earth still have no formal account at a bank, credit union, or mobile provider. Without accounts, they cannot safely save money, build credit, or insure against emergencies.</p>
-                <div class="fact-subtext">Source: World Bank Global Findex 2025</div>
+            <div class="facts-stat-deck">
+              <div class="stat-deck-pill">
+                <span class="stat-val accent-rose">1.4B</span>
+                <span class="stat-label">Unbanked adults with no account</span>
               </div>
-
-              <div class="fact-card accent-amber">
-                <div class="fact-num">75%+</div>
-                <h3>Blocked by Poverty & Excessive Fees</h3>
-                <p>When unbanked adults are surveyed, more than three-quarters state they don't have enough money to maintain minimum balance requirements or that legacy bank service charges eat away their daily income.</p>
-                <div class="fact-subtext">Top Real-World Barrier: Fee Transparency</div>
+              <div class="stat-deck-pill">
+                <span class="stat-val accent-amber">75%+</span>
+                <span class="stat-label">Citing poverty & fees as primary barrier</span>
               </div>
-
-              <div class="fact-card accent-emerald">
-                <div class="fact-num">65%+</div>
-                <h3>The Mobile Leapfrogging Revolution</h3>
-                <p>In dozens of emerging economies across Sub-Saharan Africa and Asia, mobile money has surpassed brick-and-mortar bank branches, proving that digital infrastructure can bypass decades of physical barriers.</p>
-                <div class="fact-subtext">The Path Forward: Open Digital Rails</div>
+              <div class="stat-deck-pill">
+                <span class="stat-val accent-emerald">65%+</span>
+                <span class="stat-label">Mobile money leapfrogging legacy banks</span>
               </div>
             </div>
           </div>
 
-          <!-- QUICK EXPLORE BY ARCHETYPE -->
-          <div class="panel home-archetypes-preview">
-            <div class="panel-header">
-              <div>
-                <h3>Explore The 4 Global Financial Inclusion Archetypes</h3>
-                <p class="panel-subtitle">Click any archetype below to highlight its 140 peer nations directly on the World Map</p>
+          <!-- MAP CONTROL TOOLBAR -->
+          <div class="map-controls-bar panel">
+            <div class="map-filter-group">
+              <span class="filter-label">Filter Archetype:</span>
+              <div class="map-filter-chips" id="map-filter-chips">
+                <button class="arch-filter-chip active" data-cluster="all">All Nations (140)</button>
+                <button class="arch-filter-chip c1" data-cluster="0"><span class="chip-dot c1"></span> 1. Digitally Leaping (35)</button>
+                <button class="arch-filter-chip c2" data-cluster="1"><span class="chip-dot c2"></span> 2. Universal Systems (48)</button>
+                <button class="arch-filter-chip c3" data-cluster="2"><span class="chip-dot c3"></span> 3. Severe Exclusion (29)</button>
+                <button class="arch-filter-chip c4" data-cluster="3"><span class="chip-dot c4"></span> 4. Banked Constrained (28)</button>
               </div>
             </div>
-            <div class="archetypes-preview-grid">
-              <div class="arch-preview-card c1" onclick="switchPage('page-worldmap'); setTimeout(() => { document.querySelector('.arch-filter-chip.c1')?.click(); }, 120);">
-                <div class="preview-dot c1"></div>
-                <div class="preview-info">
-                  <strong>Digitally Leaping Cash Economists</strong>
-                  <span>35 countries • High mobile money, rapid fintech surge</span>
-                  <div class="preview-peers-mini">Kenya, Ghana, Uganda, Bangladesh...</div>
-                </div>
-                <span class="preview-arrow">→</span>
-              </div>
 
-              <div class="arch-preview-card c2" onclick="switchPage('page-worldmap'); setTimeout(() => { document.querySelector('.arch-filter-chip.c2')?.click(); }, 120);">
-                <div class="preview-dot c2"></div>
-                <div class="preview-info">
-                  <strong>Universal High-Resilience Systems</strong>
-                  <span>48 countries • Saturated banking, robust emergency buffers</span>
-                  <div class="preview-peers-mini">India, Germany, Japan, Singapore, Canada...</div>
-                </div>
-                <span class="preview-arrow">→</span>
-              </div>
-
-              <div class="arch-preview-card c3" onclick="switchPage('page-worldmap'); setTimeout(() => { document.querySelector('.arch-filter-chip.c3')?.click(); }, 120);">
-                <div class="preview-dot c3"></div>
-                <div class="preview-info">
-                  <strong>Severe Exclusion Frontiers</strong>
-                  <span>29 countries • Acute access deficits, heavy cash reliance</span>
-                  <div class="preview-peers-mini">Afghanistan, South Sudan, Yemen, Chad...</div>
-                </div>
-                <span class="preview-arrow">→</span>
-              </div>
-
-              <div class="arch-preview-card c4" onclick="switchPage('page-worldmap'); setTimeout(() => { document.querySelector('.arch-filter-chip.c4')?.click(); }, 120);">
-                <div class="preview-dot c4"></div>
-                <div class="preview-info">
-                  <strong>Banked but Liquidity-Constrained</strong>
-                  <span>28 countries • High account coverage, low voluntary savings</span>
-                  <div class="preview-peers-mini">Brazil, Colombia, Egypt, Philippines, Mexico...</div>
-                </div>
-                <span class="preview-arrow">→</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- QUICK MACRO KPIs -->
-          <div class="panel">
-            <div class="panel-header">
-              <div>
-                <h3>Global Snapshot at a Glance (2024 Audit)</h3>
-                <p class="panel-subtitle">Audited metrics from 140 sovereign and autonomous economies</p>
-              </div>
-            </div>
-            <div class="kpi-grid">
-              <div class="kpi-card accent-emerald">
-                <div class="kpi-title">GLOBAL ACCOUNT OWNERSHIP</div>
-                <div class="kpi-metric"><span id="home-kpi-account">70.7</span>%</div>
-                <div class="kpi-subtext">Adults (age 15+) with a formal or mobile account</div>
-              </div>
-              <div class="kpi-card accent-cyan">
-                <div class="kpi-title">MOBILE MONEY PENETRATION</div>
-                <div class="kpi-metric"><span id="home-kpi-mobile">41.8</span>%</div>
-                <div class="kpi-subtext">Active accounts across surveyed emerging nations</div>
-              </div>
-              <div class="kpi-card accent-amber">
-                <div class="kpi-title">EMERGENCY RESILIENCE</div>
-                <div class="kpi-metric"><span id="home-kpi-resil">59.2</span>%</div>
-                <div class="kpi-subtext">Able to come up with emergency funds in 30 days</div>
-              </div>
-              <div class="kpi-card accent-purple">
-                <div class="kpi-title">NATURAL ARCHETYPES</div>
-                <div class="kpi-metric">4 Groups</div>
-                <div class="kpi-subtext">Recommended K=4 comparative pattern clusters</div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-
-        <!-- ================= PAGE 2: INTERACTIVE WORLD MAP ================= -->
-        <section id="page-worldmap" class="dashboard-page">
-          <div class="page-header">
-            <div class="page-title-group">
-              <div class="section-tag">GLOBAL EXPLORATION</div>
-              <h1>Interactive World Map & Country Archetypes</h1>
-              <p class="section-subtitle">Explore how 140+ countries cluster into 4 natural financial inclusion archetypes. Filter by group, switch between metrics, and click any nation to inspect live.</p>
-            </div>
-            <div class="map-view-pills-wrap">
+            <div class="map-metric-group">
+              <span class="filter-label">Color Map By:</span>
               <div class="map-view-pills" id="map-view-pills">
-                <button class="map-view-pill active" data-metric="cluster">🏷️ 4 Archetype Clusters</button>
-                <button class="map-view-pill" data-metric="account">💳 Overall Account (%)</button>
-                <button class="map-view-pill" data-metric="mobile">📱 Mobile Money (%)</button>
-                <button class="map-view-pill" data-metric="resilience">🛡️ Emergency Resilience (%)</button>
+                <button class="map-view-pill active" data-metric="cluster">🏷️ Archetypes</button>
+                <button class="map-view-pill" data-metric="account">💳 Account (%)</button>
+                <button class="map-view-pill" data-metric="mobile">📱 Mobile (%)</button>
+                <button class="map-view-pill" data-metric="resilience">🛡️ Resilience (%)</button>
               </div>
             </div>
           </div>
 
-          <!-- ARCHETYPE QUICK-FILTER PILLS -->
-          <div class="map-filter-toolbar">
-            <span class="filter-toolbar-label">Quick Filter Archetype:</span>
-            <div class="map-filter-chips" id="map-filter-chips">
-              <button class="arch-filter-chip active" data-cluster="all">All Nations (140)</button>
-              <button class="arch-filter-chip c1" data-cluster="0"><span class="chip-dot c1"></span> Leapfrogging Cash (35)</button>
-              <button class="arch-filter-chip c2" data-cluster="1"><span class="chip-dot c2"></span> Universal Systems (48)</button>
-              <button class="arch-filter-chip c3" data-cluster="2"><span class="chip-dot c3"></span> Severe Exclusion (29)</button>
-              <button class="arch-filter-chip c4" data-cluster="3"><span class="chip-dot c4"></span> Banked Constrained (28)</button>
-            </div>
-          </div>
-
-          <!-- SPLIT STAGE: CHOROPLETH MAP (LEFT) + INSTANT COUNTRY INSPECTOR (RIGHT) -->
+          <!-- DUAL-PANE STAGE: INTERACTIVE MAP + LIVE INSPECTOR -->
           <div class="map-layout-split">
-            <!-- LEFT: THE MAP -->
+            <!-- LEFT: PLOTLY CHOROPLETH MAP -->
             <div class="map-stage-left panel">
               <div id="chart-world-map" class="chart-container-map"></div>
               <div class="map-helper-bar">
                 <div class="map-helper-left">
-                  <span>💡 <strong>Click any country</strong> to load instant profile, or double-click to reset zoom.</span>
+                  <span>💡 <strong>Click any country</strong> to inspect live metrics, or double-click anywhere to reset zoom.</span>
                 </div>
                 <div class="map-helper-right">
                   <span id="map-hover-echo" class="map-selection-echo">Hovering: Worldwide</span>
@@ -319,7 +170,7 @@
               </div>
             </div>
 
-            <!-- RIGHT: INSTANT COUNTRY INSPECTOR CARD -->
+            <!-- RIGHT: LIVE COUNTRY INSPECTOR CARD -->
             <div class="map-stage-right panel" id="map-inspector-pane">
               <div class="inspector-card-header">
                 <div>
@@ -399,42 +250,91 @@
             </div>
           </div>
 
-          <!-- ARCHETYPE LEGEND CARDS -->
-          <div class="archetypes-legend-grid">
-            <div class="legend-card c1" data-cluster="0">
-              <div class="legend-dot c1"></div>
-              <div>
-                <strong>Archetype 1: Digitally Leaping Cash Economists</strong>
-                <p>High mobile money penetration with rapid fintech adoption, yet modest traditional bank savings.</p>
-                <span class="legend-foot">Sub-Saharan Africa & Emerging Asia</span>
+          <!-- 4 GLOBAL ARCHETYPE CARDS -->
+          <div class="archetypes-overview-section">
+            <div class="section-heading-clean">
+              <h2>The 4 Global Financial Inclusion Archetypes</h2>
+              <p>Discovered through unsupervised comparative clustering of 140+ sovereign economies</p>
+            </div>
+
+            <div class="archetypes-preview-grid">
+              <div class="arch-preview-card c1" onclick="document.querySelector('.arch-filter-chip.c1')?.click(); window.scrollTo({top: 280, behavior: 'smooth'});">
+                <div class="preview-dot c1"></div>
+                <div class="preview-info">
+                  <strong>Digitally Leaping Cash Economists</strong>
+                  <span>35 countries • High mobile money, rapid fintech surge</span>
+                  <div class="preview-peers-mini">Kenya, Ghana, Uganda, Bangladesh...</div>
+                </div>
+                <span class="preview-arrow">Filter Map ↗</span>
+              </div>
+
+              <div class="arch-preview-card c2" onclick="document.querySelector('.arch-filter-chip.c2')?.click(); window.scrollTo({top: 280, behavior: 'smooth'});">
+                <div class="preview-dot c2"></div>
+                <div class="preview-info">
+                  <strong>Universal High-Resilience Systems</strong>
+                  <span>48 countries • Saturated banking, robust emergency buffers</span>
+                  <div class="preview-peers-mini">India, Germany, Japan, Singapore, Canada...</div>
+                </div>
+                <span class="preview-arrow">Filter Map ↗</span>
+              </div>
+
+              <div class="arch-preview-card c3" onclick="document.querySelector('.arch-filter-chip.c3')?.click(); window.scrollTo({top: 280, behavior: 'smooth'});">
+                <div class="preview-dot c3"></div>
+                <div class="preview-info">
+                  <strong>Severe Exclusion Frontiers</strong>
+                  <span>29 countries • Acute access deficits, heavy cash reliance</span>
+                  <div class="preview-peers-mini">Afghanistan, South Sudan, Yemen, Chad...</div>
+                </div>
+                <span class="preview-arrow">Filter Map ↗</span>
+              </div>
+
+              <div class="arch-preview-card c4" onclick="document.querySelector('.arch-filter-chip.c4')?.click(); window.scrollTo({top: 280, behavior: 'smooth'});">
+                <div class="preview-dot c4"></div>
+                <div class="preview-info">
+                  <strong>Banked but Liquidity-Constrained</strong>
+                  <span>28 countries • High account coverage, low voluntary savings</span>
+                  <div class="preview-peers-mini">Brazil, Colombia, Egypt, Philippines, Mexico...</div>
+                </div>
+                <span class="preview-arrow">Filter Map ↗</span>
               </div>
             </div>
-            <div class="legend-card c2" data-cluster="1">
-              <div class="legend-dot c2"></div>
+          </div>
+
+          <!-- QUICK MACRO KPIS -->
+          <div class="panel macro-kpi-panel">
+            <div class="panel-header">
               <div>
-                <strong>Archetype 2: Universal High-Resilience Systems</strong>
-                <p>Nearly saturated formal banking (>90%), high digital commerce, and robust emergency buffers.</p>
-                <span class="legend-foot">OECD, High-Income & Established East Asia</span>
+                <h3>Global Macro Benchmark (140 Audited Economies)</h3>
+                <p class="panel-subtitle">Weighted and unweighted metrics across World Bank Global Findex indicators</p>
               </div>
             </div>
-            <div class="legend-card c3" data-cluster="2">
-              <div class="legend-dot c3"></div>
-              <div>
-                <strong>Archetype 3: Severe Exclusion Frontiers</strong>
-                <p>Acute access deficits across banks and mobile platforms. High reliance on physical cash.</p>
-                <span class="legend-foot">Conflict-affected, Low-Income & Rural Frontiers</span>
+            <div class="kpi-grid">
+              <div class="kpi-card accent-emerald">
+                <div class="kpi-title">GLOBAL ACCOUNT OWNERSHIP</div>
+                <div class="kpi-metric"><span id="home-kpi-account">70.7</span>%</div>
+                <div class="kpi-subtext">Adults (age 15+) with a formal or mobile account</div>
               </div>
-            </div>
-            <div class="legend-card c4" data-cluster="3">
-              <div class="legend-dot c4"></div>
-              <div>
-                <strong>Archetype 4: Banked but Liquidity-Constrained</strong>
-                <p>High formal account ownership (often payroll/G2P), but low voluntary savings mobilization.</p>
-                <span class="legend-foot">Latin America & Middle East</span>
+              <div class="kpi-card accent-cyan">
+                <div class="kpi-title">MOBILE MONEY PENETRATION</div>
+                <div class="kpi-metric"><span id="home-kpi-mobile">41.8</span>%</div>
+                <div class="kpi-subtext">Active accounts across surveyed emerging nations</div>
+              </div>
+              <div class="kpi-card accent-amber">
+                <div class="kpi-title">EMERGENCY RESILIENCE</div>
+                <div class="kpi-metric"><span id="home-kpi-resil">59.2</span>%</div>
+                <div class="kpi-subtext">Able to come up with emergency funds in 30 days</div>
+              </div>
+              <div class="kpi-card accent-purple">
+                <div class="kpi-title">NATURAL ARCHETYPES</div>
+                <div class="kpi-metric">4 Groups</div>
+                <div class="kpi-subtext">Optimal K=4 comparative pattern clusters</div>
               </div>
             </div>
           </div>
         </section>
+
+        <!-- PAGE 2: ALIAS / REDIRECT TO HOME -->
+        <section id="page-worldmap" class="dashboard-page" style="display: none;"></section>
 
 
         <!-- ================= PAGE 3: COUNTRY COMPARATOR ================= -->
@@ -1479,11 +1379,11 @@
           <span>GLOBAL FINANCIAL INCLUSION POLICY LAB</span>
           <span class="sep">|</span>
           <span>World Bank Global Findex 2025</span>
+          <span class="sep">|</span>
+          <span class="footer-notice-subtle">Exploratory analytical patterns · Not official policy rankings</span>
         </div>
         <div class="footer-right">
-          <span>Production Edition v3.0</span>
-          <span class="sep">|</span>
-          <a href="https://www.worldbank.org/en/publication/globalfindex" target="_blank" rel="noreferrer">World Bank Microdata ↗</a>
+          <a href="https://www.worldbank.org/en/publication/globalfindex" target="_blank" rel="noreferrer">World Bank Open Data ↗</a>
         </div>
       </footer>
     </div>

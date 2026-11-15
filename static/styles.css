@@ -1,16 +1,16 @@
 /* Global Financial Inclusion Policy Lab - Modern Responsive Stylesheet */
-@import url('https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,400;0,500;1,400&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap');
 
 :root {
   /* Ultra-Premium Midnight Obsidian & Slate Palette */
-  --bg-primary: #0a0e17;
-  --bg-secondary: #0f172a;
-  --bg-card: #131d31;
-  --bg-card-hover: #18253d;
-  --bg-input: #0c1424;
-  --border-color: #1e293b;
-  --border-light: #2d3d54;
-  --border-glow: rgba(99, 102, 241, 0.25);
+  --bg-primary: #070a12;
+  --bg-secondary: #0b1120;
+  --bg-card: #0f172a;
+  --bg-card-hover: #17233d;
+  --bg-input: #0b1120;
+  --border-color: rgba(255, 255, 255, 0.08);
+  --border-light: rgba(255, 255, 255, 0.14);
+  --border-glow: rgba(99, 102, 241, 0.3);
   
   --text-primary: #f8fafc;
   --text-secondary: #94a3b8;
@@ -28,8 +28,8 @@
   --accent-purple: #8b5cf6;
 
   --font-serif: 'Playfair Display', Georgia, serif;
-  --font-sans: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-mono: 'DM Mono', monospace;
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
 
   --shadow-sm: 0 1px 3px rgba(0,0,0,0.3);
   --shadow-md: 0 4px 16px -2px rgba(0,0,0,0.4);
@@ -80,12 +80,21 @@
 
 body {
   font-family: var(--font-sans);
-  background: var(--bg-primary);
+  background: radial-gradient(at 15% 15%, rgba(99, 102, 241, 0.08) 0px, transparent 40%),
+              radial-gradient(at 85% 85%, rgba(16, 185, 129, 0.05) 0px, transparent 40%),
+              var(--bg-primary);
   color: var(--text-primary);
   line-height: 1.5;
   min-height: 100vh;
   overflow-x: hidden;
   transition: background 0.3s ease, color 0.3s ease;
+  -webkit-font-smoothing: antialiased;
+}
+
+[data-theme="light"] body {
+  background: radial-gradient(at 15% 15%, rgba(99, 102, 241, 0.04) 0px, transparent 40%),
+              radial-gradient(at 85% 85%, rgba(16, 185, 129, 0.04) 0px, transparent 40%),
+              var(--bg-primary);
 }
 
 /* APP SHELL */
@@ -250,46 +259,53 @@ body {
   padding: 16px 20px;
   border-top: 1px solid var(--border-color);
   display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.theme-switch-wrap {
-  display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
+  gap: 10px;
 }
 
-.theme-label {
-  font-size: 12px;
-  color: var(--text-muted);
-}
-
-.theme-toggle {
+.theme-toggle-sleek {
   background: var(--bg-card);
   border: 1px solid var(--border-color);
   color: var(--text-primary);
-  padding: 5px 12px;
+  padding: 6px 12px;
   border-radius: 20px;
   cursor: pointer;
   display: flex;
   align-items: center;
   gap: 6px;
-  font-size: 11px;
-  font-family: var(--font-mono);
+  font-size: 11.5px;
+  font-weight: 500;
   transition: all 0.2s;
 }
 
-.theme-toggle:hover {
-  border-color: var(--accent-emerald);
+.theme-toggle-sleek:hover {
+  border-color: var(--accent-indigo);
+  transform: translateY(-1px);
 }
 
-.system-meta {
-  display: flex;
-  justify-content: space-between;
-  font-family: var(--font-mono);
-  font-size: 10px;
-  color: var(--text-muted);
+.tour-btn-pill {
+  background: rgba(99, 102, 241, 0.12);
+  border: 1px solid rgba(99, 102, 241, 0.3);
+  color: var(--accent-indigo);
+  padding: 6px 12px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 11.5px;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+
+.tour-btn-pill:hover {
+  background: rgba(99, 102, 241, 0.25);
+  transform: translateY(-1px);
+}
+
+.brand-logo-mark {
+  font-size: 24px;
+  color: var(--accent-emerald);
+  font-weight: 700;
+  line-height: 1;
 }
 
 /* MAIN WRAPPER */
@@ -390,6 +406,29 @@ body {
   display: flex;
   align-items: center;
   gap: 14px;
+}
+
+.topbar-status-badge {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 12px;
+  border-radius: 20px;
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--accent-emerald);
+  font-weight: 600;
+}
+
+.status-indicator-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent-emerald);
+  box-shadow: 0 0 8px rgba(16, 185, 129, 0.6);
+  animation: pulse 2s infinite;
 }
 
 .year-selector-wrap {
@@ -1851,26 +1890,6 @@ body {
    Methodology Walkthrough, Glossary, Modal Scorecard, Onboarding Tour & Print
    ========================================================================== */
 
-/* MANDATORY RESPONSIBLE USE BANNER */
-.mandate-disclaimer-banner {
-  background: rgba(245, 158, 11, 0.12);
-  border-bottom: 1px solid rgba(245, 158, 11, 0.35);
-  color: #fbbf24;
-  padding: 8px 24px;
-  font-size: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  text-align: center;
-  line-height: 1.4;
-}
-[data-theme= light] .mandate-disclaimer-banner {
-  background: #fef3c7;
-  border-bottom: 1px solid #fde68a;
-  color: #92400e;
-}
-
 /* TOPBAR COUNTRY SEARCH AUTOCOMPLETE */
 .country-search-bar-wrap {
   position: relative;
@@ -1950,6 +1969,161 @@ body {
   background: var(--bg-secondary);
   color: var(--accent-teal);
   border: 1px solid var(--border-color);
+}
+
+/* MODERN AESTHETIC HERO JUMBOTRON */
+.hero-jumbotron-modern {
+  background: radial-gradient(circle at 10% 20%, rgba(99, 102, 241, 0.16) 0%, transparent 45%),
+              radial-gradient(circle at 90% 80%, rgba(16, 185, 129, 0.12) 0%, transparent 45%),
+              var(--bg-card);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-lg);
+  padding: 44px 40px;
+  margin-bottom: 24px;
+  box-shadow: 0 16px 40px -8px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+[data-theme="light"] .hero-jumbotron-modern {
+  background: radial-gradient(circle at 10% 20%, rgba(99, 102, 241, 0.06) 0%, transparent 45%),
+              radial-gradient(circle at 90% 80%, rgba(16, 185, 129, 0.06) 0%, transparent 45%),
+              #ffffff;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+}
+
+.hero-tag-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 12px;
+  border-radius: 20px;
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  color: var(--accent-emerald);
+  margin-bottom: 16px;
+}
+
+.hero-headline-modern {
+  font-family: var(--font-serif);
+  font-size: 44px;
+  line-height: 1.15;
+  color: var(--text-primary);
+  margin: 0 0 14px 0;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, #38bdf8 0%, #818cf8 50%, #34d399 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-style: italic;
+}
+
+.hero-subheadline {
+  font-size: 15.5px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  max-width: 820px;
+  margin-bottom: 24px;
+}
+
+.facts-stat-deck {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.stat-deck-pill {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 14px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  transition: all 0.2s ease;
+}
+
+.stat-deck-pill:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: var(--border-light);
+  transform: translateY(-2px);
+}
+
+.stat-val {
+  font-family: var(--font-serif);
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.stat-val.accent-rose { color: var(--accent-rose); }
+.stat-val.accent-amber { color: var(--accent-amber); }
+.stat-val.accent-emerald { color: var(--accent-emerald); }
+
+.stat-label {
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.35;
+}
+
+/* MAP CONTROLS TOOLBAR */
+.map-controls-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding: 14px 20px;
+  margin-bottom: 16px;
+  border-radius: var(--radius-md);
+}
+
+.map-filter-group, .map-metric-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.filter-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-muted);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.archetypes-overview-section {
+  margin: 32px 0 24px;
+}
+
+.section-heading-clean {
+  margin-bottom: 16px;
+}
+
+.section-heading-clean h2 {
+  font-family: var(--font-serif);
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.section-heading-clean p {
+  font-size: 13.5px;
+  color: var(--text-secondary);
+}
+
+.macro-kpi-panel {
+  margin-top: 24px;
 }
 
 /* HERO JUMBOTRON (HOME) */
