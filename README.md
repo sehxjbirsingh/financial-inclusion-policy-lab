@@ -56,25 +56,39 @@ Follow these simple steps to run the lab locally on your computer:
    python -m unittest discover tests
    ```
 
-6. **Start the web application:**
-   ```bash
-   python app.py
-   ```
-
-7. **Open in your web browser:**
-   Navigate to [http://127.0.0.1:5000](http://127.0.0.1:5000)
+6. **Start the application (Choose either interface):**
+   - **Streamlit Edition:**
+     ```bash
+     streamlit run streamlit_app.py
+     ```
+     *Opens at [http://localhost:8501](http://localhost:8501)*
+   - **Flask & Vanilla JS Production Edition:**
+     ```bash
+     python app.py
+     ```
+     *Opens at [http://127.0.0.1:5000](http://127.0.0.1:5000)*
 
 ---
 
-## ☁️ One-Click Cloud Deployment
+## ☁️ Permanent Free Cloud Deployment (Streamlit Community Cloud)
 
-### Option A: Render
-1. Create a free account at [render.com](https://render.com).
-2. Click **New +** > **Web Service** and connect this repository.
-3. Render automatically detects `render.yaml`. Click **Create Web Service**.
+This project is configured for **permanent, zero-cost, continuous deployment** via Streamlit Community Cloud:
 
-### Option B: Railway / Heroku
-The included `Procfile` (`web: gunicorn app:app --bind 0.0.0.0:$PORT`) is immediately recognized by Railway, Heroku, and Dokku.
+[![Deploy to Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://share.streamlit.io/deploy?repository=sehxjbirsingh/financial-inclusion-policy-lab&branch=main&mainModule=streamlit_app.py)
+
+### 3-Step Permanent Deployment Instructions:
+1. Navigate to **[share.streamlit.io/deploy](https://share.streamlit.io/deploy?repository=sehxjbirsingh/financial-inclusion-policy-lab&branch=main&mainModule=streamlit_app.py)** (sign in with your GitHub account `sehxjbirsingh`).
+2. Verify the prefilled parameters:
+   - **Repository:** `sehxjbirsingh/financial-inclusion-policy-lab`
+   - **Branch:** `main`
+   - **Main file path:** `streamlit_app.py`
+3. Click **Deploy!** 
+   - Streamlit will automatically build your app and deploy it to a permanent public URL (e.g., `https://financial-inclusion-policy-lab.streamlit.app`).
+   - Every future git push to `main` will automatically trigger a zero-downtime hot redeployment!
+
+### Alternative Deployments:
+- **Render:** Automatic detection via [`render.yaml`](render.yaml).
+- **Heroku / Railway / Dokku:** Automatic detection via [`Procfile`](Procfile) (`web: gunicorn app:app --bind 0.0.0.0:$PORT`).
 
 ---
 
