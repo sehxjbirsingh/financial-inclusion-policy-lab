@@ -96,12 +96,17 @@ st.markdown("""
         color: #f8fafc !important;
         transform: translateX(2px) !important;
     }
+    [data-testid="stSidebar"] [data-testid="stRadio"] label[data-checked="true"],
     [data-testid="stSidebar"] [data-testid="stRadio"] label:has(input:checked) {
         background: linear-gradient(135deg, rgba(99, 102, 241, 0.25) 0%, rgba(16, 185, 129, 0.15) 100%) !important;
         border: 1px solid rgba(99, 102, 241, 0.4) !important;
         color: #ffffff !important;
         font-weight: 600 !important;
         box-shadow: 0 2px 12px rgba(99, 102, 241, 0.25) !important;
+    }
+    /* Hide the radio circles completely */
+    [data-testid="stSidebar"] [data-testid="stRadio"] label > div:first-child {
+        display: none !important;
     }
     [data-testid="stSidebar"] [data-testid="stRadio"] input[type="radio"] {
         display: none !important;
