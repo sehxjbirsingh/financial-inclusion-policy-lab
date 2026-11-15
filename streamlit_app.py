@@ -106,14 +106,29 @@ st.markdown("""
         box-shadow: 0 2px 12px rgba(99, 102, 241, 0.25) !important;
     }
     
-    /* Hide ONLY the radio circle container (has input[type="radio"]), NOT the text container */
+    /* Hide the 16x16px Radio Circle / Bullet Point completely */
+    div[data-testid="stRadioOption"] > div > div:first-child,
+    div[data-testid="stRadioOption"] > label > div:first-child,
+    div[data-testid="stRadioOption"] > div:first-child:not([data-testid="stMarkdownContainer"]),
+    div[data-testid="stRadioOption"] input[type="radio"],
+    div[data-testid="stRadioOption"] svg,
+    div[data-testid="stRadioOption"] [class*="Radio"],
+    div[data-testid="stRadioOption"] [class*="radio"],
+    div[data-testid="stRadioOption"] [class*="Circle"],
+    div[data-testid="stRadioOption"] [class*="circle"],
+    div[data-testid="stRadioOption"] [class*="Dot"],
+    [data-testid="stRadio"] div[role="radiogroup"] > div > div:first-child,
+    [data-testid="stRadio"] div[role="radiogroup"] > div > label > div:first-child,
+    [data-testid="stRadio"] label > div:first-child:has(input[type="radio"]),
     [data-testid="stSidebar"] [data-testid="stRadio"] label > div:has(input[type="radio"]),
     [data-testid="stSidebar"] [data-testid="stRadio"] input[type="radio"] {
         display: none !important;
-        width: 0 !important;
-        height: 0 !important;
-        margin: 0 !important;
-        padding: 0 !important;
+        width: 0px !important;
+        height: 0px !important;
+        min-width: 0px !important;
+        max-width: 0px !important;
+        margin: 0px !important;
+        padding: 0px !important;
         opacity: 0 !important;
         visibility: hidden !important;
         pointer-events: none !important;
@@ -121,12 +136,24 @@ st.markdown("""
     }
     
     /* Ensure Nav Pill Text Labels are Crisp, Visible, and Full-Width */
+    div[data-testid="stRadioOption"],
+    div[data-testid="stRadioOption"] > div,
+    div[data-testid="stRadioOption"] > label,
+    [data-testid="stSidebar"] [data-testid="stRadio"] label {
+        width: 100% !important;
+        cursor: pointer !important;
+        display: flex !important;
+        align-items: center !important;
+    }
+    div[data-testid="stRadioOption"] [data-testid="stMarkdownContainer"],
     [data-testid="stSidebar"] [data-testid="stRadio"] [data-testid="stMarkdownContainer"] {
         display: block !important;
         visibility: visible !important;
         opacity: 1 !important;
         width: 100% !important;
+        padding-left: 2px !important;
     }
+    div[data-testid="stRadioOption"] [data-testid="stMarkdownContainer"] p,
     [data-testid="stSidebar"] [data-testid="stRadio"] [data-testid="stMarkdownContainer"] p {
         display: block !important;
         visibility: visible !important;
@@ -137,9 +164,11 @@ st.markdown("""
         margin: 0 !important;
         line-height: 1.4 !important;
     }
+    div[data-testid="stRadioOption"]:hover p,
     [data-testid="stSidebar"] [data-testid="stRadio"] label:hover [data-testid="stMarkdownContainer"] p {
         color: #f8fafc !important;
     }
+    div[data-testid="stRadioOption"]:has(input:checked) p,
     [data-testid="stSidebar"] [data-testid="stRadio"] label[data-checked="true"] [data-testid="stMarkdownContainer"] p,
     [data-testid="stSidebar"] [data-testid="stRadio"] label:has(input:checked) [data-testid="stMarkdownContainer"] p {
         color: #ffffff !important;
