@@ -74,7 +74,7 @@ st.markdown("""
         padding-right: 1.2rem !important;
     }
 
-    /* Convert Sidebar Radio Buttons into Sleek Nav Pills */
+    /* Convert Sidebar Radio Buttons into Sleek Nav Pills with ZERO Bullet Points */
     [data-testid="stSidebar"] [data-testid="stRadio"] > div {
         gap: 6px !important;
     }
@@ -90,6 +90,7 @@ st.markdown("""
         font-weight: 500 !important;
         display: flex !important;
         align-items: center !important;
+        width: 100% !important;
     }
     [data-testid="stSidebar"] [data-testid="stRadio"] label:hover {
         background: rgba(99, 102, 241, 0.12) !important;
@@ -104,12 +105,30 @@ st.markdown("""
         font-weight: 600 !important;
         box-shadow: 0 2px 12px rgba(99, 102, 241, 0.25) !important;
     }
-    /* Hide the radio circles completely */
-    [data-testid="stSidebar"] [data-testid="stRadio"] label > div:first-child {
+    
+    /* 100% Removal of Radio Circles, Bullet Points, and Checkmarks */
+    [data-testid="stSidebar"] [data-testid="stRadio"] label > div:first-child,
+    [data-testid="stSidebar"] [data-testid="stRadio"] label > div:not([data-testid="stMarkdownContainer"]),
+    [data-testid="stSidebar"] [data-testid="stRadio"] input,
+    [data-testid="stSidebar"] [data-testid="stRadio"] svg,
+    [data-testid="stSidebar"] [data-testid="stRadio"] [class*="Radio"],
+    [data-testid="stSidebar"] [data-testid="stRadio"] [class*="radio"],
+    [data-testid="stSidebar"] [data-testid="stRadio"] [class*="Circle"],
+    [data-testid="stSidebar"] [data-testid="stRadio"] [class*="circle"],
+    [data-testid="stSidebar"] [data-testid="stRadio"] [class*="Dot"],
+    [data-testid="stSidebar"] [data-testid="stRadio"] [class*="dot"] {
         display: none !important;
+        width: 0 !important;
+        height: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        opacity: 0 !important;
+        visibility: hidden !important;
+        pointer-events: none !important;
+        position: absolute !important;
     }
-    [data-testid="stSidebar"] [data-testid="stRadio"] input[type="radio"] {
-        display: none !important;
+    [data-testid="stSidebar"] [data-testid="stRadio"] div[data-testid="stMarkdownContainer"] {
+        width: 100% !important;
     }
     [data-testid="stSidebar"] [data-testid="stRadio"] div[data-testid="stMarkdownContainer"] p {
         font-size: 13.5px !important;
@@ -331,6 +350,7 @@ with st.sidebar:
     st.caption("FINANCIAL INCLUSION 2025 · WORLD BANK FINDEX")
     st.markdown("---")
     
+    # 7 Public Dashboard Pages (Methodology moved to private section below)
     page = st.radio(
         "Navigation",
         [
@@ -340,8 +360,7 @@ with st.sidebar:
             "🎛️ Try It Yourself (Guided Lab)",
             "🔬 Archetypes & PCA Diagnostics",
             "⚡ Policy Simulator",
-            "🌐 Global Matrix (140+ Countries)",
-            "📖 Methodology & Data Log"
+            "🌐 Global Matrix (140+ Countries)"
         ],
         label_visibility="collapsed"
     )
@@ -361,6 +380,25 @@ with st.sidebar:
         )
     
     st.markdown("---")
+    
+    # Private Researcher & Evaluator Gated Section
+    with st.expander("🔒 Researcher & Evaluator Access", expanded=False):
+        st.caption("Technical methodology, preprocessing logs, and model diagnostics are restricted.")
+        passcode = st.text_input("Evaluator Passcode:", type="password", key="auditor_passcode", placeholder="••••••••")
+        if passcode in ["findex2025", "admin", "policy2025"]:
+            st.success("Access Granted")
+            if st.button("Unlock Methodology & Data Log", use_container_width=True):
+                st.session_state["show_technical_logs"] = True
+        elif passcode:
+            st.error("Access Denied: Invalid Passcode")
+
+    # If evaluator unlocked the private data log
+    if st.session_state.get("show_technical_logs", False):
+        page = "📖 Methodology & Data Log"
+        if st.button("← Return to Public Dashboard", use_container_width=True):
+            st.session_state["show_technical_logs"] = False
+            st.rerun()
+
     st.caption("World Bank Global Findex 2025 · 140 Sovereign Economies")
 
 
