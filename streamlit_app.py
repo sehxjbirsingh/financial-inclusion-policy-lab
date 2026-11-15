@@ -106,17 +106,9 @@ st.markdown("""
         box-shadow: 0 2px 12px rgba(99, 102, 241, 0.25) !important;
     }
     
-    /* 100% Removal of Radio Circles, Bullet Points, and Checkmarks */
-    [data-testid="stSidebar"] [data-testid="stRadio"] label > div:first-child,
-    [data-testid="stSidebar"] [data-testid="stRadio"] label > div:not([data-testid="stMarkdownContainer"]),
-    [data-testid="stSidebar"] [data-testid="stRadio"] input,
-    [data-testid="stSidebar"] [data-testid="stRadio"] svg,
-    [data-testid="stSidebar"] [data-testid="stRadio"] [class*="Radio"],
-    [data-testid="stSidebar"] [data-testid="stRadio"] [class*="radio"],
-    [data-testid="stSidebar"] [data-testid="stRadio"] [class*="Circle"],
-    [data-testid="stSidebar"] [data-testid="stRadio"] [class*="circle"],
-    [data-testid="stSidebar"] [data-testid="stRadio"] [class*="Dot"],
-    [data-testid="stSidebar"] [data-testid="stRadio"] [class*="dot"] {
+    /* Hide ONLY the radio circle container (has input[type="radio"]), NOT the text container */
+    [data-testid="stSidebar"] [data-testid="stRadio"] label > div:has(input[type="radio"]),
+    [data-testid="stSidebar"] [data-testid="stRadio"] input[type="radio"] {
         display: none !important;
         width: 0 !important;
         height: 0 !important;
@@ -127,12 +119,31 @@ st.markdown("""
         pointer-events: none !important;
         position: absolute !important;
     }
-    [data-testid="stSidebar"] [data-testid="stRadio"] div[data-testid="stMarkdownContainer"] {
+    
+    /* Ensure Nav Pill Text Labels are Crisp, Visible, and Full-Width */
+    [data-testid="stSidebar"] [data-testid="stRadio"] [data-testid="stMarkdownContainer"] {
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
         width: 100% !important;
     }
-    [data-testid="stSidebar"] [data-testid="stRadio"] div[data-testid="stMarkdownContainer"] p {
+    [data-testid="stSidebar"] [data-testid="stRadio"] [data-testid="stMarkdownContainer"] p {
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
         font-size: 13.5px !important;
+        font-weight: 500 !important;
+        color: #94a3b8 !important;
         margin: 0 !important;
+        line-height: 1.4 !important;
+    }
+    [data-testid="stSidebar"] [data-testid="stRadio"] label:hover [data-testid="stMarkdownContainer"] p {
+        color: #f8fafc !important;
+    }
+    [data-testid="stSidebar"] [data-testid="stRadio"] label[data-checked="true"] [data-testid="stMarkdownContainer"] p,
+    [data-testid="stSidebar"] [data-testid="stRadio"] label:has(input:checked) [data-testid="stMarkdownContainer"] p {
+        color: #ffffff !important;
+        font-weight: 600 !important;
     }
 
     /* Glassmorphic Selectboxes & Dropdowns */
