@@ -105,7 +105,9 @@ st.markdown("""
     }
     
     /* Complete removal of the round blue radio circle, inner dot, and circular outline */
-    [data-testid="stRadioOption"] > *:first-child:not([data-testid="stMarkdownContainer"]),
+    [data-testid="stRadioOption"] > div > div:first-child:not([data-testid="stMarkdownContainer"]),
+    [data-testid="stRadioOption"] [class*="ex50key4"],
+    [data-testid="stRadioOption"] [class*="ex50key5"],
     [data-testid="stRadioOption"] input[type="radio"],
     [data-testid="stRadioOption"] svg {
         display: none !important;
