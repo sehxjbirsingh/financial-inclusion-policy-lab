@@ -56,11 +56,12 @@ st.markdown("""
 
     /* Modern Layout Padding */
     .block-container {
-        padding-top: 2rem !important;
+        padding-top: 1.5rem !important;
         padding-bottom: 3rem !important;
-        padding-left: 2.5rem !important;
-        padding-right: 2.5rem !important;
-        max-width: 1350px !important;
+        padding-left: 2rem !important;
+        padding-right: 2rem !important;
+        max-width: 1440px !important;
+        width: 100% !important;
     }
     
     /* Sidebar Styling */
@@ -180,12 +181,19 @@ st.markdown("""
         padding: 16px 20px !important;
         box-shadow: 0 4px 14px rgba(0,0,0,0.25) !important;
     }
-    [data-testid="stMetricLabel"] {
+    [data-testid="stMetricLabel"],
+    [data-testid="stMetricLabel"] > div,
+    [data-testid="stMetricLabel"] p {
         font-family: 'JetBrains Mono', monospace !important;
         font-size: 11px !important;
         text-transform: uppercase !important;
         letter-spacing: 0.5px !important;
         color: #94a3b8 !important;
+        white-space: normal !important;
+        word-break: break-word !important;
+        overflow: visible !important;
+        text-overflow: unset !important;
+        line-height: 1.35 !important;
     }
     [data-testid="stMetricValue"] {
         font-family: 'Playfair Display', Georgia, serif !important;
@@ -199,15 +207,16 @@ st.markdown("""
         border-radius: 30px !important;
         padding: 4px !important;
         border: 1px solid rgba(255, 255, 255, 0.08) !important;
-        gap: 4px !important;
+        gap: 6px !important;
     }
     .stTabs [data-baseweb="tab"] {
-        border-radius: 20px !important;
+        border-radius: 14px !important;
         color: #94a3b8 !important;
         font-weight: 600 !important;
         font-size: 13px !important;
-        padding: 8px 18px !important;
+        padding: 8px 20px !important;
         border: none !important;
+        margin: 0 2px !important;
     }
     .stTabs [aria-selected="true"] {
         background-color: #6366f1 !important;
@@ -514,6 +523,18 @@ if page == "🗺️ World Map & Archetypes":
                 color_continuous_scale="Viridis",
                 labels={col_target: color_metric}
             )
+            fig_map.update_coloraxes(
+                colorbar=dict(
+                    title=dict(text="", font=dict(size=11, color="#94a3b8")),
+                    orientation="h",
+                    y=-0.12,
+                    x=0.5,
+                    xanchor="center",
+                    len=0.7,
+                    thickness=12,
+                    tickfont=dict(size=10, color="#94a3b8")
+                )
+            )
 
         fig_map.update_layout(
             geo=dict(
@@ -529,11 +550,11 @@ if page == "🗺️ World Map & Archetypes":
                 showcountries=True,
                 countrycolor="rgba(255,255,255,0.08)"
             ),
-            margin=dict(l=0, r=0, t=10, b=10),
+            margin=dict(l=0, r=0, t=10, b=45),
             paper_bgcolor="rgba(0,0,0,0)",
             plot_bgcolor="rgba(0,0,0,0)",
             font=dict(color="#f8fafc", family="Plus Jakarta Sans"),
-            legend=dict(orientation="h", y=-0.1, x=0.5, xanchor="center")
+            legend=dict(orientation="h", y=-0.12, x=0.5, xanchor="center")
         )
         st.plotly_chart(fig_map, use_container_width=True)
 
@@ -612,46 +633,77 @@ elif page == "⚖️ Country Comparator":
     profiles = [p for p in profiles if p]
 
     if profiles:
+        chart_style = st.radio("Display Chart Style:", ["📊 Grouped Bar Chart", "🕸️ Multi-Indicator Radar"], horizontal=True)
         categories = ["Account Ownership", "Mobile Money", "Formal Bank", "Savings Propensity", "Emergency Funds"]
-        fig_bar = go.Figure()
         colors = ["#10b981", "#3b82f6", "#f59e0b"]
-        
-        for idx, p in enumerate(profiles):
-            vals = [
-                p.get("account_pct", 0),
-                p.get("mobile_pct", 0),
-                p.get("fiaccount_pct", 0),
-                p.get("saved_pct", 0),
-                p.get("resilience_pct", 0)
-            ]
-            fig_bar.add_trace(go.Bar(
-                name=f"{p['country']} ({p['cluster_name']})",
-                x=categories,
-                y=vals,
-                marker_color=colors[idx % len(colors)]
-            ))
-            
-        fig_bar.update_layout(
-            barmode='group',
-            yaxis=dict(title="Percentage of Adults (%)", range=[0, 105]),
-            paper_bgcolor="rgba(0,0,0,0)",
-            plot_bgcolor="rgba(0,0,0,0)",
-            font=dict(color="#f8fafc", family="Plus Jakarta Sans"),
-            legend=dict(orientation="h", y=-0.2, x=0.5, xanchor="center")
-        )
-        st.plotly_chart(fig_bar, use_container_width=True)
+
+        if chart_style == "📊 Grouped Bar Chart":
+            fig_bar = go.Figure()
+            for idx, p in enumerate(profiles):
+                vals = [
+                    p.get("account_pct", 0),
+                    p.get("mobile_pct", 0),
+                    p.get("fiaccount_pct", 0),
+                    p.get("saved_pct", 0),
+                    p.get("resilience_pct", 0)
+                ]
+                fig_bar.add_trace(go.Bar(
+                    name=f"{p['country']} ({p['cluster_name']})",
+                    x=categories,
+                    y=vals,
+                    marker_color=colors[idx % len(colors)]
+                ))
+            fig_bar.update_layout(
+                barmode='group',
+                yaxis=dict(title="Percentage of Adults (%)", range=[0, 105]),
+                paper_bgcolor="rgba(0,0,0,0)",
+                plot_bgcolor="rgba(0,0,0,0)",
+                font=dict(color="#f8fafc", family="Plus Jakarta Sans"),
+                legend=dict(orientation="h", y=1.12, x=0.5, xanchor="center"),
+                margin=dict(t=50, b=60, l=40, r=20)
+            )
+            st.plotly_chart(fig_bar, use_container_width=True)
+        else:
+            fig_radar = go.Figure()
+            for idx, p in enumerate(profiles):
+                vals = [
+                    p.get("account_pct", 0),
+                    p.get("mobile_pct", 0),
+                    p.get("fiaccount_pct", 0),
+                    p.get("saved_pct", 0),
+                    p.get("resilience_pct", 0)
+                ]
+                fig_radar.add_trace(go.Scatterpolar(
+                    r=vals + [vals[0]],
+                    theta=categories + [categories[0]],
+                    fill='toself',
+                    name=f"{p['country']} ({p['cluster_name']})",
+                    line=dict(color=colors[idx % len(colors)], width=2.5)
+                ))
+            fig_radar.update_layout(
+                polar=dict(
+                    radialaxis=dict(visible=True, range=[0, 100], color="#94a3b8"),
+                    bgcolor="rgba(15, 23, 42, 0.6)"
+                ),
+                paper_bgcolor="rgba(0,0,0,0)",
+                plot_bgcolor="rgba(0,0,0,0)",
+                font=dict(color="#f8fafc", family="Plus Jakarta Sans"),
+                legend=dict(orientation="h", y=1.12, x=0.5, xanchor="center"),
+                margin=dict(t=50, b=40, l=40, r=40)
+            )
+            st.plotly_chart(fig_radar, use_container_width=True)
 
         st.markdown("### 💡 Plain-English Takeaways")
-        diff_acc = abs(profiles[0].get("account_pct", 0) - profiles[1].get("account_pct", 0))
-        leader_acc = profiles[0] if profiles[0].get("account_pct", 0) > profiles[1].get("account_pct", 0) else profiles[1]
-        laggard_acc = profiles[1] if leader_acc == profiles[0] else profiles[0]
-        
-        st.info(f"**Account Gap:** **{leader_acc['country']}** leads **{laggard_acc['country']}** in overall account coverage by **{diff_acc:.1f} percentage points** ({leader_acc.get('account_pct', 0):.1f}% vs {laggard_acc.get('account_pct', 0):.1f}%).")
-        
-        if profiles[0].get("mobile_pct", 0) > profiles[1].get("mobile_pct", 0):
-            st.success(f"**Mobile Money Adoption:** **{profiles[0]['country']}** ({profiles[0].get('mobile_pct', 0):.1f}%) demonstrates higher reliance on mobile wallets than **{profiles[1]['country']}** ({profiles[1].get('mobile_pct', 0):.1f}%).")
+        comp_data = data_service.compare_multiple_countries([p["country"] for p in profiles])
+        takeaways = comp_data.get("takeaways", [])
+        if takeaways:
+            for t in takeaways:
+                st.info(f"💡 {t}")
         else:
-            st.success(f"**Mobile Money Adoption:** **{profiles[1]['country']}** ({profiles[1].get('mobile_pct', 0):.1f}%) demonstrates higher reliance on mobile wallets than **{profiles[0]['country']}** ({profiles[0].get('mobile_pct', 0):.1f}%).")
+            diff_acc = abs(profiles[0].get("account_pct", 0) - profiles[1].get("account_pct", 0))
+            leader_acc = profiles[0] if profiles[0].get("account_pct", 0) > profiles[1].get("account_pct", 0) else profiles[1]
+            laggard_acc = profiles[1] if leader_acc == profiles[0] else profiles[0]
+            st.info(f"**Account Gap:** **{leader_acc['country']}** leads **{laggard_acc['country']}** in overall account coverage by **{diff_acc:.1f} percentage points** ({leader_acc.get('account_pct', 0):.1f}% vs {laggard_acc.get('account_pct', 0):.1f}%).")
 
 
 # ==============================================================================
@@ -732,7 +784,8 @@ elif page == "🎛️ Try It Yourself (Guided Lab)":
         paper_bgcolor="rgba(0,0,0,0)",
         plot_bgcolor="rgba(0,0,0,0)",
         font=dict(color="#f8fafc", family="Plus Jakarta Sans"),
-        legend=dict(orientation="h", y=-0.2, x=0.5, xanchor="center")
+        legend=dict(orientation="h", y=1.12, x=0.5, xanchor="center"),
+        margin=dict(t=50, b=40, l=40, r=40)
     )
     st.plotly_chart(fig_eval, use_container_width=True)
 
@@ -796,7 +849,8 @@ elif page == "🔬 Archetypes & PCA Diagnostics":
         paper_bgcolor="rgba(0,0,0,0)",
         plot_bgcolor="rgba(0,0,0,0)",
         font=dict(color="#f8fafc", family="Plus Jakarta Sans"),
-        legend=dict(orientation="h", y=-0.15, x=0.5, xanchor="center")
+        legend=dict(orientation="h", y=1.12, x=0.5, xanchor="center", title=dict(text="")),
+        margin=dict(t=50, b=40, l=40, r=20)
     )
     st.plotly_chart(fig_pca, use_container_width=True)
 
@@ -841,13 +895,20 @@ elif page == "⚡ Policy Simulator":
     baseline = sim_result.get("baseline", {})
     projected = sim_result.get("projected", {})
 
-    r1, r2, r3 = st.columns(3)
+    st.markdown("### 📊 Policy Impact Projections")
+    r1, r2, r3, r4 = st.columns(4)
     with r1:
-        st.metric("Projected Account Ownership", f"{projected.get('account', 0):.1f}%", f"+{projected.get('uplift', 0):.1f}%")
+        st.metric("Baseline Coverage", f"{baseline.get('account', 0):.1f}%")
+        st.caption("Current formal inclusion")
     with r2:
-        st.metric("Estimated Newly Included Citizens", f"{projected.get('newly_included_est', 0):,}")
+        st.metric("Projected Coverage", f"{projected.get('account', 0):.1f}%", f"+{projected.get('uplift', 0):.1f}%")
+        st.caption("Post-intervention target")
     with r3:
+        st.metric("Newly Included Citizens", f"{projected.get('newly_included_est', 0):,}")
+        st.caption("Estimated adult beneficiaries")
+    with r4:
         st.metric("Years to Universal Access", f"{projected.get('years_to_universal_access', 0):.1f} yrs")
+        st.caption("At projected adoption pace")
 
 
 # ==============================================================================
@@ -881,7 +942,8 @@ elif page == "🌐 Global Matrix (140+ Countries)":
             "emergency_pct": "Resilience %"
         }),
         use_container_width=True,
-        hide_index=True
+        hide_index=True,
+        height=560
     )
 
 
