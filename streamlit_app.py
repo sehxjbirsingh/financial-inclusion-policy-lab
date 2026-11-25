@@ -783,48 +783,201 @@ elif page == "💡 Citizen Action Hub":
 # ==============================================================================
 elif page == "🎛️ Try It Yourself (Guided Lab)":
     st.markdown("## 🎛️ Guided Clustering Playground")
-    st.caption("Experiment with K = 2 to 10 and compare Euclidean vs Manhattan distance metrics. View live mathematical validation metrics with plain-English explanations.")
+    st.caption("Experiment with K = 2 to 10 and compare Euclidean vs Manhattan distance metrics. Observe live mathematical validation metrics, dynamic cluster partitions, and elbow curves.")
 
-    k_val = st.slider("Select Number of Clusters (K):", min_value=2, max_value=10, value=4, step=1)
-    dist_val = st.radio("Select Distance Metric:", ["Euclidean (Standard K-Means)", "Manhattan (L1 K-Medians)"], horizontal=True)
+    palette = [
+        "#38bdf8", "#f43f5e", "#10b981", "#f59e0b", "#a855f7",
+        "#ec4899", "#14b8a6", "#fb923c", "#6366f1", "#84cc16"
+    ]
+
+    ctrl_c1, ctrl_c2 = st.columns([1, 1])
+    with ctrl_c1:
+        k_val = st.slider(
+            "Select Number of Clusters (K):",
+            min_value=2,
+            max_value=10,
+            value=4,
+            step=1,
+            key="interactive_k_slider",
+            help="Number of distinct natural archetypes to partition sovereign economies into."
+        )
+    with ctrl_c2:
+        dist_val = st.radio(
+            "Select Distance Metric:",
+            ["Euclidean (Standard K-Means)", "Manhattan (L1 K-Medians)"],
+            horizontal=True,
+            key="interactive_dist_metric",
+            help="Euclidean measures straight-line distance; Manhattan measures grid-like absolute deviation (robust against outliers)."
+        )
     metric_code = "euclidean" if "Euclidean" in dist_val else "manhattan"
 
     eval_data = data_service.get_interactive_clustering(k=k_val, metric=metric_code)
     metrics = eval_data.get("metrics", {})
+    cluster_sizes = eval_data.get("cluster_sizes", {})
+    country_assignments = eval_data.get("country_assignments", [])
+
+    st.info(f"🔬 **Active Model:** Partitioning 140 countries into **K = {k_val} Clusters** using **{dist_val}**. (Optimal benchmark: *K = 4* with Silhouette = 0.434).")
     
-    m1, m2, m3 = st.columns(3)
+    m1, m2, m3, m4 = st.columns(4)
     with m1:
-        st.metric("Within-Cluster Distance (WCSS / Elbow)", f"{metrics.get('wcss', 0):,.1f}")
-        st.caption("How tightly packed points are inside their cluster. Smaller is tighter, but decreases naturally as K grows.")
+        st.metric("Selected Clusters (K)", f"{k_val}")
+        st.caption("Active group partitions")
     with m2:
-        st.metric("Silhouette Score (Cluster Separation)", f"{metrics.get('silhouette', 0):.3f}")
-        st.caption("Ranges from -1 to +1. Scores > 0.4 indicate distinct separation without overlapping borders.")
+        dist_label = "WCSS (Elbow)" if metric_code == "euclidean" else "WCSAD (Dispersion)"
+        st.metric(dist_label, f"{metrics.get('wcss', 0):,.1f}")
+        st.caption("Within-cluster compactness")
     with m3:
-        st.metric("Davies-Bouldin Index (Compactness)", f"{metrics.get('davies_bouldin', 0):.3f}")
-        st.caption("Similarity between each cluster and its closest neighbor. Lower is better.")
+        sil_val = metrics.get('silhouette', 0)
+        st.metric("Silhouette Score", f"{sil_val:.3f}")
+        st.caption("Separation (> 0.4 is strong)")
+    with m4:
+        db_val = metrics.get('davies_bouldin', 0)
+        st.metric("Davies-Bouldin Index", f"{db_val:.3f}")
+        st.caption("Lower indicates tighter clusters")
 
     st.markdown("---")
-    st.markdown("##### 📐 Elbow & Metric Comparison Curve (K = 2 to 10)")
     
-    k_range = list(range(2, 11))
-    euc_wcss = [data_service.get_interactive_clustering(k=k, metric="euclidean")["metrics"]["wcss"] for k in k_range]
-    euc_sil = [data_service.get_interactive_clustering(k=k, metric="euclidean")["metrics"]["silhouette"] for k in k_range]
+    # 2-Column Visuals: Left = Dynamic PCA Clusters for K; Right = Cluster Sizes & Elbow
+    v_col1, v_col2 = st.columns([1.1, 0.9])
     
+    with v_col1:
+        st.markdown(f"##### 🗺️ Dynamic Cluster Map in PCA Space (K = {k_val})")
+        pca_raw = data_service.get_pca_coordinates()
+        df_pca = pd.DataFrame(pca_raw.get("data", []))
+        df_assign = pd.DataFrame(country_assignments)
+        if not df_pca.empty and not df_assign.empty:
+            merged_pca = pd.merge(df_pca[["country", "pc1_2d", "pc2_2d"]], df_assign, on="country", how="inner")
+            merged_pca["Cluster Group"] = "Cluster " + merged_pca["cluster"].astype(str)
+            merged_pca = merged_pca.sort_values("cluster")
+
+            fig_dyn_pca = px.scatter(
+                merged_pca,
+                x="pc1_2d",
+                y="pc2_2d",
+                color="Cluster Group",
+                hover_name="country",
+                hover_data={"code": True, "Cluster Group": True, "pc1_2d": False, "pc2_2d": False},
+                color_discrete_sequence=palette[:k_val],
+                labels={"pc1_2d": "Principal Component 1", "pc2_2d": "Principal Component 2"}
+            )
+            fig_dyn_pca.update_traces(marker=dict(size=9, opacity=0.88, line=dict(width=1, color="rgba(255,255,255,0.2)")))
+            fig_dyn_pca.update_layout(
+                paper_bgcolor="rgba(0,0,0,0)",
+                plot_bgcolor="rgba(0,0,0,0)",
+                font=dict(color="#f8fafc", family="Plus Jakarta Sans"),
+                legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1),
+                margin=dict(t=30, b=30, l=30, r=20),
+                height=380
+            )
+            st.plotly_chart(fig_dyn_pca, use_container_width=True)
+        else:
+            st.warning("PCA coordinates currently loading.")
+
+    with v_col2:
+        st.markdown(f"##### 📊 Cluster Membership Sizes (K = {k_val})")
+        df_sizes = pd.DataFrame([
+            {"Cluster": f"Cluster {c}", "Economies": count}
+            for c, count in sorted(cluster_sizes.items())
+        ])
+        fig_sizes = go.Figure()
+        fig_sizes.add_trace(go.Bar(
+            x=df_sizes["Cluster"],
+            y=df_sizes["Economies"],
+            marker=dict(
+                color=palette[:len(df_sizes)],
+                line=dict(color="rgba(255,255,255,0.15)", width=1)
+            ),
+            text=df_sizes["Economies"],
+            textposition="auto"
+        ))
+        fig_sizes.update_layout(
+            paper_bgcolor="rgba(0,0,0,0)",
+            plot_bgcolor="rgba(0,0,0,0)",
+            font=dict(color="#f8fafc", family="Plus Jakarta Sans"),
+            yaxis=dict(gridcolor="rgba(255,255,255,0.08)", title="Number of Countries"),
+            margin=dict(t=30, b=30, l=30, r=20),
+            height=380
+        )
+        st.plotly_chart(fig_sizes, use_container_width=True)
+
+    # Validation Curve with Active K Marked
+    st.markdown("---")
+    st.markdown(f"##### 📐 Elbow & Metric Curve (K = 2 to 10) · Highlighted at K = {k_val}")
+    benchmarks = data_service.get_clustering_benchmarks()
+    k_range = [b["k"] for b in benchmarks]
+    wcss_key = "wcss_euclidean" if metric_code == "euclidean" else "wcsad_manhattan"
+    sil_key = "silhouette_euclidean" if metric_code == "euclidean" else "silhouette_manhattan"
+    wcss_vals = [b.get(wcss_key, 0) for b in benchmarks]
+    sil_vals = [b.get(sil_key, 0) for b in benchmarks]
+
+    curr_wcss = metrics.get('wcss', 0)
+    curr_sil = metrics.get('silhouette', 0)
+
     fig_eval = go.Figure()
-    fig_eval.add_trace(go.Scatter(x=k_range, y=euc_wcss, name="WCSS (Elbow)", line=dict(color="#6366f1", width=3), yaxis="y1"))
-    fig_eval.add_trace(go.Scatter(x=k_range, y=euc_sil, name="Silhouette Score", line=dict(color="#10b981", width=3, dash="dot"), yaxis="y2"))
-    
+    fig_eval.add_trace(go.Scatter(
+        x=k_range,
+        y=wcss_vals,
+        name=dist_label,
+        line=dict(color="#6366f1", width=3),
+        yaxis="y1"
+    ))
+    fig_eval.add_trace(go.Scatter(
+        x=k_range,
+        y=sil_vals,
+        name="Silhouette Score",
+        line=dict(color="#10b981", width=3, dash="dot"),
+        yaxis="y2"
+    ))
+    # Active K point on WCSS curve
+    fig_eval.add_trace(go.Scatter(
+        x=[k_val],
+        y=[curr_wcss],
+        name=f"Current K={k_val} ({dist_label})",
+        mode="markers",
+        marker=dict(color="#f43f5e", size=14, symbol="circle", line=dict(color="#ffffff", width=2)),
+        yaxis="y1"
+    ))
+    # Active K point on Silhouette curve
+    fig_eval.add_trace(go.Scatter(
+        x=[k_val],
+        y=[curr_sil],
+        name=f"Current K={k_val} (Silhouette)",
+        mode="markers",
+        marker=dict(color="#38bdf8", size=14, symbol="diamond", line=dict(color="#ffffff", width=2)),
+        yaxis="y2"
+    ))
+    # Vertical line indicating chosen K
+    fig_eval.add_vline(
+        x=k_val,
+        line_dash="dash",
+        line_color="#f43f5e",
+        line_width=2,
+        annotation_text=f"Selected K = {k_val}",
+        annotation_position="top left",
+        annotation_font=dict(color="#f43f5e", size=12)
+    )
+
     fig_eval.update_layout(
-        xaxis=dict(title="Number of Clusters (K)"),
-        yaxis=dict(title="WCSS (Inertia)", side="left"),
-        yaxis2=dict(title="Silhouette Score", overlaying="y", side="right"),
+        xaxis=dict(title="Number of Clusters (K)", tickmode="linear", tick0=2, dtick=1),
+        yaxis=dict(title=dist_label, side="left", gridcolor="rgba(255,255,255,0.08)"),
+        yaxis2=dict(title="Silhouette Score", overlaying="y", side="right", range=[-0.1, 0.6]),
         paper_bgcolor="rgba(0,0,0,0)",
         plot_bgcolor="rgba(0,0,0,0)",
         font=dict(color="#f8fafc", family="Plus Jakarta Sans"),
-        legend=dict(orientation="h", y=1.12, x=0.5, xanchor="center"),
-        margin=dict(t=50, b=40, l=40, r=40)
+        legend=dict(orientation="h", y=1.14, x=0.5, xanchor="center"),
+        margin=dict(t=50, b=40, l=40, r=40),
+        height=340
     )
     st.plotly_chart(fig_eval, use_container_width=True)
+
+    # Interactive Country Cluster Assignment Explorer for Selected K
+    with st.expander(f"📋 View Country Assignments for K = {k_val} ({len(country_assignments)} Economies)", expanded=False):
+        c_cols = st.columns(min(k_val, 4))
+        for c_num in range(1, k_val + 1):
+            with c_cols[(c_num - 1) % len(c_cols)]:
+                c_members = [item["country"] for item in country_assignments if item["cluster"] == c_num]
+                st.markdown(f"**Cluster {c_num}** ({len(c_members)} countries)")
+                st.caption(", ".join(sorted(c_members)[:12]) + ("..." if len(c_members) > 12 else ""))
 
 
 # ==============================================================================
