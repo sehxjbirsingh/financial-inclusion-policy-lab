@@ -106,11 +106,17 @@ st.markdown("""
     }
     
     /* Complete removal of the round blue radio circle, inner dot, and circular outline */
+    [data-testid="stSidebar"] [data-testid="stRadio"] label > div:first-child:not([data-testid="stMarkdownContainer"]),
+    [data-testid="stSidebar"] [data-testid="stRadio"] div[role="radiogroup"] label > div:first-child:not([data-testid="stMarkdownContainer"]),
+    [data-testid="stSidebar"] div[data-baseweb="radio"] > div:first-child:not([data-testid="stMarkdownContainer"]),
+    [data-testid="stRadioOption"] > div:first-child:not([data-testid="stMarkdownContainer"]),
     [data-testid="stRadioOption"] > div > div:first-child:not([data-testid="stMarkdownContainer"]),
-    [data-testid="stRadioOption"] [class*="ex50key4"],
-    [data-testid="stRadioOption"] [class*="ex50key5"],
+    [data-testid="stRadioOption"] [class*="ex50key"],
     [data-testid="stRadioOption"] input[type="radio"],
-    [data-testid="stRadioOption"] svg {
+    [data-testid="stRadioOption"] input[type="radio"] + div,
+    [data-testid="stRadioOption"] svg,
+    [data-testid="stRadioOption"] span[class*="Radio"],
+    [data-testid="stRadioOption"] div[class*="Radio"] {
         display: none !important;
         visibility: hidden !important;
         width: 0px !important;
@@ -875,20 +881,46 @@ elif page == "⚡ Policy Simulator":
     sim_country_list = sorted([c["country"] for c in countries if "country" in c])
     sim_target = st.selectbox("Select Target Economy to Simulate:", sim_country_list, index=sim_country_list.index("Nigeria") if "Nigeria" in sim_country_list else 0)
 
-    s_c1, s_c2, s_c3 = st.columns(3)
+    s_c1, s_c2 = st.columns(2)
     with s_c1:
-        delta_mobile = st.slider("📱 Expand Mobile Money Rails (%):", 0, 30, 10, step=2)
+        delta_mobile = st.slider(
+            "📱 Mobile Money Rails & Agent Networks (%):",
+            min_value=0, max_value=50, value=15, step=1,
+            help="Licensing non-bank e-money issuers and expanding rural cash-in/cash-out agent points."
+        )
+        delta_did = st.slider(
+            "🪪 Digital ID Rollout & Tiered e-KYC (%):",
+            min_value=0, max_value=50, value=20, step=1,
+            help="Biometric or verifiable national digital ID to eliminate paper documentation friction."
+        )
+        delta_gen = st.slider(
+            "👩 Targeted Female & Rural Direct Subsidies (%):",
+            min_value=0, max_value=50, value=15, step=1,
+            help="Direct government benefit transfers (G2P) targeted into accounts owned by women."
+        )
     with s_c2:
-        delta_fee = st.slider("💳 Subsidize Basic Bank Accounts (%):", 0, 30, 5, step=2)
-    with s_c3:
-        delta_resil = st.slider("🛡️ Emergency Micro-Insurance (%):", 0, 30, 8, step=2)
+        delta_lit = st.slider(
+            "🛡️ Financial Literacy & Consumer Protection (%):",
+            min_value=0, max_value=50, value=10, step=1,
+            help="Digital financial education, transparent pricing rules, and deposit insurance."
+        )
+        delta_ob = st.slider(
+            "⚡ Interoperability & Open Banking Rails (%):",
+            min_value=0, max_value=50, value=15, step=1,
+            help="Unified instant payment switches connecting banks, telcos, and fintechs seamlessly."
+        )
 
     sim_result = data_service.simulate_policy(
         country=sim_target,
         levers={
+            "mobile_infrastructure": delta_mobile,
+            "digital_id": delta_did,
+            "gender_inclusion": delta_gen,
+            "financial_literacy": delta_lit,
+            "open_banking": delta_ob,
             "delta_mobile": delta_mobile,
-            "delta_fee": delta_fee,
-            "delta_resilience": delta_resil
+            "delta_fee": delta_did,
+            "delta_resilience": delta_lit
         }
     )
 
@@ -901,7 +933,8 @@ elif page == "⚡ Policy Simulator":
         st.metric("Baseline Coverage", f"{baseline.get('account', 0):.1f}%")
         st.caption("Current formal inclusion")
     with r2:
-        st.metric("Projected Coverage", f"{projected.get('account', 0):.1f}%", f"+{projected.get('uplift', 0):.1f}%")
+        acc_up = projected.get('account_uplift', projected.get('uplift', 0))
+        st.metric("Projected Coverage", f"{projected.get('account', 0):.1f}%", f"+{acc_up:.1f}%")
         st.caption("Post-intervention target")
     with r3:
         st.metric("Newly Included Citizens", f"{projected.get('newly_included_est', 0):,}")
@@ -909,6 +942,51 @@ elif page == "⚡ Policy Simulator":
     with r4:
         st.metric("Years to Universal Access", f"{projected.get('years_to_universal_access', 0):.1f} yrs")
         st.caption("At projected adoption pace")
+
+    # Dynamic Visual Trajectory Chart
+    st.markdown("#### 📈 Multi-Dimensional Impact Trajectory")
+    cat_labels = ["Formal Account", "Mobile Money", "Emergency Resilience", "Composite Index"]
+    base_vals = [
+        baseline.get("account", 0),
+        baseline.get("mobile", 0),
+        baseline.get("emergency_resilience", 0),
+        baseline.get("inclusion_index", 0)
+    ]
+    proj_vals = [
+        projected.get("account", 0),
+        projected.get("mobile", 0),
+        projected.get("emergency_resilience", 0),
+        projected.get("inclusion_index", 0)
+    ]
+
+    fig_sim = go.Figure()
+    fig_sim.add_trace(go.Bar(
+        name="Current Baseline",
+        x=cat_labels,
+        y=base_vals,
+        marker_color="#475569",
+        text=[f"{v:.1f}%" if i < 3 else f"{v:.1f}" for i, v in enumerate(base_vals)],
+        textposition="auto"
+    ))
+    fig_sim.add_trace(go.Bar(
+        name="Projected Simulation",
+        x=cat_labels,
+        y=proj_vals,
+        marker_color="#38bdf8",
+        text=[f"{v:.1f}%" if i < 3 else f"{v:.1f}" for i, v in enumerate(proj_vals)],
+        textposition="auto"
+    ))
+    fig_sim.update_layout(
+        barmode="group",
+        paper_bgcolor="rgba(0,0,0,0)",
+        plot_bgcolor="rgba(0,0,0,0)",
+        font=dict(color="#f8fafc", family="Plus Jakarta Sans"),
+        yaxis=dict(gridcolor="rgba(255,255,255,0.08)", range=[0, 105], title="Percentage (%) / Index Score"),
+        legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1),
+        margin=dict(l=20, r=20, t=30, b=30),
+        height=340
+    )
+    st.plotly_chart(fig_sim, use_container_width=True)
 
 
 # ==============================================================================

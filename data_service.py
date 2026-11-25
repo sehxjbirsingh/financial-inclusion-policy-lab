@@ -398,12 +398,27 @@ class FindexDataService:
             baseline_save = latest.get("saved") or 30.0
             baseline_resil = latest.get("emergency") or 40.0
 
-        # Levers (range 0 to 100)
-        l_mob = float(levers.get("mobile_infrastructure", 25))
-        l_did = float(levers.get("digital_id", 30))
-        l_gen = float(levers.get("gender_inclusion", 20))
-        l_lit = float(levers.get("financial_literacy", 15))
-        l_ob = float(levers.get("open_banking", 20))
+        # Support flexible lever keys from both Streamlit UI and API
+        def _read_lever(keys: list[str], default_val: float) -> float:
+            if not levers:
+                return default_val
+            for k in keys:
+                if k in levers and levers[k] is not None:
+                    try:
+                        return float(levers[k])
+                    except (ValueError, TypeError):
+                        pass
+            return default_val
+
+        # If caller provides a levers dict, unmentioned levers default to 0.0 (no phantom uplifts)
+        has_custom_levers = bool(levers)
+        def_val = 0.0 if has_custom_levers else 20.0
+
+        l_mob = _read_lever(["mobile_infrastructure", "delta_mobile", "mobile_lever", "mobile"], def_val)
+        l_did = _read_lever(["digital_id", "delta_fee", "delta_digital_id", "subsidize_accounts", "digital_kyc"], def_val)
+        l_gen = _read_lever(["gender_inclusion", "delta_gender", "gender_mandate", "female_subsidies"], def_val)
+        l_lit = _read_lever(["financial_literacy", "delta_resilience", "delta_literacy", "literacy_campaign", "micro_insurance"], def_val)
+        l_ob  = _read_lever(["open_banking", "delta_open_banking", "open_banking_interop", "interoperability"], def_val)
 
         # Diminishing returns formula: delta = headroom * (1 - exp(-alpha * lever))
         acc_headroom = max(0.0, 100.0 - baseline_acc)
@@ -436,6 +451,7 @@ class FindexDataService:
         baseline_index = float(round(0.45 * baseline_acc + 0.25 * baseline_mob + 0.15 * baseline_save + 0.15 * baseline_resil, 1))
         sim_index = float(round(0.45 * sim_acc + 0.25 * sim_mob + 0.15 * (baseline_save + 0.1 * delta_resil) + 0.15 * sim_resil, 1))
         index_uplift = float(round(sim_index - baseline_index, 1))
+        account_uplift = float(round(sim_acc - baseline_acc, 1))
 
         # Estimated newly included adults (based on adult population)
         adult_pop = 25_000_000  # Default benchmark
@@ -443,7 +459,7 @@ class FindexDataService:
 
         # Projected years to reach 85% universal inclusion threshold
         current_gap = max(0.0, 85.0 - sim_acc)
-        annual_speed = max(0.5, (delta_acc / 3.0))
+        annual_speed = max(0.4, (delta_acc / 3.0)) if delta_acc > 0 else 0.4
         years_to_85 = float(round(current_gap / annual_speed, 1)) if sim_acc < 85.0 else 0.0
 
         return {
@@ -460,6 +476,7 @@ class FindexDataService:
                 "emergency_resilience": sim_resil,
                 "inclusion_index": sim_index,
                 "uplift": index_uplift,
+                "account_uplift": account_uplift,
                 "newly_included_est": newly_included,
                 "years_to_universal_access": years_to_85
             },
