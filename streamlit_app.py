@@ -106,17 +106,11 @@ st.markdown("""
     }
     
     /* Complete removal of the round blue radio circle, inner dot, and circular outline */
-    [data-testid="stSidebar"] [data-testid="stRadio"] label > div:first-child:not([data-testid="stMarkdownContainer"]),
-    [data-testid="stSidebar"] [data-testid="stRadio"] div[role="radiogroup"] label > div:first-child:not([data-testid="stMarkdownContainer"]),
-    [data-testid="stSidebar"] div[data-baseweb="radio"] > div:first-child:not([data-testid="stMarkdownContainer"]),
-    [data-testid="stRadioOption"] > div:first-child:not([data-testid="stMarkdownContainer"]),
     [data-testid="stRadioOption"] > div > div:first-child:not([data-testid="stMarkdownContainer"]),
-    [data-testid="stRadioOption"] [class*="ex50key"],
+    [data-testid="stRadioOption"] [class*="ex50key4"],
+    [data-testid="stRadioOption"] [class*="ex50key5"],
     [data-testid="stRadioOption"] input[type="radio"],
-    [data-testid="stRadioOption"] input[type="radio"] + div,
-    [data-testid="stRadioOption"] svg,
-    [data-testid="stRadioOption"] span[class*="Radio"],
-    [data-testid="stRadioOption"] div[class*="Radio"] {
+    [data-testid="stRadioOption"] svg {
         display: none !important;
         visibility: hidden !important;
         width: 0px !important;
