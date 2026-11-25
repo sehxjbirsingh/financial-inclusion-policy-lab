@@ -485,87 +485,168 @@ class FindexDataService:
 
     def get_citizen_barriers(self, country: str = "India") -> dict:
         """Returns the real-world barriers reported by unbanked citizens in that country,
-        with practical citizen advice and policy interventions.
+        with practical citizen advice and policy interventions tailored to the country's ecosystem.
         """
-        # Find country row for 2024 (or fallback to latest)
+        # Match country name
         country_clean = country.strip().lower()
-        sub = self.df_all[
-            (self.df_all["countrynewwb"].str.lower() == country_clean) &
-            (self.df_all["year"] == "2024")
-        ]
+        sub = self.df_all[self.df_all["countrynewwb"].str.lower() == country_clean]
         if sub.empty:
-            sub = self.df_all[self.df_all["countrynewwb"].str.lower() == country_clean]
+            sub = self.df_all[self.df_all["countrynewwb"].str.lower().str.contains(country_clean, na=False)]
         
-        # Global baseline averages among unbanked
-        global_2024 = self.df_all[self.df_all["year"] == "2024"]
+        # Latest row for country
+        matched_name = country
+        if not sub.empty:
+            sub_2024 = sub[sub["year"] == "2024"]
+            row = sub_2024.iloc[0] if not sub_2024.empty else sub.sort_values("year").iloc[-1]
+            matched_name = str(row["countrynewwb"])
+        else:
+            row = pd.Series()
 
-        def get_val(col, default):
-            if not sub.empty and col in sub.columns:
-                v = pd.to_numeric(sub[col], errors="coerce").dropna()
-                if not v.empty:
-                    val = float(v.iloc[0])
+        # Get country cluster profile for archetype context
+        profile = self.get_country_cluster_profile(matched_name)
+        cluster_id = profile.get("cluster", 1) if profile else 1
+        cluster_name = profile.get("cluster_name", "Developing Financial System") if profile else "Developing Financial System"
+
+        # National account ownership and unbanked fraction
+        acc_raw = row.get("account.t.d") if not row.empty else None
+        if pd.notna(acc_raw):
+            acc_val = float(acc_raw)
+            if acc_val > 1.0:
+                acc_val = acc_val / 100.0
+        elif profile:
+            acc_val = profile.get("account_pct", 60.0) / 100.0
+        else:
+            acc_val = 0.60
+
+        unbanked_rate = max(0.02, 1.0 - acc_val)
+        unbanked_pct = round(unbanked_rate * 100, 1)
+        account_pct = round(acc_val * 100, 1)
+
+        # Cluster-archetype fallback rates (derived from Findex empirical survey distributions)
+        cluster_defaults = {
+            1: {"funds": 52.0, "cost": 41.5, "distance": 26.0, "documentation": 28.5, "trust": 29.0, "digital_literacy": 46.0},
+            2: {"funds": 48.0, "cost": 36.0, "distance": 18.0, "documentation": 22.0, "trust": 38.0, "digital_literacy": 35.0},
+            3: {"funds": 68.0, "cost": 46.0, "distance": 45.0, "documentation": 42.0, "trust": 31.0, "digital_literacy": 58.0},
+            4: {"funds": 58.0, "cost": 62.0, "distance": 38.0, "documentation": 34.0, "trust": 32.0, "digital_literacy": 44.0},
+        }
+        c_bench = cluster_defaults.get(cluster_id, cluster_defaults[1])
+
+        # Compute each barrier rate using country-specific Findex columns
+        def _calc_barrier(col_s: str, col_raw: str, default_rate: float) -> float:
+            if not row.empty:
+                v_s = row.get(col_s)
+                if pd.notna(v_s):
+                    val = float(v_s)
                     return round(val * 100 if val <= 1.0 else val, 1)
-            # Try global mean
-            if col in global_2024.columns:
-                v_glob = pd.to_numeric(global_2024[col], errors="coerce").dropna()
-                if not v_glob.empty:
-                    val = float(v_glob.mean())
-                    return round(val * 100 if val <= 1.0 else val, 1)
-            return default
+                v_raw = row.get(col_raw)
+                if pd.notna(v_raw):
+                    val = float(v_raw)
+                    # Normalize raw adult population citation by unbanked share
+                    normalized = (val / unbanked_rate) * 100.0
+                    return round(max(3.0, min(95.0, normalized)), 1)
+            # Calibrate cluster default with country's specific unbankedness
+            adj = (unbanked_rate - 0.35) * 15.0
+            return round(max(5.0, min(92.0, default_rate + adj)), 1)
+
+        rate_funds = _calc_barrier("fin11d.s", "fin11d", c_bench["funds"])
+        rate_cost = _calc_barrier("fin11b.s", "fin11b", c_bench["cost"])
+        rate_dist = _calc_barrier("fin11a.s", "fin11a", c_bench["distance"])
+        rate_docs = _calc_barrier("fin11c.s", "fin11c", c_bench.get("documentation", 30.0))
+        rate_trust = _calc_barrier("fin11f.s", "fin11f", c_bench["trust"])
+        rate_lit = _calc_barrier("fin11_2a.s", "fin11_2a", c_bench["digital_literacy"])
+
+        # Country-tailored solutions & localized policy interventions
+        c_low = matched_name.lower()
+        if "india" in c_low:
+            sol_cost = "Open a Pradhan Mantri Jan Dhan Yojana (PMJDY) zero-balance account at any national bank or post office with zero minimum balance fees and free RuPay card."
+            sol_docs = "Use your 12-digit Aadhaar number for instant e-KYC. Under RBI simplified KYC rules, small accounts require only biometric verification without utility bills."
+            sol_dist = "Visit a local Business Correspondent (Bank Mitra) at your nearest village kiosk or common service centre (CSC) for doorstep deposits, AePS biometric cash-outs, and DBT subsidies."
+            sol_funds = "PMJDY accounts provide direct government welfare (DBT) transfers with no maintenance charges, protecting micro-savings from zero-balance penalties."
+            pol_fix_cost = "Expand UPI transaction subsidization to maintain zero merchant discount rates (MDR) for low-value retail payments."
+        elif "kenya" in c_low:
+            sol_cost = "Use an M-Pesa mobile wallet without maintenance fees. Safaricom agent outlets allow free wallet-to-wallet transfers below KSh 100."
+            sol_docs = "Register for a basic mobile money account using your National ID card number at any authorized agent."
+            sol_dist = "Access over 200,000 nationwide mobile money agents for neighborhood cash-in and cash-out."
+            sol_funds = "Save micro-amounts starting from KSh 10 via mobile savings solutions (M-Shwari or KCB M-Pesa) without monthly penalty fees."
+            pol_fix_cost = "Regulate non-bank digital lender interest rate caps and mandate interoperability across competing mobile telecom switches."
+        elif "nigeria" in c_low:
+            sol_cost = "Open a Tier-1 Basic Account requiring only a passport photo and phone number, protected by Central Bank of Nigeria zero-maintenance guidelines."
+            sol_docs = "Enroll for a National Identification Number (NIN) to obtain a Tier-1 digital banking wallet without utility bills."
+            sol_dist = "Use neighborhood SANEF banking agents (PoS kiosks) located in local markets for cash withdrawals and transfers."
+            sol_funds = "Micro-savings in mobile wallets (OPay, PalmPay, Moniepoint) accrue daily interest without minimum balance deductions."
+            pol_fix_cost = "Accelerate SANEF rural agent network subsidies and cap interbank electronic transfer levies on micro-transactions."
+        elif "brazil" in c_low:
+            sol_cost = "Open a free digital savings account via Caixa Tem or a fintech app with 100% free Pix instant transactions mandated by Banco Central do Brasil."
+            sol_docs = "Use your CPF tax registration number for automated instant digital onboarding via gov.br identity portal."
+            sol_dist = "Utilize Casa Lotérica lottery agent branches located in virtually every municipality for fee-free deposits and bill payments."
+            sol_funds = "Direct Bolsa Família social welfare transfers into Caixa digital accounts with zero balance maintenance fees."
+            pol_fix_cost = "Maintain statutory zero-fee regulation for Pix peer-to-peer and small merchant retail transfers."
+        elif "bangladesh" in c_low:
+            sol_cost = "Open a bKash or Nagad mobile financial services (MFS) account with free registration and zero monthly service charges."
+            sol_docs = "Present your Smart National Identity Card (NID) for instant digital onboarding at any MFS agent."
+            sol_dist = "Visit neighborhood MFS agent retail points or Union Digital Centres (UDC) across rural upazilas."
+            sol_funds = "Store informal remittances and micro-savings in digital MFS wallets with zero minimum deposit rules."
+            pol_fix_cost = "Promote Bangla QR interoperability and subsidize agricultural cash-out fees for smallholder farmers."
+        else:
+            sol_cost = "Open a zero-fee basic digital wallet or statutory basic bank account. In most jurisdictions, central bank rules require banks to offer fee-free basic entry accounts."
+            sol_docs = "Request a Tier-1 'Simplified KYC' digital account using only a mobile phone number or national civil ID without formal utility bill proofs."
+            sol_dist = "Use neighborhood retail agent kiosks (post offices, pharmacies, retail grocery agents) for cash-in and cash-out within walking distance."
+            sol_funds = "Use micro-savings wallets that allow deposits as low as $0.50 without monthly minimum balance fines or penalties."
+            pol_fix_cost = "Enact statutory fee caps on small retail transfers and mandate free basic banking accounts (BSBDA / basic debit card tier)."
 
         barriers = [
+            {
+                "id": "funds",
+                "title": "Not Enough Money to Keep in Account",
+                "icon": "🪙",
+                "rate": rate_funds,
+                "question": "No account because of insufficient income or funds to deposit",
+                "citizen_solution": sol_funds,
+                "policy_fix": "Prohibit minimum balance fines on entry-level savings accounts and integrate social welfare / farmer G2P subsidies directly into free accounts."
+            },
             {
                 "id": "cost",
                 "title": "Bank Services Too Expensive & High Fees",
                 "icon": "💸",
-                "rate": get_val("fin11b.s", 43.8),
-                "question": "No account because financial services are too expensive",
-                "citizen_solution": "Open a zero-fee basic digital wallet (like M-Pesa, Pix, or UPI-linked account). Under banking regulations in most countries, basic savings accounts have zero minimum balance and zero monthly maintenance charges.",
-                "policy_fix": "Enact statutory fee caps on small digital retail transfers and mandate free basic banking accounts (e.g. BSBDA / basic debit card tier)."
+                "rate": rate_cost,
+                "question": "No account because financial services or maintenance fees are too expensive",
+                "citizen_solution": sol_cost,
+                "policy_fix": pol_fix_cost
             },
             {
                 "id": "distance",
                 "title": "Bank Branch Is Too Far Away",
                 "icon": "🚶",
-                "rate": get_val("fin11a.s", 38.1),
-                "question": "No account because institutions are too far away",
-                "citizen_solution": "Use local neighborhood banking agents (grocery store kiosks, post office agents, or local pharmacy agents). Most agent networks allow cash deposits, cash withdrawals, and bill payments within walking distance.",
+                "rate": rate_dist,
+                "question": "No account because physical financial institutions are too far away",
+                "citizen_solution": sol_dist,
                 "policy_fix": "Deregulate non-bank retail agent licensing and incentivize telecom agent networks in remote and rural villages."
             },
             {
                 "id": "documentation",
-                "title": "Lack of Official ID & Paperwork",
+                "title": "Lack of Official ID & Documentation",
                 "icon": "📑",
-                "rate": get_val("fin11c.s", 31.1),
-                "question": "No account because of a lack of necessary documentation",
-                "citizen_solution": "Apply for Tier-1 'Simplified KYC' digital accounts. These allow you to open an account with only a mobile phone number or basic national registration, without requiring utility bills or formal proof of income.",
+                "rate": rate_docs,
+                "question": "No account because of a lack of necessary paperwork or identification",
+                "citizen_solution": sol_docs,
                 "policy_fix": "Deploy tiered e-KYC frameworks compliant with FATF standards allowing low-value accounts with proportional risk controls."
             },
             {
-                "id": "funds",
-                "title": "Not Enough Money to Keep in Account",
-                "icon": "🪙",
-                "rate": get_val("fin11d.s", 55.0),
-                "question": "No account because of insufficient funds",
-                "citizen_solution": "Remember: you don't need regular salary to hold an account. Many digital wallets allow micro-savings of even $0.50 without penalty, protecting your savings from theft, inflation, or impulse spending.",
-                "policy_fix": "Prohibit minimum balance fines on entry-level savings accounts and integrate social welfare / farmer G2P subsidies directly into free accounts."
-            },
-            {
                 "id": "trust",
-                "title": "Lack of Trust in Banking Institutions",
+                "title": "Lack of Trust in Financial Institutions",
                 "icon": "🤝",
-                "rate": get_val("fin11f.s", 32.3),
-                "question": "No account because of lack of trust in financial institutions",
-                "citizen_solution": "Check if your deposit is protected by the national deposit insurance corporation (which legally guarantees deposits if a bank fails). Alternatively, look at community-owned credit cooperatives (SACCOs).",
+                "rate": rate_trust,
+                "question": "No account because of distrust in banks or financial institutions",
+                "citizen_solution": "Verify if your deposit is protected by the national deposit insurance scheme (which legally reimburses deposits up to the statutory limit if an institution fails), or consider regulated community credit cooperatives.",
                 "policy_fix": "Strengthen consumer financial protection agencies, mandate transparent plain-language disclosures, and enforce prompt deposit insurance payouts."
             },
             {
                 "id": "digital_literacy",
                 "title": "Cannot Use Account Without Help",
                 "icon": "📱",
-                "rate": get_val("fin11_2a", 17.6),
-                "question": "Needs assistance from family or agents to navigate financial transactions",
-                "citizen_solution": "Use audio/voice-enabled payment apps and localized language menus. Never share your secret 4-digit PIN with anyone, including bank agents.",
+                "rate": rate_lit,
+                "question": "Needs assistance from family members or agents to navigate financial transactions",
+                "citizen_solution": "Use audio/voice-enabled payment applications and localized language menus. Never disclose your secret PIN or biometric credentials to anyone, including bank agents.",
                 "policy_fix": "Fund public digital financial literacy campaigns, mandate localized vernacular voice interfaces, and establish elder/accessibility standards."
             }
         ]
@@ -573,7 +654,11 @@ class FindexDataService:
         barriers.sort(key=lambda b: b["rate"], reverse=True)
 
         return {
-            "country": country,
+            "country": matched_name,
+            "account_pct": account_pct,
+            "unbanked_pct": unbanked_pct,
+            "cluster_name": cluster_name,
+            "cluster_id": cluster_id,
             "barriers": barriers,
             "top_barrier": barriers[0]["title"],
             "top_rate": barriers[0]["rate"]

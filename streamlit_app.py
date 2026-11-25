@@ -711,7 +711,7 @@ elif page == "⚖️ Country Comparator":
 # ==============================================================================
 elif page == "💡 Citizen Action Hub":
     st.markdown("## 💡 Citizen Action Hub: Solving Real-World Barriers")
-    st.caption("Over 1.4 billion adults remain unbanked. Select an economy to view local barriers, proven community solutions, and policy recommendations.")
+    st.caption("Over 1.4 billion adults remain unbanked worldwide. Select an economy to view local barriers, proven community solutions, and localized policy interventions.")
 
     country_list = sorted([c["country"] for c in countries if "country" in c])
     selected_c = st.selectbox("Select Country:", country_list, index=country_list.index("India") if "India" in country_list else 0)
@@ -719,8 +719,45 @@ elif page == "💡 Citizen Action Hub":
     barrier_data = data_service.get_citizen_barriers(country=selected_c)
     barriers = barrier_data.get("barriers", [])
     
-    st.info(f"📌 **Primary Constraint in {selected_c}:** {barrier_data.get('top_barrier', 'Insufficient funds')} cited by **{barrier_data.get('top_rate', 0)}%** of unbanked citizens.")
+    # Country Demographic Context Cards
+    c1, c2, c3 = st.columns(3)
+    with c1:
+        st.metric("Formal Account Coverage", f"{barrier_data.get('account_pct', 0):.1f}%")
+        st.caption("Adults holding a formal account")
+    with c2:
+        st.metric("Unbanked Adults", f"{barrier_data.get('unbanked_pct', 0):.1f}%")
+        st.caption("Citizens facing financial barriers")
+    with c3:
+        st.metric("Primary Barrier", f"{barrier_data.get('top_rate', 0):.1f}%")
+        st.caption(f"{barrier_data.get('top_barrier', 'Insufficient funds')[:32]}...")
+
+    st.info(f"📌 **Primary Constraint in {selected_c}:** **{barrier_data.get('top_barrier', 'Insufficient funds')}** cited by **{barrier_data.get('top_rate', 0)}%** of unbanked citizens in this economy (Development Archetype: *{barrier_data.get('cluster_name', 'Developing Ecosystem')}*).")
     
+    # Interactive Barrier Severity Chart
+    fig_barriers = go.Figure()
+    fig_barriers.add_trace(go.Bar(
+        x=[b["rate"] for b in reversed(barriers)],
+        y=[b["title"] for b in reversed(barriers)],
+        orientation="h",
+        marker=dict(
+            color=["#f43f5e" if idx == len(barriers)-1 else "#38bdf8" for idx in range(len(barriers))],
+            line=dict(color="rgba(255,255,255,0.1)", width=1)
+        ),
+        text=[f"{b['rate']}%" for b in reversed(barriers)],
+        textposition="auto"
+    ))
+    fig_barriers.update_layout(
+        title=f"Relative Severity of Barriers Reported by Unbanked Citizens in {selected_c}",
+        paper_bgcolor="rgba(0,0,0,0)",
+        plot_bgcolor="rgba(0,0,0,0)",
+        font=dict(color="#f8fafc", family="Plus Jakarta Sans"),
+        xaxis=dict(gridcolor="rgba(255,255,255,0.08)", range=[0, 100], title="% of Unbanked Citizens Citing Barrier"),
+        margin=dict(l=20, r=20, t=40, b=20),
+        height=270
+    )
+    st.plotly_chart(fig_barriers, use_container_width=True)
+
+    st.markdown("### 🛠️ Citizen Solutions & Policy Interventions")
     b_cols = st.columns(2)
     for idx, b in enumerate(barriers):
         with b_cols[idx % 2]:
