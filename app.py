@@ -1,14 +1,18 @@
 from flask import Flask, render_template, request, jsonify, send_file
 from werkzeug.datastructures import FileStorage
 from pathlib import Path
-from flask_cors import CORS
+try:
+    from flask_cors import CORS
+except ImportError:
+    CORS = None
 import random
 
 from analysis import analyze_upload, inspect_upload, AnalysisError
 from data_service import data_service
 
 app = Flask(__name__)
-CORS(app)
+if CORS is not None:
+    CORS(app)
 app.config["MAX_CONTENT_LENGTH"] = 32 * 1024 * 1024
 
 DATASET_PATH = Path(__file__).parent / "data" / "GlobalFindex2025.xlsx"
